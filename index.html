@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- Fonte Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- 🔥 PWA (INSTALAÇÃO COMO APP) -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000">
+
+<style>
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:none;
+  overflow-x:hidden;
+
+  max-width:500px;  /* 👈 ADICIONA */
+  margin:auto;      /* 👈 ADICIONA */
+}
+/* TOPO */
+.topo-novo{
+display:flex;
+align-items:center;
+gap:12px;
+padding:15px;
+}
+
+.topo-novo img{
+  width:15vw;
+  height:15vw;
+  max-width:80px;
+  max-height:80px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ola{
+font-size:20px;
+font-weight:700;
+color:#333;
+}
+
+/* BOX */
+.box{
+background:#fff;
+margin:15px;
+padding:15px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* OPÇÕES */
+.opcoes{
+  display:flex;
+  gap:10px;
+  margin-top:5px;
+
+  overflow-x:hidden; /* ✅ padrão SEM scroll */
+  scroll-behavior:smooth;
+  justify-content:space-between;
+
+  /* 👇 esconder barra de rolagem */
+  scrollbar-width:none; /* Firefox */
+}
+
+.opcoes::-webkit-scrollbar{
+  display:none; /* Chrome, Safari, Instagram */
+}
+
+.op{
+  flex:1;              /* ✅ divide espaço no Chrome/Safari */
+  min-width:0;         /* ✅ evita quebrar no Safari */
+  padding:12px 6px;
+  border-radius:16px;
+  border:2px solid #e6c068;
+  text-align:center;
+  color:#b8860b;
+  font-weight:bold;
+  cursor:pointer;
+  background:#f7f1e3;
+  white-space:nowrap; /* evita quebrar texto */
+}
+
+.op img{
+  width:34px;
+  height:34px;
+  margin:auto;
+  display:block;
+  margin-bottom:6px;
+}
+
+/* 👇 SOMENTE INSTAGRAM / FACEBOOK (volta o scroll) */
+.app-view .opcoes{
+  overflow-x:auto;
+  justify-content:flex-start;
+}
+
+.app-view .op{
+  flex:0 0 auto;
+  min-width:120px;
+  padding:14px 10px;
+}
+
+.op.active{
+  background:linear-gradient(45deg,#ffd700,#e6c068);
+  color:#fff;
+}
+.op.active img{
+  filter: brightness(0) invert(1);
+}
+/* TITULOS */
+.titulo{
+margin:12px 15px 6px;
+font-weight:700;
+font-size:18px;
+color:#333;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.titulo img{
+width:40px;
+}
+
+/* SCROLL */
+.scroll{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding:10px 15px;
+scroll-snap-type:x mandatory;
+}
+
+.scroll::-webkit-scrollbar{
+display:none;
+}
+
+/* CARD */
+.card{
+flex:0 0 auto;
+width:80%;
+max-width:300px;
+min-height:150px;
+border-radius:20px;
+padding:16px 10px;
+position:relative;
+background:#fff;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+scroll-snap-align:center;
+overflow:hidden;
+text-align:center;
+}
+
+/* FUNDO */
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+background-image:url('https://i.ibb.co/yBnPKpsp/Whats-App-Image-2026-04-07-at-22-40-41.jpg');
+background-size:cover;
+background-position:center;
+opacity:0.5;
+}
+
+.card *{
+position:relative;
+z-index:1;
+}
+
+/* ⏰ TEMPO COM RELÓGIO */
+.tempo{
+position:absolute;
+top:10px;
+left:10px;
+display:flex;
+align-items:center;
+gap:6px;
+background:#fff3cd;
+color:#b8860b;
+font-size:11px;
+font-weight:bold;
+padding:5px 10px;
+border-radius:20px;
+}
+
+.tempo svg{
+width:14px;
+height:14px;
+}
+
+/* FOTO */
+.foto{
+  width:30vw;
+  height:30vw;
+  max-width:140px;
+  max-height:140px;
+  margin:auto;
+  margin-top:5px; /* sobe um pouco */
+  border-radius:50%;
+  padding:4px;
+  background:linear-gradient(45deg,#e6c068,#b8860b);
+  position:relative;
+}
+.foto img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+}
+/* 🟢 ONLINE PISCANDO */
+.online{
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:15px;
+  height:15px;
+  background:#00cc66;
+  border-radius:50%;
+  border:2px solid #fff;
+  box-shadow:0 0 4px rgba(0,204,102,0.5);
+  animation:pulse 1.2s infinite;
+}
+@keyframes pulse{
+0%{transform:scale(1);opacity:1;}
+50%{transform:scale(1.4);opacity:0.5;}
+100%{transform:scale(1);opacity:1;}
+}
+
+/* TEXTO CENTRAL */
+.nome,.desc,.foot{
+text-align:center;
+}
+
+.nome{
+  margin-top:15px; /* mais próximo da foto */
+  font-weight:600;
+   font-size:clamp(18px, 5vw, 26px);
+  color:#333;
+}
+
+.desc{
+  font-size:clamp(14px, 4vw, 18px);
+  color:#c47a00; /* voltou para o dourado/amarelo */
+  margin-top:8px;
+}
+
+.foot{
+  font-size:13px;
+  margin-top:15px;
+  background:rgba(255, 215, 0, 0.5); /* amarelo com transparência */
+  border-radius:20px;
+  padding:8px;
+  font-weight:500;
+}
+
+/* 👇 PARTE 7 (IMPORTANTE) */
+img{
+  max-width:100%;
+  height:auto;
+}
+
+*{
+  word-wrap:break-word;
+}
+
+.app-view .opcoes{
+  overflow-x:auto;
+  justify-content:flex-start;
+}
+
+.app-view .op{
+  flex:0 0 auto;
+  min-width:120px;
+  padding:14px 10px;
+}
+
+/* 🔥 CARD DESTAQUE (PADRÃO DOS CARDS) */
+.card-destaque{
+  background:#fff;
+  margin:15px;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  position:relative;
+  overflow:hidden;
+}
+
+.card-destaque::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url('https://i.ibb.co/yBnPKpsp/Whats-App-Image-2026-04-07-at-22-40-41.jpg');
+  background-size:cover;
+  background-position:center;
+  opacity:0.5;
+}
+
+.card-destaque *{
+  position:relative;
+  z-index:1;
+}
+
+/* 🔥 TOPO CORRIGIDO (ESSA É A CHAVE) */
+.topo-destaque{
+  display:flex;
+  gap:12px;
+  align-items:flex-start; /* 👈 CORREÇÃO AQUI */
+}
+
+/* 🔥 LIBERA O BLOCO DE TEXTO */
+.card-destaque .topo-destaque > div{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+/* 🔥 FOTO IGUAL AOS CARDS */
+.foto-destaque{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  padding:4px;
+  background:linear-gradient(45deg,#e6c068,#b8860b);
+  position:relative;
+}
+
+.foto-destaque img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* 🔥 ONLINE */
+.foto-destaque .online{
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:14px;
+  height:14px;
+  background:#00cc66;
+  border-radius:50%;
+  border:2px solid #fff;
+  box-shadow:0 0 4px rgba(0,204,102,0.5);
+  animation:pulse 1.2s infinite;
+}
+
+/* 🔥 BADGE */
+.badge{
+  background:linear-gradient(45deg,#ffd700,#e6c068);
+  color:#000;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:20px;
+  display:inline-block;
+}
+
+/* 🔥 NOME (AGORA DESCE DE VERDADE) */
+.card-destaque .nome-destaque{
+  display:block;
+  margin-top:5px; /* 👈 AGORA FUNCIONA DE VERDADE */
+  font-weight:600;
+  font-size:clamp(18px, 5vw, 26px);
+  color:#333;
+}
+
+/* 🔥 SUB */
+.sub{
+  font-size:clamp(14px, 4vw, 18px);
+  color:#c47a00;
+  margin-top:12px;
+}
+
+/* 🔥 INFO */
+.info{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+/* 🔥 PESSOAS */
+#pessoasSemana{
+  background:rgba(255, 215, 0, 0.5);
+  padding:8px;
+  border-radius:20px;
+  font-size:13px;
+}
+
+/* 🔥 TEMPO */
+#tempoSemana{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:#fff3cd;
+  color:#b8860b;
+  font-size:11px;
+  font-weight:bold;
+  padding:5px 10px;
+  border-radius:20px;
+}
+
+#tempoSemana svg{
+  width:14px;
+  height:14px;
+  stroke:#b8860b;
+}
+
+/* 🔥 TEXTO */
+.texto{
+  margin-top:15px;
+  font-size:14px;
+  color:#555;
+}
+
+/* 🔥 BOTÃO */
+.btn{
+  margin-top:20px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(45deg,#00bfa6,#1abc9c);
+  color:#fff;
+  font-size:18px;
+  font-weight:600;
+}
+</style>
+</head>
+<body>
+
+<div class="topo-novo">
+<img src="https://i.ibb.co/dJt2Zwz0/Design-sem-nome.png">
+<span class="ola">Olá :)</span>
+</div>
+
+<div class="box">
+<div class="titulo">O que está procurando?</div>
+
+<div class="opcoes">
+<div class="op active" onclick="trocar('clareza',this)">
+<img src="https://i.ibb.co/TMVkVXN6/pp.png">Clareza
+</div>
+
+<div class="op" onclick="trocar('motivacao',this)">
+<img src="https://i.ibb.co/8Dhz1WFw/image.png">Motivação
+</div>
+
+<div class="op" onclick="trocar('esperanca',this)">
+<img src="https://i.ibb.co/ccP46cMj/kkkkk.png">Esperança
+</div>
+</div>
+</div>
+<div id="principal"></div>
+<div id="fixo"></div>
+<script>
+const banco={
+clareza:[
+{nome:"Pai Márcio",img:"https://i.ibb.co/RGZzCfFC/Captura-de-tela-2026-04-02-001847.png"},
+{nome:"Samya",img:"https://i.ibb.co/m570rCkG/Whats-App-Image-2026-04-03-at-22-36-29-1.jpg"},
+{nome:"Aislyn",img:"https://i.ibb.co/5WtRK6mQ/Whats-App-Image-2026-04-03-at-22-36-29-2.jpg"},
+{nome:"Tulipa",img:"https://i.ibb.co/0pNhf839/Whats-App-Image-2026-04-03-at-22-36-29.jpg"}
+],
+motivacao:[
+{nome:"Esmeralda",img:"https://i.ibb.co/8LMGQ4s9/Chat-GPT-Image-7-04-2026-07-47-54.png"},
+{nome:"Thabata",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/06/28/d5969655ef-1-_3.webp"},
+{nome:"Analu",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp"},
+{nome:"Benedita",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/10/23/9f9ffa4ba9-1-_3.webp"}
+],
+esperanca:[
+{nome:"Estrela",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2026/01/01/b2a24fc4f7-1-_3.webp"},
+{nome:"Sulamita",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/05/27/47a447851c-1-.jpg"},
+{nome:"Adria",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/07/25/d6152621b2-1-_3.webp"},
+{nome:"M.Padilha",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2025/01/27/699974ac8a-1-.jpg"},
+{nome:"Sara",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/09/04/9a6f4cec30-1-.jpg"},
+{nome:"7 Saias",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/02/29/e43513a707-1-.jpg"},
+{nome:"Odara",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/01/15/91bb2a4455-1-.jpg"}
+]
+};
+
+const fixo=[
+{
+titulo:"Nós temos um futuro juntos?",
+icone:"https://i.ibb.co/tw8wF0JD/ppp.png",
+lista:["Esmeralda","M.Padilha","Thabata"]
+},
+{
+titulo:"Tem interesse em mim?",
+icone:"https://i.ibb.co/gLMsV9kQ/ppppp.png",
+lista:["Analu","Benedita","Estrela"]
+},
+{
+titulo:"Como atrair o amor?",
+icone:"https://i.ibb.co/DHGtmnwZ/pppppppp.png",
+lista:["Sulamita","Adria","M.Padilha","Sara","7 Saias","Odara"]
+}
+];
+
+function buscar(nome){
+  return [...banco.clareza,...banco.motivacao,...banco.esperanca]
+  .find(c=>c.nome===nome);
+}
+
+// 🟢 CONTROLE PERSISTENTE
+let statusOnline = JSON.parse(localStorage.getItem("statusOnline")) || {};
+let ultimoUpdate = localStorage.getItem("ultimoUpdate") || 0;
+
+// 🟢 CONTROLE DE ONLINE/OFFLINE (PROFISSIONAL)
+function estaOnline(nome) {
+  const agora = new Date();
+  const hora = agora.getHours();
+
+  // 🔒 Entre 2h e 10h → todos offline
+  if (hora >= 2 && hora < 10) {
+    return false;
+  }
+
+  const agoraMs = Date.now();
+
+  // ⏱️ Atualiza somente a cada 1 minuto
+  if (agoraMs - ultimoUpdate > 60000) {
+
+    statusOnline = {};
+
+    const todos = [
+      ...banco.clareza,
+      ...banco.motivacao,
+      ...banco.esperanca
+    ];
+
+    todos.forEach(c => {
+      statusOnline[c.nome] = Math.random() > 0.4;
+    });
+
+    localStorage.setItem("statusOnline", JSON.stringify(statusOnline));
+    localStorage.setItem("ultimoUpdate", agoraMs);
+  }
+
+  return statusOnline[nome];
+}
+
+// ⏰ TEMPO
+function tempo(){
+  let t=["≈1h","≈33m","≈2h"];
+  return t[Math.floor(Math.random()*t.length)];
+}
+
+// 👥 PESSOAS
+function pessoas(){
+  return Math.floor(Math.random()*53)+20;
+}
+
+// 🧱 CARD
+function card(c){
+return `
+<div class="card">
+<div class="tempo">
+<svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M12 7v5l3 2"></path>
+</svg>
+${tempo()}
+</div>
+
+<div class="foto">
+<img src="${c.img}">
+${estaOnline(c.nome) ? '<div class="online"></div>' : ''}
+</div>
+
+<div class="nome">${c.nome}</div>
+<div class="desc">Compatibilidade amorosa,Sessão de...</div>
+<div class="foot">${pessoas()} pessoas ajudadas/90 dias</div>
+</div>`;
+}
+
+// 🔥 RENDER PRINCIPAL
+function renderPrincipal(tipo){
+
+const icones={
+clareza:"https://i.ibb.co/TMVkVXN6/pp.png",
+motivacao:"https://i.ibb.co/8Dhz1WFw/image.png",
+esperanca:"https://i.ibb.co/ccP46cMj/kkkkk.png"
+};
+
+const titulos={
+clareza:"Estou no caminho correto?",
+motivacao:"Qual é minha missão?",
+esperanca:"Terei um futuro melhor?"
+};
+
+let html=`
+<div class="titulo">
+<img src="${icones[tipo]}">
+${titulos[tipo]}
+</div>
+<div class="scroll">`;
+
+banco[tipo].forEach(c=> html+=card(c));
+
+html+=`</div>`;
+document.getElementById("principal").innerHTML=html;
+
+renderFixo();
+}
+
+// 🔥 FIXO
+function renderFixo(){
+
+let html="";
+
+fixo.forEach((sec,index)=>{
+html+=`
+<div class="titulo">
+<img src="${sec.icone}">
+${sec.titulo}
+</div>`;
+
+html+=`<div class="scroll">`;
+
+sec.lista.forEach(n=> html+=card(buscar(n)));
+
+html+=`</div>`;
+
+// 🔥 CARD DESTAQUE
+if(index === 0){
+html+=`
+<div class="card-destaque">
+
+  <div class="topo-destaque">
+  <div class="foto-destaque">
+    <img id="fotoSemana">
+    ${estaOnline("destaque") ? '<div class="online"></div>' : ''}
+  </div>
+
+  <div>
+    <div class="badge">CONSULTOR DA SEMANA</div>
+
+    <div class="nome-destaque" id="nomeSemana"></div>
+  </div>
+</div>
+
+<div class="sub">Compatibilidade Amor...</div>
+
+<div class="info">
+  <span id="pessoasSemana"></span>
+
+  <span id="tempoSemana">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 7v5l3 2"></path>
+    </svg>
+    <span id="tempoTexto"></span>
+  </span>
+</div>
+
+<div class="texto" id="descSemana"></div>
+
+<button class="btn" id="btnSemana"></button>
+
+</div>
+`;
+}
+
+});
+
+// ✅ renderiza o HTML corretamente
+document.getElementById("fixo").innerHTML=html;
+
+// 🔥 ATUALIZA DESTAQUE
+setTimeout(renderDestaque,100);
+}
+
+// 🔥 DESCRIÇÕES
+const descricoes = {
+
+"Pai Márcio":"Sou tarólogo experiente e intuitivo, trabalho com espiritualidade profunda e orientação direta. Minha missão é te mostrar caminhos claros e te ajudar a tomar decisões com segurança e fé.",
+
+"Samya":"Sou taróloga sensitiva, conectada com a energia do amor e da intuição. Minhas leituras são acolhedoras e sinceras, sempre buscando te orientar com carinho.",
+
+"Aislyn":"Trabalho com energias espirituais e intuição refinada. Minha missão é te ajudar a enxergar o que está oculto e trazer respostas verdadeiras.",
+
+"Tulipa":"Sou sensitiva e trabalho com amor e energia espiritual. Minhas leituras são profundas e sinceras para te ajudar a encontrar equilíbrio.",
+
+"Esmeralda":"Especialista em amor e relacionamentos, utilizo minha intuição para revelar sentimentos e intenções ocultas.",
+
+"Thabata":"Sou intuitiva e acolhedora, trabalho com energia emocional e espiritual para te orientar com leveza.",
+
+"Analu":"Realizo leituras profundas e detalhadas, trazendo clareza para suas dúvidas e caminhos.",
+
+"Benedita":"Sou experiente e sensitiva, atuo com energia espiritual e direcionamento sincero.",
+
+"Estrela":"Trabalho com energia espiritual elevada, trazendo luz e clareza para sua vida.",
+
+"Sulamita":"Especialista em amor e reconciliação, ajudo a entender sentimentos e caminhos.",
+
+"Adria":"Trabalho com intuição profunda para te mostrar caminhos verdadeiros.",
+
+"M.Padilha":"Leituras diretas e espirituais para decisões importantes.",
+
+"Sara":"Sensitiva com orientação detalhada e acolhedora.",
+
+"7 Saias":"Energia forte e reveladora para mostrar verdades.",
+
+"Odara":"Energia positiva e orientação sincera para sua vida."
+};
+
+function renderDestaque(){
+
+const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
+const semana=Math.floor(Date.now()/604800000);
+const c=todos[semana % todos.length];
+
+document.getElementById("fotoSemana").src=c.img;
+document.getElementById("nomeSemana").innerText=c.nome;
+
+document.getElementById("pessoasSemana").innerText=
+(Math.floor(Math.random()*300)+200)+" pessoas ajudadas";
+
+document.getElementById("tempoTexto").innerText=
+"≈"+(Math.floor(Math.random()*3)+1)+"h";
+
+document.getElementById("descSemana").innerText=
+descricoes[c.nome] || "Estou aqui para te ajudar com clareza.";
+
+document.getElementById("btnSemana").innerText=
+"Consultar "+c.nome;
+}
+
+// 🔥 chama automaticamente
+setTimeout(renderDestaque,100);
+
+
+// 🔥 CONTROLE DO TIPO ATUAL
+let tipoAtual = "clareza";
+
+// 🔥 FUNÇÃO DO MENU
+function trocar(tipo,el){
+
+  tipoAtual = tipo;
+
+  document.querySelectorAll(".op").forEach(o=>o.classList.remove("active"));
+
+  el.classList.add("active");
+
+  renderPrincipal(tipo);
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+
+// 🔥 INICIALIZA
+renderPrincipal(tipoAtual);
+
+
+// 🔥 ATUALIZA AUTOMATICAMENTE
+setInterval(() => {
+  renderPrincipal(tipoAtual);
+}, 60000);
+
+
+/* =========================
+   🔥 PWA + DETECÇÃO COMPLETA
+========================= */
+
+// detectar ambiente
+const ua = navigator.userAgent.toLowerCase();
+
+if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
+  document.body.classList.add("app-view");
+}
+
+// PWA
+let deferredPrompt;
+
+function isIOS(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
+function isInApp(){
+  return ua.includes("instagram") || ua.includes("fb") || ua.includes("messenger");
+}
+
+function isAndroid(){
+  return /android/i.test(navigator.userAgent);
+}
+
+// captura instalação android
+window.addEventListener("beforeinstallprompt",(e)=>{
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+// 🔥 FUNÇÃO PRINCIPAL DO POPUP
+function abrirPWA(){
+
+  // não mostra se já instalado
+  if(window.matchMedia('(display-mode: standalone)').matches) return;
+
+  const popup = document.getElementById("pwaPopup");
+  const titulo = document.getElementById("pwaTitulo");
+  const texto = document.getElementById("pwaTexto");
+  const steps = document.getElementById("pwaSteps");
+  const btn = document.getElementById("pwaBtn");
+
+  popup.style.display="flex";
+
+  // 📱 INSTAGRAM / FACEBOOK
+  if(isInApp()){
+    titulo.innerText="ABRIR NO NAVEGADOR";
+    texto.innerHTML="Você está dentro do Instagram/Facebook.";
+    steps.innerHTML=`
+    1. Toque em <b>⋮</b><br>
+    2. Abrir no navegador<br>
+    3. Depois instale o aplicativo
+    `;
+
+    btn.innerText="COPIAR LINK";
+    btn.onclick=()=>{
+      navigator.clipboard.writeText(location.href);
+      alert("Link copiado!");
+    };
+    return;
+  }
+
+  // 🍎 IPHONE / SAFARI
+  if(isIOS()){
+    titulo.innerText="INSTALAR NO IPHONE";
+    texto.innerHTML="Siga os passos abaixo:";
+    steps.innerHTML=`
+    1. Toque em <b>Compartilhar ⤴️</b><br>
+    2. Role a tela<br>
+    3. Toque em <b>Adicionar à Tela de Início</b><br>
+    4. Confirmar
+    `;
+
+    btn.innerText="ENTENDI";
+    btn.onclick=fecharPWA;
+    return;
+  }
+
+  // 🤖 ANDROID (AUTOMÁTICO)
+  if(deferredPrompt){
+    titulo.innerText="INSTALAR APLICATIVO";
+    texto.innerHTML="Instale agora:";
+    steps.innerHTML=`
+    ✔ Acesso rápido<br>
+    ✔ Funciona como app<br>
+    ✔ Mais leve e rápido
+    `;
+
+    btn.innerText="INSTALAR AGORA";
+    btn.onclick=()=>{
+      deferredPrompt.prompt();
+      popup.style.display="none";
+    };
+    return;
+  }
+
+  // 💻 PC / OUTROS
+  titulo.innerText="INSTALAR NO DISPOSITIVO";
+  texto.innerHTML="Você pode instalar este site como aplicativo.";
+  steps.innerHTML=`
+  👉 No Chrome / Edge:<br>
+  1. Clique em <b>⋮</b><br>
+  2. "Instalar aplicativo"<br><br>
+
+  👉 Outros navegadores:<br>
+  1. Use o menu<br>
+  2. Adicionar à tela inicial
+  `;
+
+  btn.innerText="ENTENDI";
+  btn.onclick=fecharPWA;
+}
+
+// fechar popup
+function fecharPWA(){
+  document.getElementById("pwaPopup").style.display="none";
+}
+
+// abrir automático
+setTimeout(abrirPWA,2000);
+
+// service worker
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js");
+}
+
+</script>
+
+<!-- 🔥 POPUP (OBRIGATÓRIO NO FINAL) -->
+<div id="pwaPopup" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.9);
+z-index:99999;
+align-items:center;
+justify-content:center;
+padding:15px;
+">
+
+  <div style="
+  background:#000;
+  color:#fff;
+  padding:20px;
+  border-radius:15px;
+  max-width:340px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 0 25px rgba(255,215,0,0.4);
+  ">
+
+    <h2 id="pwaTitulo" style="color:#ffd700;"></h2>
+    <div id="pwaTexto"></div>
+    <div id="pwaSteps" style="margin-top:10px;text-align:left;"></div>
+
+    <button id="pwaBtn" style="
+    margin-top:12px;
+    padding:12px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#ffd700;
+    font-weight:bold;
+    ">
+      CONTINUAR
+    </button>
+
+    <button onclick="fecharPWA()" style="
+    margin-top:8px;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#333;
+    color:#fff;
+    ">
+      AGORA NÃO
+    </button>
+
+  </div>
+
+</div>
+
+</body>
+</html>
