@@ -5,6 +5,7 @@ const urlsToCache = [
   "/aplicativo/index.html",
   "/aplicativo/logo-192.png",
   "/aplicativo/logo-512.png"
+  "/aplicativo/perfil.html"
 ];
 
 // instalar
