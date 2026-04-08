@@ -561,8 +561,18 @@ function pessoas(){
 
 // 🧱 CARD
 function card(c){
+
+const online = estaOnline(c.nome);
+
 return `
-<div class="card">
+<div class="card" 
+${online ? `
+onclick="
+localStorage.setItem('consultorNome','${c.nome}');
+localStorage.setItem('consultorImagem','${c.img}');
+window.location.href='/aplicativo/perfil.html';
+"` : ''}>
+
 <div class="tempo">
 <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
 <circle cx="12" cy="12" r="9"></circle>
@@ -573,15 +583,15 @@ ${tempo()}
 
 <div class="foto">
 <img src="${c.img}">
-${estaOnline(c.nome) ? '<div class="online"></div>' : ''}
+${online ? '<div class="online"></div>' : ''}
 </div>
 
 <div class="nome">${c.nome}</div>
 <div class="desc">Compatibilidade amorosa,Sessão de...</div>
 <div class="foot">${pessoas()} pessoas ajudadas/90 dias</div>
+
 </div>`;
 }
-
 // 🔥 RENDER PRINCIPAL
 function renderPrincipal(tipo){
 
@@ -632,46 +642,50 @@ html+=`</div>`;
 
 // 🔥 CARD DESTAQUE
 if(index === 0){
+
+const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
+const semana=Math.floor(Date.now()/604800000);
+const c=todos[semana % todos.length];
+const online = estaOnline(c.nome);
+
 html+=`
 <div class="card-destaque">
 
   <div class="topo-destaque">
-  <div class="foto-destaque">
-    <img id="fotoSemana">
-    ${estaOnline("destaque") ? '<div class="online"></div>' : ''}
+    <div class="foto-destaque">
+      <img id="fotoSemana">
+      ${online ? '<div class="online"></div>' : ''}
+    </div>
+
+    <div>
+      <div class="badge">CONSULTOR DA SEMANA</div>
+      <div class="nome-destaque" id="nomeSemana"></div>
+    </div>
   </div>
 
-  <div>
-    <div class="badge">CONSULTOR DA SEMANA</div>
+  <div class="sub">Compatibilidade Amor...</div>
 
-    <div class="nome-destaque" id="nomeSemana"></div>
+  <div class="info">
+    <span id="pessoasSemana"></span>
+
+    <span id="tempoSemana">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 7v5l3 2"></path>
+      </svg>
+      <span id="tempoTexto"></span>
+    </span>
   </div>
-</div>
 
-<div class="sub">Compatibilidade Amor...</div>
+  <div class="texto" id="descSemana"></div>
 
-<div class="info">
-  <span id="pessoasSemana"></span>
-
-  <span id="tempoSemana">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
-      <circle cx="12" cy="12" r="9"></circle>
-      <path d="M12 7v5l3 2"></path>
-    </svg>
-    <span id="tempoTexto"></span>
-  </span>
-</div>
-
-<div class="texto" id="descSemana"></div>
-
-<button class="btn" id="btnSemana"></button>
+  ${online ? `<button class="btn" id="btnSemana"></button>` : ''}
 
 </div>
 `;
 }
 
 });
-
 // ✅ renderiza o HTML corretamente
 document.getElementById("fixo").innerHTML=html;
 
@@ -718,10 +732,13 @@ function renderDestaque(){
 const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
 const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
+const online = estaOnline(c.nome);
 
+// 🔥 FOTO + NOME
 document.getElementById("fotoSemana").src=c.img;
 document.getElementById("nomeSemana").innerText=c.nome;
 
+// 🔥 INFO
 document.getElementById("pessoasSemana").innerText=
 (Math.floor(Math.random()*300)+200)+" pessoas ajudadas";
 
@@ -731,8 +748,25 @@ document.getElementById("tempoTexto").innerText=
 document.getElementById("descSemana").innerText=
 descricoes[c.nome] || "Estou aqui para te ajudar com clareza.";
 
-document.getElementById("btnSemana").innerText=
-"Consultar "+c.nome;
+
+// 🔥 BOTÃO (SÓ SE ONLINE)
+const btn = document.getElementById("btnSemana");
+
+if(btn){
+  if(online){
+    btn.style.display="block";
+    btn.innerText="Consultar "+c.nome;
+
+    btn.onclick = () => {
+      localStorage.setItem("consultorNome", c.nome);
+      localStorage.setItem("consultorImagem", c.img);
+      window.location.href="/aplicativo/perfil.html";
+    };
+
+  }else{
+    btn.style.display="none";
+  }
+}
 }
 
 // 🔥 chama automaticamente
@@ -742,7 +776,7 @@ setTimeout(renderDestaque,100);
 // 🔥 CONTROLE DO TIPO ATUAL
 let tipoAtual = "clareza";
 
-// 🔥 FUNÇÃO DO MENU
+// 🔥 MENU
 function trocar(tipo,el){
 
   tipoAtual = tipo;
@@ -761,24 +795,22 @@ function trocar(tipo,el){
 renderPrincipal(tipoAtual);
 
 
-// 🔥 ATUALIZA AUTOMATICAMENTE
+// 🔥 ATUALIZA AUTOMÁTICO
 setInterval(() => {
   renderPrincipal(tipoAtual);
 }, 60000);
 
 
 /* =========================
-   🔥 PWA + DETECÇÃO COMPLETA
+   🔥 PWA + DETECÇÃO
 ========================= */
 
-// detectar ambiente
 const ua = navigator.userAgent.toLowerCase();
 
 if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
   document.body.classList.add("app-view");
 }
 
-// PWA
 let deferredPrompt;
 
 function isIOS(){
@@ -793,16 +825,13 @@ function isAndroid(){
   return /android/i.test(navigator.userAgent);
 }
 
-// captura instalação android
 window.addEventListener("beforeinstallprompt",(e)=>{
   e.preventDefault();
   deferredPrompt = e;
 });
 
-// 🔥 FUNÇÃO PRINCIPAL DO POPUP
 function abrirPWA(){
 
-  // não mostra se já instalado
   if(window.matchMedia('(display-mode: standalone)').matches) return;
 
   const popup = document.getElementById("pwaPopup");
@@ -813,7 +842,6 @@ function abrirPWA(){
 
   popup.style.display="flex";
 
-  // 📱 INSTAGRAM / FACEBOOK
   if(isInApp()){
     titulo.innerText="ABRIR NO NAVEGADOR";
     texto.innerHTML="Você está dentro do Instagram/Facebook.";
@@ -831,7 +859,6 @@ function abrirPWA(){
     return;
   }
 
-  // 🍎 IPHONE / SAFARI
   if(isIOS()){
     titulo.innerText="INSTALAR NO IPHONE";
     texto.innerHTML="Siga os passos abaixo:";
@@ -847,7 +874,6 @@ function abrirPWA(){
     return;
   }
 
-  // 🤖 ANDROID (AUTOMÁTICO)
   if(deferredPrompt){
     titulo.innerText="INSTALAR APLICATIVO";
     texto.innerHTML="Instale agora:";
@@ -865,7 +891,6 @@ function abrirPWA(){
     return;
   }
 
-  // 💻 PC / OUTROS
   titulo.innerText="INSTALAR NO DISPOSITIVO";
   texto.innerHTML="Você pode instalar este site como aplicativo.";
   steps.innerHTML=`
@@ -882,22 +907,19 @@ function abrirPWA(){
   btn.onclick=fecharPWA;
 }
 
-// fechar popup
 function fecharPWA(){
   document.getElementById("pwaPopup").style.display="none";
 }
 
-// abrir automático
 setTimeout(abrirPWA,2000);
 
-// service worker
 if("serviceWorker" in navigator){
   navigator.serviceWorker.register("service-worker.js");
 }
 
 </script>
 
-<!-- 🔥 POPUP (OBRIGATÓRIO NO FINAL) -->
+<!-- 🔥 POPUP -->
 <div id="pwaPopup" style="
 display:none;
 position:fixed;
