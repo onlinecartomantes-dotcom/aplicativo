@@ -158,6 +158,23 @@ box-shadow:0 6px 18px rgba(0,0,0,0.08);
 scroll-snap-align:center;
 overflow:hidden;
 text-align:center;
+
+/* 🔥 CORREÇÃO DO LINK */
+display:block;
+text-decoration:none;
+color:inherit;
+}
+
+/* 🔥 REMOVE AZUL E SUBLINHADO DE TUDO */
+.card,
+.card *{
+text-decoration:none !important;
+color:inherit !important;
+}
+
+/* 🔥 EFEITO DE CLIQUE (OPCIONAL TOP) */
+.card:active{
+transform:scale(0.98);
 }
 
 /* FUNDO */
@@ -171,11 +188,11 @@ background-position:center;
 opacity:0.5;
 }
 
+/* GARANTE QUE TEXTO FIQUE NA FRENTE */
 .card *{
 position:relative;
 z-index:1;
 }
-
 /* ⏰ TEMPO COM RELÓGIO */
 .tempo{
 position:absolute;
@@ -564,19 +581,16 @@ function card(c){
 const online = estaOnline(c.nome);
 
 return `
-<div class="card" 
+<a class="card" 
 ${online ? `
+href="https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html"
 onclick="
 localStorage.setItem('consultorNome','${c.nome}');
 localStorage.setItem('consultorImagem','${c.img}');
-window.location.href='https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html';
-"` : ''}>
+"
+` : `href="javascript:void(0)"` }>
 
 <div class="tempo">
-<svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
-<circle cx="12" cy="12" r="9"></circle>
-<path d="M12 7v5l3 2"></path>
-</svg>
 ${tempo()}
 </div>
 
@@ -589,7 +603,7 @@ ${online ? '<div class="online"></div>' : ''}
 <div class="desc">Compatibilidade amorosa,Sessão de...</div>
 <div class="foot">${pessoas()} pessoas ajudadas/90 dias</div>
 
-</div>`;
+</a>`;
 }
 // 🔥 RENDER PRINCIPAL
 function renderPrincipal(tipo){
