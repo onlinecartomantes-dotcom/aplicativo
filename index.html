@@ -559,7 +559,6 @@ function pessoas(){
   return Math.floor(Math.random()*53)+20;
 }
 
-// 🧱 CARD
 function card(c){
 
 const online = estaOnline(c.nome);
@@ -570,7 +569,7 @@ ${online ? `
 onclick="
 localStorage.setItem('consultorNome','${c.nome}');
 localStorage.setItem('consultorImagem','${c.img}');
-window.location.href='/aplicativo/perfil.html';
+window.location.href='https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html';
 "` : ''}>
 
 <div class="tempo">
