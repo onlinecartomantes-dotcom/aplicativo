@@ -4,7 +4,6 @@
 
 <meta charset="UTF-8">
 
-<!-- 🔥 viewport corrigido (ESSENCIAL) -->
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>Pagamento</title>
@@ -24,14 +23,23 @@ html,body{
   font-family:'Poppins', Arial, sans-serif;
   background:#f5f5f5;
   overflow-x:hidden;
+  height:100%;
 }
 
-/* 🔥 CONTAINER CENTRAL IGUAL APP */
+/* 🔥 altura REAL corrigida (resolve Instagram/Facebook) */
+body{
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* CONTAINER */
 .container{
   width:100%;
   max-width:420px;
   margin:auto;
-  padding:20px 16px 200px;
+  padding:20px 16px 120px; /* 🔥 menor e controlado */
+  flex:1;
 }
 
 /* CARD */
@@ -66,11 +74,6 @@ html,body{
   border-color:#d4af37;
 }
 
-/* preço invisível */
-.price{
-  display:none;
-}
-
 /* PIX */
 .pix-logo{
   width:120px;
@@ -78,21 +81,20 @@ html,body{
   display:block;
 }
 
-/* 🔥 FOOTER SUPER ESTÁVEL */
+/* 🔥 FOOTER INTELIGENTE */
 .footer-fixo{
-  position:fixed;
-  left:0;
-  right:0;
+  position:sticky;
   bottom:0;
-  margin:auto;
+
   width:100%;
   max-width:420px;
+  margin:auto;
 
   display:flex;
   flex-direction:column;
   gap:10px;
 
-  padding:12px 16px calc(20px + env(safe-area-inset-bottom));
+  padding:12px 16px calc(16px + env(safe-area-inset-bottom));
   background:#f5f5f5;
 }
 
@@ -125,12 +127,16 @@ html,body{
   color:#5a4a00;
 }
 
-/* 🔥 DETECÇÃO INSTAGRAM / FACEBOOK */
+/* 🔥 MODO INSTAGRAM/FACEBOOK */
 .app-view .container{
-  padding-bottom:220px;
+  padding-bottom:160px;
 }
 
-/* 🔥 evita zoom estranho em inputs/webview */
+.app-view .footer-fixo{
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+}
+
+/* 🔥 evita zoom bugado */
 body{
   -webkit-text-size-adjust:100%;
 }
@@ -145,8 +151,6 @@ body{
   <div class="box">
 
     <div id="opcoes"></div>
-
-    <div id="preco" class="price"></div>
 
     <img class="pix-logo" src="https://artpoin.com/wp-content/uploads/2023/09/artpoin-logo-pix.png">
 
@@ -168,7 +172,7 @@ body{
 
 <script>
 
-// 🔥 DETECTA INSTAGRAM / FACEBOOK
+// 🔥 DETECÇÃO INSTAGRAM / FACEBOOK
 const ua = navigator.userAgent.toLowerCase();
 
 if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
@@ -191,7 +195,6 @@ let precoFinal = null;
 let minutosSelecionados = null;
 
 const opcoes = document.getElementById("opcoes");
-const precoTxt = document.getElementById("preco");
 const btn = document.getElementById("btn");
 
 // GERAR OPÇÕES
@@ -214,8 +217,6 @@ minutos.forEach(m=>{
 
     precoFinal = preco;
     minutosSelecionados = m;
-
-    precoTxt.innerText = `Consulta com ${nome} • ${m} minutos = R$ ${preco}`;
 
     btn.disabled = false;
   };
