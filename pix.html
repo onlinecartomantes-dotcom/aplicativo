@@ -26,7 +26,7 @@ background:#f5f5f5;
 .container{
 max-width:420px;
 margin:auto;
-padding:20px 16px 120px; /* espaço pro botão */
+padding:20px 16px 120px;
 }
 
 /* CARD */
@@ -52,25 +52,13 @@ align-items:center;
 transition:0.2s;
 }
 
-/* CLIQUE */
 .option:active{
 transform:scale(0.98);
 }
 
-/* SELECIONADO */
 .option.selected{
 background:#ffe58a;
 border-color:#d4af37;
-}
-
-/* MAIS ESCOLHIDO */
-.badge{
-font-size:11px;
-background:#00bfa5;
-color:#fff;
-padding:4px 8px;
-border-radius:10px;
-margin-left:8px;
 }
 
 /* TEXTO */
@@ -91,7 +79,7 @@ display:block;
 /* BOTÃO */
 .btn{
 position:fixed;
-bottom:20px; /* 🔥 MAIS ALTO */
+bottom:20px;
 left:50%;
 transform:translateX(-50%);
 width:92%;
@@ -106,7 +94,6 @@ font-weight:700;
 box-shadow:0 6px 18px rgba(0,0,0,0.2);
 }
 
-/* DESATIVADO */
 .btn:disabled{
 opacity:0.5;
 }
@@ -145,20 +132,17 @@ Pagar com PIX
 
 <script>
 
-// 🔥 DADOS
+// DADOS
 const nome = localStorage.getItem("consultorNome");
 const valor = parseFloat(localStorage.getItem("consultorValor")) || 1.99;
 
-// 🔥 SEGURANÇA
+// SEGURANÇA
 if(!nome){
   window.location.href = "/aplicativo/index.html";
 }
 
 // MINUTOS
 const minutos = [5,10,20,30];
-
-// 🔥 MAIS ESCOLHIDO (automático)
-const destaque = 10;
 
 let precoFinal = null;
 let minutosSelecionados = null;
@@ -176,10 +160,7 @@ minutos.forEach(m=>{
   div.className="option";
 
   div.innerHTML = `
-    <div>
-      ${m} minutos 
-      ${m === destaque ? '<span class="badge">Mais escolhido</span>' : ''}
-    </div>
+    <div>${m} minutos</div>
     <div>R$ ${preco}</div>
   `;
 
@@ -203,7 +184,7 @@ minutos.forEach(m=>{
 btn.onclick = () => {
 
   const valorFormatado = precoFinal.replace('.', ',');
-  const descricao = encodeURIComponent(`${nome} - ${minutosSelecionados} minutos`);
+  const descricao = encodeURIComponent(`Consulta com ${nome} - ${minutosSelecionados} minutos`);
 
   window.location.href =
   `https://pagamentopix.helioho.st/index.php?valor=${valorFormatado}&descricao=${descricao}`;
