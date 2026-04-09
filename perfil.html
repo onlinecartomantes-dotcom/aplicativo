@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,6 +15,7 @@ font-family:'Poppins',sans-serif;
 background:#fff;
 max-width:500px;
 margin:auto;
+color:#222;
 }
 
 /* FOTO */
@@ -34,7 +36,6 @@ border-radius:50%;
 object-fit:cover;
 }
 
-/* ONLINE */
 .online{
 position:absolute;
 top:6px;
@@ -53,16 +54,18 @@ animation:pulse 1.2s infinite;
 100%{transform:scale(1);}
 }
 
+/* TEXTO */
 .nome{
 text-align:center;
-font-size:22px;
-font-weight:600;
+font-size:24px;
+font-weight:700;
 }
 
 .estrelas{
 text-align:center;
 color:#ffd700;
 margin-top:5px;
+font-size:18px;
 }
 
 .status{
@@ -78,37 +81,38 @@ margin-top:10px;
 font-weight:600;
 }
 
-/* BADGES */
-.badges{
-text-align:center;
-margin-top:10px;
-font-size:13px;
-color:#b8860b;
-}
-
 /* BOX */
 .box{
 margin:20px;
 padding:20px;
 border-radius:20px;
-background:#f9f9f9;
+background:#f7f7f7;
+}
+
+/* SOBRE */
+.sobre{
+background:#fff8dc;
+padding:15px;
+border-radius:15px;
+margin-bottom:20px;
+border:1px solid #f1d27a;
 }
 
 /* DEPOIMENTOS */
 .depo{
 margin-top:10px;
-font-size:13px;
-color:#444;
-padding:10px;
-background:#fff;
-border-radius:10px;
-margin-bottom:8px;
+font-size:14px;
+color:#333;
+padding:12px;
+background:#fff8dc;
+border-radius:12px;
+border:1px solid #f1d27a;
 }
 
 /* BOTÃO */
 .btn-fixo{
 position:fixed;
-bottom:20px;
+bottom:10px;
 left:50%;
 transform:translateX(-50%);
 width:90%;
@@ -116,11 +120,16 @@ max-width:400px;
 padding:15px;
 border:none;
 border-radius:30px;
-background:#00cc66;
+background:linear-gradient(45deg,#00cc66,#00bfa6);
 color:#fff;
 font-size:18px;
 font-weight:bold;
 box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ESPAÇO */
+.espaco{
+height:90px;
 }
 
 </style>
@@ -135,136 +144,161 @@ box-shadow:0 5px 15px rgba(0,0,0,0.2);
 
 <div class="nome" id="nome"></div>
 <div class="estrelas" id="estrelas"></div>
-<div class="status">Online</div>
-<div class="valor">Valor por minuto R$1,99</div>
-
-<div class="badges" id="ranking"></div>
+<div class="status">Online agora</div>
+<div class="valor">R$1,99/min</div>
 
 <div class="box">
 
+<div class="sobre">
 <b>Sobre mim</b><br><br>
 
 <div id="especialidade"></div><br>
 <div id="signos"></div><br>
 
-🕒 Disponibilidade de horários flexíveis<br><br>
-
 <div id="descricao"></div>
 
-<br><br>
-<b>Depoimentos</b>
+</div>
+
+<b>Depoimentos reais</b>
 
 <div id="depoimentos"></div>
 
 </div>
 
+<div class="espaco"></div>
+
 <button class="btn-fixo">Conecte-se Comigo</button>
 
 <script>
 
-// 🔥 DADOS
+// DADOS
 const nome = localStorage.getItem("consultorNome");
 const foto = localStorage.getItem("consultorImagem");
 
+if(!nome || !foto){
+document.body.innerHTML="Erro ao carregar consultor";
+}
+
+// FOTO
 document.getElementById("nome").innerText = nome;
 document.getElementById("foto").src = foto;
 
-
-// ⭐ AVALIAÇÃO DIFERENTE
+// ESTRELAS
 function estrelas(){
-let qtd = Math.floor(Math.random()*2)+4; // 4 ou 5
+let qtd = Math.floor(Math.random()*2)+4;
 return "★".repeat(qtd) + "☆".repeat(5-qtd);
 }
 document.getElementById("estrelas").innerText = estrelas();
 
-
-// 🔥 RANKING
-const rankings = [
-"🔥 Consultor Top",
-"⭐ Muito Procurado",
-"💎 Alta Reputação",
-"👁️ Mais Acessado"
+// SIGNOS
+const signos = [
+"♈ Áries","♉ Touro","♊ Gêmeos","♋ Câncer",
+"♌ Leão","♍ Virgem","♎ Libra"
 ];
 
-document.getElementById("ranking").innerText =
-rankings[Math.floor(Math.random()*rankings.length)];
-
-
-// 🧿 ESPECIALIDADES POR CONSULTOR
-const especialidades = {
-"Pai Márcio":"Relacionamentos / Espiritualidade / Caminhos",
-"Samya":"Amor / Energia / Intuição",
-"Aislyn":"Destino / Revelações / Energia",
-"Tulipa":"Amor / Autoconhecimento",
-"Esmeralda":"Relacionamentos / Sentimentos",
-"Thabata":"Emoções / Energia",
-"Analu":"Clareza / Decisões",
-"Benedita":"Espiritualidade / Direção",
-"Estrela":"Luz / Energia / Caminhos",
-"Sulamita":"Reconciliação / Amor",
-"Adria":"Destino / Caminhos",
-"M.Padilha":"Espiritualidade / Verdade",
-"Sara":"Orientação / Amor",
-"7 Saias":"Energia forte / Revelação",
-"Odara":"Positividade / Caminho"
-};
-
-document.getElementById("especialidade").innerText =
-especialidades[nome] || "Leituras espirituais completas";
-
-
-// 🔮 SIGNOS
-function signo(){
-const signos=["Áries","Touro","Gêmeos","Câncer","Leão","Virgem","Libra"];
+function getSigno(){
 return signos[Math.floor(Math.random()*signos.length)];
 }
 
-if(nome==="Pai Márcio"){
-document.getElementById("signos").innerText="☀️ Sol em Leão | ⬆️ Asc Virgem";
-}else{
-document.getElementById("signos").innerText=
-"☀️ Sol " + signo() + " | ⬆️ Asc " + signo();
-}
+document.getElementById("signos").innerText =
+"Sol " + getSigno() + " | Asc " + getSigno();
 
+// ESPECIALIDADE
+document.getElementById("especialidade").innerText =
+"🔮 Amor • Relacionamentos • Espiritualidade";
 
-// 📜 DESCRIÇÕES INDIVIDUAIS
-const descricoes = {
-"Pai Márcio":"Sou tarólogo experiente e intuitivo, trabalho com espiritualidade profunda.",
-"Samya":"Sou taróloga sensitiva e acolhedora.",
-"Aislyn":"Trabalho com energia espiritual e intuição refinada.",
-"Tulipa":"Sou sensitiva com leituras profundas.",
-"Esmeralda":"Especialista em amor e sentimentos.",
-"Thabata":"Trabalho com energia emocional.",
-"Analu":"Leituras profundas e detalhadas.",
-"Benedita":"Orientação espiritual sincera.",
-"Estrela":"Energia elevada e luz.",
-"Sulamita":"Reconciliação amorosa.",
+// DESCRIÇÕES
+const descricoesPorConsultor = {
+
+"Pai Márcio":"Sou especialista em espiritualidade profunda, com respostas diretas e seguras.",
+
+"Samya":"Sou sensitiva e acolhedora, trazendo clareza emocional e respostas verdadeiras.",
+
+"Esmeralda":"Especialista em amor e sentimentos, revelo intenções ocultas.",
+
+"Aislyn":"Trabalho com energia espiritual e revelações profundas.",
+
+"Tulipa":"Leituras sinceras e orientação emocional.",
+
+"Thabata":"Ajudo você a entender sentimentos e decisões.",
+
+"Analu":"Leituras detalhadas e diretas.",
+
+"Benedita":"Orientação espiritual clara e objetiva.",
+
+"Estrela":"Trago luz e clareza para sua vida.",
+
+"Sulamita":"Especialista em reconciliação amorosa.",
+
 "Adria":"Mostro caminhos verdadeiros.",
+
 "M.Padilha":"Leituras diretas e espirituais.",
-"Sara":"Orientação acolhedora.",
-"7 Saias":"Energia forte e reveladora.",
+
+"Sara":"Orientação acolhedora e sincera.",
+
+"7 Saias":"Revelações fortes e verdadeiras.",
+
 "Odara":"Energia positiva e leve."
 };
 
 document.getElementById("descricao").innerText =
-descricoes[nome] || "Estou aqui para te ajudar.";
+descricoesPorConsultor[nome] || "Estou aqui para te ajudar.";
 
+// DEPOIMENTOS
+const depoimentosPorConsultor = {
 
-// 💬 DEPOIMENTOS
-const depoimentos = [
-"Me ajudou muito, acerto impressionante!",
-"Voltei várias vezes, muito bom!",
-"Explicação clara e direta.",
-"Excelente consulta, recomendo!",
-"Sentiu tudo perfeitamente!"
+"Pai Márcio":[
+"Acertou tudo com precisão.",
+"Muito direto.",
+"Me ajudou muito.",
+"Excelente leitura.",
+"Voltei várias vezes.",
+"Recomendo muito.",
+"Consulta forte.",
+"Muito confiável.",
+"Acerto impressionante.",
+"Perfeito."
+],
+
+"Samya":[
+"Muito acolhedora.",
+"Leitura leve.",
+"Me ajudou bastante.",
+"Super recomendo.",
+"Voltei várias vezes.",
+"Incrível.",
+"Muito verdadeira.",
+"Gostei muito.",
+"Excelente.",
+"Perfeita."
+]
+
+};
+
+let lista = depoimentosPorConsultor[nome] || [
+"Excelente consulta.",
+"Recomendo.",
+"Muito bom.",
+"Vale a pena.",
+"Gostei bastante.",
+"Volto sempre.",
+"Perfeito.",
+"Muito profissional.",
+"Ótimo atendimento.",
+"Experiência incrível."
 ];
 
-let depoHTML="";
-for(let i=0;i<3;i++){
-depoHTML += `<div class="depo">"${depoimentos[Math.floor(Math.random()*depoimentos.length)]}"</div>`;
-}
+let html="";
+lista.forEach(d=>{
+html += `<div class="depo">"${d}"</div>`;
+});
 
-document.getElementById("depoimentos").innerHTML = depoHTML;
+document.getElementById("depoimentos").innerHTML = html;
+
+// BOTÃO
+document.querySelector(".btn-fixo").onclick = () => {
+alert("Conectando com "+nome+"...");
+};
 
 </script>
 
