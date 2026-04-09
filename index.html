@@ -648,6 +648,7 @@ function renderFixo(){
 let html="";
 
 fixo.forEach((sec,index)=>{
+
 html+=`
 <div class="titulo">
 <img src="${sec.icone}">
@@ -703,6 +704,18 @@ html+=`
 
 </div>
 `;
+}
+
+// 🔥 NOVA SEÇÃO (OFERTAS ESPECIAIS)
+if(index === 2){
+
+html+=`
+<div class="titulo">
+  <img src="https://i.ibb.co/QvGk7YvL/Chat-GPT-Image-9-04-2026-18-51-25-removebg-preview.png">
+  Ofertas Especiais
+</div>
+`;
+
 }
 
 });
