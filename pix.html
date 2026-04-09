@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Pagamento</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color: transparent;
+}
+
+body{
+margin:0;
+font-family:'Poppins', Arial;
+background:#f5f5f5;
+}
+
+/* CONTAINER MOBILE */
+.container{
+width:100%;
+max-width:420px;
+margin:auto;
+min-height:100vh;
+padding:20px 16px 30px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+/* CARD */
+.box{
+background:#fff;
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* OPÇÕES */
+.option{
+background:#fff;
+border:1px solid #e6c068;
+padding:18px;
+margin-bottom:12px;
+border-radius:14px;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+transition:0.2s;
+}
+
+/* ÁREA DE TOQUE MELHOR */
+.option:active{
+transform:scale(0.98);
+}
+
+/* SELECIONADO */
+.option.selected{
+background:#ffe58a;
+border-color:#d4af37;
+}
+
+/* TEXTO PREÇO */
+.price{
+margin-top:15px;
+font-size:16px;
+font-weight:600;
+text-align:center;
+}
+
+/* PIX */
+.pix-logo{
+width:120px;
+margin:25px auto;
+display:block;
+}
+
+/* BOTÃO */
+.pix-btn{
+position:fixed;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+width:92%;
+max-width:400px;
+padding:16px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#00c9a7,#00bfa5);
+color:#fff;
+font-size:17px;
+font-weight:700;
+box-shadow:0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* BOTÃO DESATIVADO */
+.pix-btn:disabled{
+opacity:0.5;
+}
+
+/* ESPAÇO PRA NÃO COBRIR */
+.espaco{
+height:90px;
+}
+
+/* RESPONSIVO EXTRA */
+@media (max-width:360px){
+.option{
+font-size:15px;
+padding:16px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="box">
+
+<div id="opcoes"></div>
+
+<div id="precoSelecionado" class="price">
+Selecione uma opção
+</div>
+
+<img class="pix-logo" src="https://artpoin.com/wp-content/uploads/2023/09/artpoin-logo-pix.png">
+
+</div>
+
+<div class="espaco"></div>
+
+<button id="pixButton" class="pix-btn" disabled>
+Pagar com PIX
+</button>
+
+</div>
+
+<script>
+
+// VALOR BASE
+const valor = 1.99;
+
+// MINUTOS (A PARTIR DE 5)
+const minutos = [5,10,20,30];
+
+let precoFinal = null;
+let minutosSelecionados = null;
+
+const opcoesDiv = document.getElementById("opcoes");
+const precoTxt = document.getElementById("precoSelecionado");
+const btn = document.getElementById("pixButton");
+
+// GERAR OPÇÕES
+minutos.forEach(m=>{
+  const preco = (m * valor).toFixed(2);
+
+  const div = document.createElement("div");
+  div.className="option";
+  div.innerHTML = `<div>${m} minutos</div><div>R$ ${preco}</div>`;
+
+  div.onclick = () => {
+    document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+    div.classList.add("selected");
+
+    precoFinal = preco;
+    minutosSelecionados = m;
+
+    precoTxt.innerText = `${m} minutos • R$ ${preco}`;
+    btn.disabled = false;
+  };
+
+  opcoesDiv.appendChild(div);
+});
+
+// PAGAMENTO PIX
+btn.onclick = () => {
+  const valorFormatado = precoFinal.replace('.', ',');
+  const descricao = encodeURIComponent(`CONSULTA - ${minutosSelecionados} minutos`);
+
+  window.location.href =
+  `https://pagamentopix.helioho.st/index.php?valor=${valorFormatado}&descricao=${descricao}`;
+};
+
+</script>
+
+</body>
+</html>
