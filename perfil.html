@@ -176,12 +176,54 @@ document.getElementById("especialidade").innerText =
 "🔮 Amor • Relacionamentos • Espiritualidade";
 
 // DESCRIÇÃO
+// 🔥 DESCRIÇÕES PROFISSIONAIS
 const descricoes = {
-Masculino:"Sou especialista em orientação espiritual profunda, com leitura direta e respostas verdadeiras.",
-Feminino:"Sou sensitiva e intuitiva, conectada com sua energia para revelar sentimentos e caminhos ocultos."
+
+Masculino: [
+"Sou especialista em orientação espiritual profunda, trazendo respostas diretas e seguras.",
+"Minha leitura revela com clareza o que está oculto, ajudando você a tomar decisões com confiança.",
+"Trabalho com espiritualidade forte e verdadeira, mostrando exatamente o que você precisa saber.",
+"Sou tarólogo experiente, focado em revelar sentimentos e caminhos com precisão.",
+"Minha missão é trazer respostas claras e orientação segura para sua vida.",
+"Realizo leituras profundas, mostrando verdades que fazem diferença nas suas decisões.",
+"Atuo com energia espiritual direta, trazendo clareza e direção.",
+"Sou especialista em revelar situações ocultas e orientar seus próximos passos.",
+"Minha leitura é objetiva e verdadeira, sem rodeios.",
+"Trabalho com conexão espiritual para trazer respostas firmes e confiáveis."
+],
+
+Feminino: [
+"Sou sensitiva e intuitiva, conectada com sua energia para revelar sentimentos ocultos.",
+"Minha leitura é acolhedora e verdadeira, trazendo clareza emocional.",
+"Trabalho com energia do amor e intuição profunda, revelando caminhos.",
+"Sou sensitiva e ajudo você a entender sentimentos e decisões.",
+"Minhas leituras são sinceras e feitas para trazer paz e clareza.",
+"Atuo com energia espiritual leve, guiando você com segurança.",
+"Sou intuitiva e acolhedora, trazendo respostas com carinho.",
+"Minha leitura revela intenções ocultas e sentimentos verdadeiros.",
+"Trabalho com conexão emocional profunda para te orientar.",
+"Sou sensitiva experiente, trazendo respostas detalhadas.",
+"Minha energia é voltada para clareza e direção emocional.",
+"Atuo com leitura espiritual verdadeira e acolhedora.",
+"Sou especialista em sentimentos e relacionamentos.",
+"Minhas consultas trazem paz, clareza e entendimento.",
+"Trabalho com intuição refinada para revelar verdades.",
+"Sou conectada com sua energia para orientar seus caminhos.",
+"Minha leitura mostra exatamente o que você precisa saber.",
+"Trago respostas sinceras e direcionamento emocional.",
+"Sou sensitiva com forte conexão espiritual.",
+"Minha missão é te ajudar com clareza e verdade."
+]
+
 };
 
-document.getElementById("descricao").innerText = descricoes[genero];
+// 🔥 ESCOLHE ALEATÓRIO
+const textoDescricao = descricoes[genero][
+Math.floor(Math.random() * descricoes[genero].length)
+];
+
+// 🔥 APLICA NA TELA
+document.getElementById("descricao").innerText = textoDescricao;
 
 // 🔥 40 COMENTÁRIOS REALISTAS
 const comentariosMasculino = [
@@ -270,19 +312,19 @@ const comentariosFeminino = [
 "Amei."
 ];
 
-// escolher 40 sem repetir
-function embaralhar(arr){
-return arr.sort(()=>0.5-Math.random());
+// 🔥 EMBARALHAR SEM BAGUNÇAR ORIGINAL
+function embaralhar(array){
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
+// 🔥 ESCOLHER ATÉ 15 SEM REPETIR
 const lista = genero === "Masculino"
-? embaralhar(comentariosMasculino).slice(0,40)
-: embaralhar(comentariosFeminino).slice(0,40);
-
+  ? embaralhar(comentariosMasculino).slice(0,15)
+  : embaralhar(comentariosFeminino).slice(0,15);
 // render
 let html="";
 lista.forEach(c=>{
-html += `<div class="depo">"${c}"</div>`;
+html += `<div class="depo">⭐ ${c}</div>`;
 });
 
 document.getElementById("depoimentos").innerHTML = html;
