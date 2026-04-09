@@ -27,21 +27,27 @@ body{
 }
 /* TOPO */
 .topo-novo{
-display:flex;
-align-items:center;
-gap:12px;
-padding:15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px;
 }
 
+/* imagem padrão (vale para esquerda e direita) */
 .topo-novo img{
   width:15vw;
   height:15vw;
   max-width:80px;
   max-height:80px;
-border-radius:12px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
 
+  border-radius:0;
+  box-shadow:none;
+  background:none;
+}
+/* 🔥 IMAGEM DA DIREITA */
+.logo-direita{
+  margin-left:auto; /* empurra pra direita */
+}
 .ola{
 font-size:20px;
 font-weight:700;
@@ -454,8 +460,11 @@ img{
 <body>
 
 <div class="topo-novo">
-<img src="https://i.ibb.co/dJt2Zwz0/Design-sem-nome.png">
-<span class="ola">Olá :)</span>
+  <img src="https://i.ibb.co/CpTCs8s9/Design-sem-nome-removebg-preview.png">
+  <span class="ola">Olá :)</span>
+
+  <!-- NOVA IMAGEM -->
+  <img class="logo-direita" src="https://i.ibb.co/FqhZTCZg/logo-192-removebg-preview.png">
 </div>
 
 <div class="box">
