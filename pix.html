@@ -3,7 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 🔥 viewport corrigido (ESSENCIAL) -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>Pagamento</title>
 
@@ -12,113 +14,125 @@
 <style>
 
 *{
-box-sizing:border-box;
--webkit-tap-highlight-color: transparent;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body{
-margin:0;
-font-family:'Poppins', Arial;
-background:#f5f5f5;
+html,body{
+  margin:0;
+  padding:0;
+  font-family:'Poppins', Arial, sans-serif;
+  background:#f5f5f5;
+  overflow-x:hidden;
 }
 
-/* CONTAINER */
+/* 🔥 CONTAINER CENTRAL IGUAL APP */
 .container{
-max-width:420px;
-margin:auto;
-padding:20px 16px 220px;
+  width:100%;
+  max-width:420px;
+  margin:auto;
+  padding:20px 16px 200px;
 }
 
 /* CARD */
 .box{
-background:#fff;
-border-radius:20px;
-padding:20px;
-box-shadow:0 8px 25px rgba(0,0,0,0.08);
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
 }
 
 /* OPÇÕES */
 .option{
-border:1px solid #e6c068;
-padding:18px;
-margin-bottom:12px;
-border-radius:14px;
-cursor:pointer;
-font-weight:600;
-font-size:16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-transition:0.2s;
+  border:1px solid #e6c068;
+  padding:18px;
+  margin-bottom:12px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.2s;
 }
 
 .option:active{
-transform:scale(0.98);
+  transform:scale(0.98);
 }
 
 .option.selected{
-background:#ffe58a;
-border-color:#d4af37;
+  background:#ffe58a;
+  border-color:#d4af37;
 }
 
-/* 🔥 TEXTO INVISÍVEL */
+/* preço invisível */
 .price{
-display:none;
+  display:none;
 }
 
 /* PIX */
 .pix-logo{
-width:120px;
-margin:25px auto;
-display:block;
+  width:120px;
+  margin:25px auto;
+  display:block;
 }
 
-/* FOOTER */
+/* 🔥 FOOTER SUPER ESTÁVEL */
 .footer-fixo{
-position:fixed;
-bottom:40px;
-left:50%;
-transform:translateX(-50%);
-width:92%;
-max-width:400px;
-display:flex;
-flex-direction:column;
-gap:10px;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  width:100%;
+  max-width:420px;
+
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+
+  padding:12px 16px calc(20px + env(safe-area-inset-bottom));
+  background:#f5f5f5;
 }
 
 /* BOTÃO */
 .btn{
-padding:16px;
-border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#00c9a7,#00bfa5);
-color:#fff;
-font-size:17px;
-font-weight:700;
-box-shadow:0 6px 18px rgba(0,0,0,0.2);
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#00c9a7,#00bfa5);
+  color:#fff;
+  font-size:17px;
+  font-weight:700;
+  box-shadow:0 6px 18px rgba(0,0,0,0.2);
 }
 
 .btn:disabled{
-opacity:0.5;
+  opacity:0.5;
 }
 
 /* AVISO */
 .aviso{
-background:#ffe58a;
-border:1px solid #d4af37;
-padding:12px;
-border-radius:14px;
-font-size:13px;
-font-weight:600;
-text-align:center;
-color:#5a4a00;
+  background:#ffe58a;
+  border:1px solid #d4af37;
+  padding:12px;
+  border-radius:14px;
+  font-size:13px;
+  font-weight:600;
+  text-align:center;
+  color:#5a4a00;
 }
 
-/* SAFE AREA */
-@supports (padding: max(0px)) {
-.footer-fixo{
-bottom: max(40px, env(safe-area-inset-bottom));
+/* 🔥 DETECÇÃO INSTAGRAM / FACEBOOK */
+.app-view .container{
+  padding-bottom:220px;
 }
+
+/* 🔥 evita zoom estranho em inputs/webview */
+body{
+  -webkit-text-size-adjust:100%;
 }
 
 </style>
@@ -128,32 +142,38 @@ bottom: max(40px, env(safe-area-inset-bottom));
 
 <div class="container">
 
-<div class="box">
+  <div class="box">
 
-<div id="opcoes"></div>
+    <div id="opcoes"></div>
 
-<!-- 🔥 CONTINUA EXISTINDO, MAS INVISÍVEL -->
-<div id="preco" class="price"></div>
+    <div id="preco" class="price"></div>
 
-<img class="pix-logo" src="https://artpoin.com/wp-content/uploads/2023/09/artpoin-logo-pix.png">
+    <img class="pix-logo" src="https://artpoin.com/wp-content/uploads/2023/09/artpoin-logo-pix.png">
 
-</div>
+  </div>
 
 </div>
 
 <div class="footer-fixo">
 
-<button id="btn" class="btn" disabled>
-Pagar com PIX
-</button>
+  <button id="btn" class="btn" disabled>
+    Pagar com PIX
+  </button>
 
-<div class="aviso">
-⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página, você será direcionado automaticamente para o chat de atendimento.
-</div>
+  <div class="aviso">
+    ⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página, você será direcionado automaticamente para o chat de atendimento.
+  </div>
 
 </div>
 
 <script>
+
+// 🔥 DETECTA INSTAGRAM / FACEBOOK
+const ua = navigator.userAgent.toLowerCase();
+
+if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
+  document.body.classList.add("app-view");
+}
 
 // DADOS
 const nome = localStorage.getItem("consultorNome");
@@ -174,7 +194,7 @@ const opcoes = document.getElementById("opcoes");
 const precoTxt = document.getElementById("preco");
 const btn = document.getElementById("btn");
 
-// GERAR OPÇÕES (VISÍVEIS)
+// GERAR OPÇÕES
 minutos.forEach(m=>{
 
   const preco = (m * valor).toFixed(2);
@@ -195,7 +215,6 @@ minutos.forEach(m=>{
     precoFinal = preco;
     minutosSelecionados = m;
 
-    // 🔥 CONTINUA EXISTINDO (INVISÍVEL)
     precoTxt.innerText = `Consulta com ${nome} • ${m} minutos = R$ ${preco}`;
 
     btn.disabled = false;
