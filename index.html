@@ -551,7 +551,7 @@ function estaOnline(nome) {
   const agoraMs = Date.now();
 
   // ⏱️ Atualiza somente a cada 1 minuto
-  if (agoraMs - ultimoUpdate > 60000) {
+  if (agoraMs - ultimoUpdate > 10000) {
 
     statusOnline = {};
 
@@ -699,7 +699,7 @@ html+=`
 
   <div class="texto" id="descSemana"></div>
 
-  ${online ? `<button class="btn" id="btnSemana"></button>` : ''}
+  <button class="btn" id="btnSemana" style="display:none;"></button>
 
 </div>
 `;
@@ -769,13 +769,17 @@ document.getElementById("descSemana").innerText=
 descricoes[c.nome] || "Estou aqui para te ajudar com clareza.";
 
 
-// 🔥 BOTÃO (SÓ SE ONLINE)
+// 🔥 BOTÃO (controle correto)
 const btn = document.getElementById("btnSemana");
 
+// 🔥 só executa se o botão existir (não quebra a função)
 if(btn){
+
+  // 🔥 SEMPRE atualiza estado corretamente
   if(online){
-    btn.style.display="block";
-    btn.innerText="Consultar "+c.nome;
+
+    btn.style.display = "block";
+    btn.innerText = "Consultar " + c.nome;
 
     btn.onclick = () => {
       localStorage.setItem("consultorNome", c.nome);
@@ -784,17 +788,17 @@ if(btn){
     };
 
   }else{
-    btn.style.display="none";
+    btn.style.display = "none";
   }
-}
-}
 
-// 🔥 chama automaticamente
-setTimeout(renderDestaque,100);
+} // ✅ fecha corretamente (SEM else extra)
+
+} // ✅ FECHA A FUNÇÃO renderDestaque AQUI
 
 
-// 🔥 CONTROLE DO TIPO ATUAL
+// 🔥 CONTROLE DO TIPO ATUAL (FORA DA FUNÇÃO)
 let tipoAtual = "clareza";
+
 
 // 🔥 MENU
 function trocar(tipo,el){
@@ -807,19 +811,19 @@ function trocar(tipo,el){
 
   renderPrincipal(tipo);
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
-
-
 // 🔥 INICIALIZA
 renderPrincipal(tipoAtual);
 
 
 // 🔥 ATUALIZA AUTOMÁTICO
 setInterval(() => {
-  renderPrincipal(tipoAtual);
-}, 60000);
-
+  renderDestaque();
+}, 10000);
 
 /* =========================
    🔥 PWA + DETECÇÃO
