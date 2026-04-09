@@ -288,11 +288,21 @@ html += `<div class="depo">"${c}"</div>`;
 document.getElementById("depoimentos").innerHTML = html;
 
 // BOTÃO
-document.querySelector(".btn-fixo").onclick = () => {
-alert("Conectando com "+nome+"...");
-};
+const btn = document.querySelector(".btn-fixo");
 
+if(btn){
+  btn.onclick = () => {
+
+    const nome = localStorage.getItem("consultorNome");
+
+    const valorPorMinuto = 1.99;
+
+    localStorage.setItem("consultorNome", nome);
+    localStorage.setItem("consultorValor", valorPorMinuto);
+
+    window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/pix.html";
+  };
+}
 </script>
-
 </body>
 </html>
