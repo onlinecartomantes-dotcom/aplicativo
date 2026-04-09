@@ -18,7 +18,6 @@ margin:auto;
 color:#222;
 }
 
-/* FOTO */
 .foto{
 width:140px;
 height:140px;
@@ -54,34 +53,11 @@ animation:pulse 1.2s infinite;
 100%{transform:scale(1);}
 }
 
-/* TEXTO */
-.nome{
-text-align:center;
-font-size:24px;
-font-weight:700;
-}
+.nome{text-align:center;font-size:24px;font-weight:700;}
+.estrelas{text-align:center;color:#ffd700;margin-top:5px;font-size:18px;}
+.status{text-align:center;color:#00cc66;font-weight:600;margin-top:5px;}
+.valor{text-align:center;margin-top:10px;font-weight:600;}
 
-.estrelas{
-text-align:center;
-color:#ffd700;
-margin-top:5px;
-font-size:18px;
-}
-
-.status{
-text-align:center;
-color:#00cc66;
-font-weight:600;
-margin-top:5px;
-}
-
-.valor{
-text-align:center;
-margin-top:10px;
-font-weight:600;
-}
-
-/* BOX */
 .box{
 margin:20px;
 padding:20px;
@@ -89,7 +65,6 @@ border-radius:20px;
 background:#f7f7f7;
 }
 
-/* SOBRE */
 .sobre{
 background:#fff8dc;
 padding:15px;
@@ -98,18 +73,15 @@ margin-bottom:20px;
 border:1px solid #f1d27a;
 }
 
-/* DEPOIMENTOS */
 .depo{
 margin-top:10px;
 font-size:14px;
-color:#333;
 padding:12px;
 background:#fff8dc;
 border-radius:12px;
 border:1px solid #f1d27a;
 }
 
-/* BOTÃO */
 .btn-fixo{
 position:fixed;
 bottom:10px;
@@ -124,13 +96,9 @@ background:linear-gradient(45deg,#00cc66,#00bfa6);
 color:#fff;
 font-size:18px;
 font-weight:bold;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* ESPAÇO */
-.espaco{
-height:90px;
-}
+.espaco{height:90px;}
 
 </style>
 </head>
@@ -160,7 +128,6 @@ height:90px;
 </div>
 
 <b>Depoimentos reais</b>
-
 <div id="depoimentos"></div>
 
 </div>
@@ -179,6 +146,10 @@ if(!nome || !foto){
 document.body.innerHTML="Erro ao carregar consultor";
 }
 
+// GÊNERO
+const masculino = ["Pai Márcio"];
+const genero = masculino.includes(nome) ? "Masculino" : "Feminino";
+
 // FOTO
 document.getElementById("nome").innerText = nome;
 document.getElementById("foto").src = foto;
@@ -190,107 +161,128 @@ return "★".repeat(qtd) + "☆".repeat(5-qtd);
 }
 document.getElementById("estrelas").innerText = estrelas();
 
-// SIGNOS
-const signos = [
-"♈ Áries","♉ Touro","♊ Gêmeos","♋ Câncer",
-"♌ Leão","♍ Virgem","♎ Libra"
-];
-
-function getSigno(){
-return signos[Math.floor(Math.random()*signos.length)];
+// SIGNOS (fixo Pai Márcio)
+if(nome === "Pai Márcio"){
+document.getElementById("signos").innerText = "Sol ♌ Leão | Asc ♍ Virgem";
+}else{
+const signos = ["♈ Áries","♉ Touro","♊ Gêmeos","♋ Câncer","♌ Leão","♍ Virgem","♎ Libra"];
+const s1 = signos[Math.floor(Math.random()*signos.length)];
+const s2 = signos[Math.floor(Math.random()*signos.length)];
+document.getElementById("signos").innerText = "Sol " + s1 + " | Asc " + s2;
 }
-
-document.getElementById("signos").innerText =
-"Sol " + getSigno() + " | Asc " + getSigno();
 
 // ESPECIALIDADE
 document.getElementById("especialidade").innerText =
 "🔮 Amor • Relacionamentos • Espiritualidade";
 
-// DESCRIÇÕES
-const descricoesPorConsultor = {
-
-"Pai Márcio":"Sou especialista em espiritualidade profunda, com respostas diretas e seguras.",
-
-"Samya":"Sou sensitiva e acolhedora, trazendo clareza emocional e respostas verdadeiras.",
-
-"Esmeralda":"Especialista em amor e sentimentos, revelo intenções ocultas.",
-
-"Aislyn":"Trabalho com energia espiritual e revelações profundas.",
-
-"Tulipa":"Leituras sinceras e orientação emocional.",
-
-"Thabata":"Ajudo você a entender sentimentos e decisões.",
-
-"Analu":"Leituras detalhadas e diretas.",
-
-"Benedita":"Orientação espiritual clara e objetiva.",
-
-"Estrela":"Trago luz e clareza para sua vida.",
-
-"Sulamita":"Especialista em reconciliação amorosa.",
-
-"Adria":"Mostro caminhos verdadeiros.",
-
-"M.Padilha":"Leituras diretas e espirituais.",
-
-"Sara":"Orientação acolhedora e sincera.",
-
-"7 Saias":"Revelações fortes e verdadeiras.",
-
-"Odara":"Energia positiva e leve."
+// DESCRIÇÃO
+const descricoes = {
+Masculino:"Sou especialista em orientação espiritual profunda, com leitura direta e respostas verdadeiras.",
+Feminino:"Sou sensitiva e intuitiva, conectada com sua energia para revelar sentimentos e caminhos ocultos."
 };
 
-document.getElementById("descricao").innerText =
-descricoesPorConsultor[nome] || "Estou aqui para te ajudar.";
+document.getElementById("descricao").innerText = descricoes[genero];
 
-// DEPOIMENTOS
-const depoimentosPorConsultor = {
-
-"Pai Márcio":[
-"Acertou tudo com precisão.",
-"Muito direto.",
-"Me ajudou muito.",
-"Excelente leitura.",
-"Voltei várias vezes.",
-"Recomendo muito.",
-"Consulta forte.",
-"Muito confiável.",
+// 🔥 40 COMENTÁRIOS REALISTAS
+const comentariosMasculino = [
+"Ele descreveu a situação exatamente como está acontecendo.",
+"Fiquei impressionada com a precisão das respostas.",
+"Falou coisas que ninguém sabia.",
+"Me deu uma direção muito clara.",
+"Consulta muito forte e verdadeira.",
+"Acertou até detalhes pequenos.",
+"Me senti segura com o que falou.",
+"Voltarei com certeza.",
+"Explicou tudo com firmeza.",
+"Não enrola, fala direto.",
+"Acertou sentimentos ocultos.",
+"Me ajudou a decidir algo importante.",
+"Consulta muito profunda.",
+"Passa muita confiança.",
 "Acerto impressionante.",
-"Perfeito."
-],
-
-"Samya":[
-"Muito acolhedora.",
-"Leitura leve.",
-"Me ajudou bastante.",
-"Super recomendo.",
-"Voltei várias vezes.",
-"Incrível.",
-"Muito verdadeira.",
-"Gostei muito.",
-"Excelente.",
-"Perfeita."
-]
-
-};
-
-let lista = depoimentosPorConsultor[nome] || [
-"Excelente consulta.",
-"Recomendo.",
-"Muito bom.",
-"Vale a pena.",
-"Gostei bastante.",
-"Volto sempre.",
-"Perfeito.",
+"Já consultei outros e ele foi o melhor.",
+"Tudo fez sentido.",
+"Me trouxe muita clareza.",
+"Respostas rápidas e diretas.",
+"Recomendo muito.",
+"Leitura muito detalhada.",
 "Muito profissional.",
-"Ótimo atendimento.",
-"Experiência incrível."
+"Me surpreendeu bastante.",
+"Falou exatamente o que eu precisava ouvir.",
+"Muito assertivo.",
+"Gostei demais da consulta.",
+"Voltei pela segunda vez.",
+"Vale muito a pena.",
+"Explicação clara.",
+"Me deixou mais tranquila.",
+"Ele é muito bom mesmo.",
+"Confiei totalmente.",
+"Acertou tudo.",
+"Excelente consulta.",
+"Me ajudou muito.",
+"Super recomendo.",
+"Incrível mesmo.",
+"Leitura forte.",
+"Muito direto.",
+"Perfeito."
 ];
 
+const comentariosFeminino = [
+"Muito acolhedora e sensível.",
+"Me senti muito confortável.",
+"Explicou tudo com calma.",
+"Leitura leve e verdadeira.",
+"Acertou sentimentos ocultos.",
+"Me trouxe muita paz.",
+"Energia muito boa.",
+"Voltei várias vezes.",
+"Super recomendo.",
+"Consulta maravilhosa.",
+"Muito detalhada.",
+"Me ajudou emocionalmente.",
+"Senti muita verdade.",
+"Falou tudo certo.",
+"Gostei muito.",
+"Incrível mesmo.",
+"Me orientou muito bem.",
+"Consulta muito boa.",
+"Vale a pena.",
+"Me trouxe clareza.",
+"Explicação perfeita.",
+"Muito profissional.",
+"Gostei demais.",
+"Me ajudou muito.",
+"Leitura sincera.",
+"Perfeita.",
+"Voltarei sempre.",
+"Confio muito.",
+"Excelente atendimento.",
+"Muito sensitiva.",
+"Acertou bastante.",
+"Me surpreendeu.",
+"Maravilhosa consulta.",
+"Leitura forte.",
+"Muito clara.",
+"Recomendo demais.",
+"Incrível.",
+"Perfeita leitura.",
+"Me ajudou muito mesmo.",
+"Amei."
+];
+
+// escolher 40 sem repetir
+function embaralhar(arr){
+return arr.sort(()=>0.5-Math.random());
+}
+
+const lista = genero === "Masculino"
+? embaralhar(comentariosMasculino).slice(0,40)
+: embaralhar(comentariosFeminino).slice(0,40);
+
+// render
 let html="";
-lista.forEach(d=>{
-html += `<div class="depo">"${d}"</div>`;
+lista.forEach(c=>{
+html += `<div class="depo">"${c}"</div>`;
 });
 
 document.getElementById("depoimentos").innerHTML = html;
