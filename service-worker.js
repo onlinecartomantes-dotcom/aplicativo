@@ -1,11 +1,10 @@
-const CACHE_NAME = "cartomantes-v2";
+const CACHE_NAME = "cartomantes-v3";
 
 const urlsToCache = [
-  "/aplicativo/",
   "/aplicativo/index.html",
+  "/aplicativo/perfil.html",
   "/aplicativo/logo-192.png",
-  "/aplicativo/logo-512.png",
-  "/aplicativo/perfil.html"
+  "/aplicativo/logo-512.png"
 ];
 
 // instalar
@@ -32,11 +31,18 @@ self.addEventListener("activate", event => {
   );
 });
 
-// fetch (offline + cache inteligente)
+// 🔥 FETCH CORRIGIDO (ANTI TELA BRANCA)
 self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then(response => {
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request)
+          .then(response => {
+            return response || caches.match("/aplicativo/index.html");
+          });
+      })
   );
 });
