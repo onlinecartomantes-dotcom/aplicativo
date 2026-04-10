@@ -1,0 +1,290 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>Mural</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background: linear-gradient(180deg, #fffdf5 0%, #fff4cc 40%, #ffe8a3 100%);
+  min-height:100vh;
+}
+
+.chat{
+  max-width:500px;
+  margin:auto;
+  padding:15px;
+}
+
+.titulo-topo{
+  text-align:center;
+  font-size:26px;
+  font-weight:700;
+  margin:10px 0 20px;
+  color:#b8860b;
+}
+
+/* CLIENTE */
+.msg-cliente{
+  display:flex;
+  gap:10px;
+  margin:18px 0;
+}
+
+.msg-cliente img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  padding:2px;
+  background:linear-gradient(45deg,#ffd700,#e6c068);
+}
+
+/* BALÃO */
+.balao{
+  background:#fff;
+  padding:14px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  max-width:85%;
+}
+
+.info{
+  font-size:12px;
+  color:#999;
+  margin-bottom:6px;
+  font-weight:600;
+}
+
+/* CONSULTOR */
+.msg-consultor{
+  display:flex;
+  gap:10px;
+  margin:18px 0;
+}
+
+.msg-consultor img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  padding:2px;
+  background:linear-gradient(45deg,#ffd700,#e6c068);
+}
+
+.resposta{
+  background:#fff;
+  padding:15px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  max-width:85%;
+}
+
+.nome{
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.texto{
+  font-size:14px;
+  line-height:1.6;
+  color:#444;
+}
+
+/* CARTAS */
+.cartas{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.cartas img{
+  width:75px;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.modal img{
+  max-width:90%;
+  border-radius:12px;
+}
+
+.modal.active{
+  display:flex;
+}
+
+/* BOTÃO FLUTUANTE */
+.floating{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(45deg,#00bfa6,#1abc9c);
+  color:#fff;
+  padding:14px 20px;
+  border-radius:30px;
+  font-weight:600;
+  box-shadow:0 6px 20px rgba(0,0,0,0.2);
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat">
+
+<div class="titulo-topo">Mural</div>
+
+<!-- 1 -->
+<div class="msg-cliente">
+<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
+<div class="balao">
+<div class="info">M.R.S • 16/09/1995 • 22:30</div>
+Depois da discussão, o R.A (12/03/1993) sumiu totalmente… você vê ele me procurando de novo?
+</div>
+</div>
+
+<div class="msg-consultor">
+<img src="https://i.ibb.co/RGZzCfFC/Captura-de-tela-2026-04-02-001847.png">
+<div class="resposta">
+<div class="nome">Pai Márcio</div>
+<div class="texto">
+Ele ainda pensa em você, mas está orgulhoso e tentando evitar sentimentos. Vejo sim um retorno, porém com demora.
+</div>
+<div class="cartas">
+<img src="https://i.ibb.co/6707LcDX/Whats-App-Image-2026-04-10-at-02-35-25.jpg" onclick="abrir(this.src)">
+</div>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="msg-cliente">
+<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
+<div class="balao">
+<div class="info">J.P.A • 22/11/1997 • 22:41</div>
+Fiz uma entrevista importante… você acha que consigo esse emprego ou aparece outro melhor?
+</div>
+</div>
+
+<div class="msg-consultor">
+<img src="https://i.ibb.co/m570rCkG/Whats-App-Image-2026-04-03-at-22-36-29-1.jpg">
+<div class="resposta">
+<div class="nome">Samya</div>
+<div class="texto">
+Existe chance sim, mas vejo demora e incerteza. As cartas mostram que outra oportunidade mais alinhada pode surgir.
+</div>
+<div class="cartas">
+<img src="https://i.ibb.co/7xx5c6Mb/Whats-App-Image-2026-04-10-at-02-35-24.jpg" onclick="abrir(this.src)">
+</div>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="msg-cliente">
+<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
+<div class="balao">
+<div class="info">A.C.F • 03/02/1990 • 22:10</div>
+O L.S (28/07/1988) se afastou do nada… você vê ele voltando a falar comigo?
+</div>
+</div>
+
+<div class="msg-consultor">
+<img src="https://i.ibb.co/5WtRK6mQ/Whats-App-Image-2026-04-03-at-22-36-29-2.jpg">
+<div class="resposta">
+<div class="nome">Aislyn</div>
+<div class="texto">
+Ele ainda pensa em você, mas está confuso emocionalmente. Vejo retorno, porém lento e sem muita clareza no início.
+</div>
+<div class="cartas">
+<img src="https://i.ibb.co/99QcWLTf/Whats-App-Image-2026-04-10-at-02-35-24-5.jpg" onclick="abrir(this.src)">
+</div>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="msg-cliente">
+<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
+<div class="balao">
+<div class="info">L.T.S • 10/05/1992 • 22:19</div>
+Meu relacionamento com D.R (21/01/1990) está estranho… você vê melhora ou afastamento?
+</div>
+</div>
+
+<div class="msg-consultor">
+<img src="https://i.ibb.co/0pNhf839/Whats-App-Image-2026-04-03-at-22-36-29.jpg">
+<div class="resposta">
+<div class="nome">Tulipa</div>
+<div class="texto">
+Vejo desgaste emocional, mas não término agora. Se houver diálogo, existe melhora.
+</div>
+<div class="cartas">
+<img src="https://i.ibb.co/fdy1GdyW/Whats-App-Image-2026-04-10-at-02-35-24-4.jpg" onclick="abrir(this.src)">
+</div>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="msg-cliente">
+<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
+<div class="balao">
+<div class="info">R.M.L • 14/08/1998 • 22:25</div>
+Estou há muito tempo sozinho… aparece alguém especial ainda esse ano?
+</div>
+</div>
+
+<div class="msg-consultor">
+<img src="https://i.ibb.co/8LMGQ4s9/Chat-GPT-Image-7-04-2026-07-47-54.png">
+<div class="resposta">
+<div class="nome">Esmeralda</div>
+<div class="texto">
+Sim, vejo um novo amor chegando de forma inesperada, com conexão forte e verdadeira.
+</div>
+<div class="cartas">
+<img src="https://i.ibb.co/0pdpRym9/Whats-App-Image-2026-04-10-at-02-35-24-3.jpg" onclick="abrir(this.src)">
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="floating">
+🔮 Procurar consultores disponíveis
+</div>
+
+<div id="modal" class="modal" onclick="fechar()">
+<img id="imgModal">
+</div>
+
+<script>
+function abrir(src){
+  document.getElementById("modal").classList.add("active");
+  document.getElementById("imgModal").src = src;
+}
+function fechar(){
+  document.getElementById("modal").classList.remove("active");
+}
+</script>
+
+</body>
+</html>
+```
