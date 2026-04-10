@@ -161,14 +161,34 @@ return "★".repeat(qtd) + "☆".repeat(5-qtd);
 }
 document.getElementById("estrelas").innerText = estrelas();
 
-// SIGNOS (fixo Pai Márcio)
+// 🔥 SIGNOS FIXOS POR CONSULTOR
+const signosFixos = {
+
+"Samya": "Sol ♈ Áries | Asc ♌ Leão",
+"Aislyn": "Sol ♓ Peixes | Asc ♋ Câncer",
+"Tulipa": "Sol ♉ Touro | Asc ♍ Virgem",
+
+"Esmeralda": "Sol ♎ Libra | Asc ♒ Aquário",
+"Thabata": "Sol ♏ Escorpião | Asc ♑ Capricórnio",
+"Analu": "Sol ♊ Gêmeos | Asc ♐ Sagitário",
+"Benedita": "Sol ♍ Virgem | Asc ♉ Touro",
+
+"Estrela": "Sol ♓ Peixes | Asc ♎ Libra",
+"Sulamita": "Sol ♋ Câncer | Asc ♓ Peixes",
+"Adria": "Sol ♒ Aquário | Asc ♈ Áries",
+"M.Padilha": "Sol ♏ Escorpião | Asc ♌ Leão",
+"Sara": "Sol ♑ Capricórnio | Asc ♍ Virgem",
+"7 Saias": "Sol ♌ Leão | Asc ♏ Escorpião",
+"Odara": "Sol ♐ Sagitário | Asc ♊ Gêmeos"
+
+};
+
+// 🔥 SIGNOS (fixo Pai Márcio)
 if(nome === "Pai Márcio"){
-document.getElementById("signos").innerText = "Sol ♌ Leão | Asc ♍ Virgem";
+  document.getElementById("signos").innerText = "Sol ♌ Leão | Asc ♍ Virgem";
 }else{
-const signos = ["♈ Áries","♉ Touro","♊ Gêmeos","♋ Câncer","♌ Leão","♍ Virgem","♎ Libra"];
-const s1 = signos[Math.floor(Math.random()*signos.length)];
-const s2 = signos[Math.floor(Math.random()*signos.length)];
-document.getElementById("signos").innerText = "Sol " + s1 + " | Asc " + s2;
+  document.getElementById("signos").innerText =
+    signosFixos[nome] || "";
 }
 
 // ESPECIALIDADE
