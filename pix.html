@@ -16,20 +16,26 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 🔥 CENTRALIZAÇÃO REAL */
 body{
   margin:0;
   font-family:'Poppins', sans-serif;
   background:#f5f5f5;
-  max-width:420px;
-  margin:auto;
+
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* CONTAINER */
+/* 🔥 CONTAINER CENTRAL */
 .container{
+  width:100%;
+  max-width:420px;
   padding:20px 16px;
 }
 
-/* CARD */
+/* 🔥 CARD */
 .box{
   background:#fff;
   border-radius:20px;
@@ -54,7 +60,7 @@ body{
   border-color:#d4af37;
 }
 
-/* 🔥 BOTÃO PRINCIPAL */
+/* BOTÃO */
 .btn{
   width:100%;
   padding:16px;
@@ -72,11 +78,11 @@ body{
   opacity:0.5;
 }
 
-/* 🔥 AVISO AGORA IGUAL AO SELECIONADO */
+/* AVISO */
 .aviso{
   margin-top:12px;
-  background:#ffe58a; /* 🔥 mesma cor */
-  border:1px solid #d4af37; /* 🔥 mesma borda */
+  background:#ffe58a;
+  border:1px solid #d4af37;
   padding:14px;
   border-radius:14px;
   font-size:13px;
@@ -85,9 +91,14 @@ body{
   color:#5a4a00;
 }
 
-/* 🔥 APP VIEW */
+/* 🔥 INSTAGRAM / FACEBOOK (DESATIVA CENTRALIZAÇÃO) */
+.app-view body{
+  display:block;
+}
+
 .app-view .container{
-  padding-bottom:20px;
+  margin:auto;
+  padding-top:20px;
 }
 
 </style>
@@ -101,12 +112,10 @@ body{
 
     <div id="opcoes"></div>
 
-    <!-- 🔥 BOTÃO -->
     <button id="btn" class="btn" disabled>
       Realizar Pagamento
     </button>
 
-    <!-- 🔥 AVISO -->
     <div class="aviso">
       ⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página, você será direcionado automaticamente para o atendimento.
     </div>
@@ -117,7 +126,7 @@ body{
 
 <script>
 
-// 🔥 DETECTA INSTAGRAM / FACEBOOK
+// DETECÇÃO
 const ua = navigator.userAgent.toLowerCase();
 
 if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
