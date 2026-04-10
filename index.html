@@ -187,15 +187,29 @@ transform:scale(0.98);
 
 /* FUNDO */
 .card::before{
-content:"";
-position:absolute;
-inset:0;
-background-image:url('https://i.ibb.co/yBnPKpsp/Whats-App-Image-2026-04-07-at-22-40-41.jpg');
-background-size:cover;
-background-position:center;
-opacity:0.5;
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url('https://i.ibb.co/yBnPKpsp/Whats-App-Image-2026-04-07-at-22-40-41.jpg');
+  background-size:cover;
+  background-position:center;
+  opacity:0.5;
+  z-index:0; /* 🔥 garante que fique atrás */
 }
 
+/* 🔥 garante que todo conteúdo fique acima */
+.card *{
+  position:relative;
+  z-index:1;
+}
+
+/* 🔥 relógio acima de tudo */
+.tempo{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:2;
+}
 /* GARANTE QUE TEXTO FIQUE NA FRENTE */
 .card *{
 position:relative;
@@ -331,7 +345,7 @@ img{
 
 .card-destaque *{
   position:relative;
-  z-index:1;
+  z-index:2;
 }
 
 /* 🔥 TOPO CORRIGIDO (ESSA É A CHAVE) */
@@ -642,9 +656,12 @@ localStorage.setItem('consultorImagem','${c.img}');
 ` : `href="javascript:void(0)"` }>
 
 <div class="tempo">
-${tempo()}
+  <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="M12 7v5l3 2"></path>
+  </svg>
+  ${tempo()}
 </div>
-
 <div class="foto">
 <img src="${c.img}">
 ${online ? '<div class="online"></div>' : ''}
