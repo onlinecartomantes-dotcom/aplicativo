@@ -456,40 +456,46 @@ img{
   font-weight:600;
 }
 
-/* 🔥 CARD OFERTAS (COLE AQUI) */
+/* 🔥 CARD OFERTA (NOVO MODELO) */
 .card-oferta{
   flex:0 0 auto;
   width:85%;
   max-width:320px;
   border-radius:20px;
-  background:#fff;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
   overflow:hidden;
-  text-align:center;
-  padding-bottom:15px;
+  position:relative;
 }
 
-.card-oferta img{
+/* 🔥 CONTAINER DA IMAGEM */
+.img-box{
+  position:relative;
+}
+
+/* IMAGEM */
+.img-box img{
   width:100%;
   display:block;
+  border-radius:20px;
 }
 
-.texto-oferta{
-  padding:12px;
-  font-size:15px;
-  color:#5f5f8a;
-}
-
+/* 🔥 BOTÃO SOBRE A IMAGEM */
 .btn-oferta{
-  width:85%;
-  margin:10px auto 0;
+  position:absolute;
+  bottom:15px;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:80%;
   padding:14px;
   border:none;
-  border-radius:20px;
+  border-radius:25px;
+
   background:linear-gradient(45deg,#00bfa6,#1abc9c);
   color:#fff;
   font-size:16px;
   font-weight:600;
+
+  box-shadow:0 6px 18px rgba(0,0,0,0.2);
 }
 
 </style>
@@ -504,9 +510,7 @@ img{
 </div>
 
 <div class="box">
-<div class="titulo">O que está procurando?</div>
-
-<div class="opcoes">
+<div class="titulo">O que está procurando?</div><div class="opcoes">
 <div class="op active" onclick="trocar('clareza',this)">
 <img src="https://i.ibb.co/TMVkVXN6/pp.png">Clareza
 </div>
@@ -760,15 +764,13 @@ html+=`<div class="scroll">`;
 html+=`
 <div class="card-oferta">
 
-  <img src="https://i.ibb.co/BWYnvNR/Whats-App-Image-2026-04-09-at-20-54-28-1.jpg">
+  <div class="img-box">
+    <img src="https://i.ibb.co/BWYnvNR/Whats-App-Image-2026-04-09-at-20-54-28-1.jpg">
 
-  <div class="texto-oferta">
-    Curioso(a) para saber o que o amor reserva para você?
+    <button class="btn-oferta">
+      Encomende uma leitura...
+    </button>
   </div>
-
-  <button class="btn-oferta">
-    Encomende uma leitura...
-  </button>
 
 </div>
 `;
@@ -777,15 +779,13 @@ html+=`
 html+=`
 <div class="card-oferta">
 
-  <img src="https://i.ibb.co/3ycG35td/Whats-App-Image-2026-04-09-at-20-54-28.jpg">
+  <div class="img-box">
+    <img src="https://i.ibb.co/3ycG35td/Whats-App-Image-2026-04-09-at-20-54-28.jpg">
 
-  <div class="texto-oferta">
-    Resolva seus caminhos amorosos com ajuda espiritual.
+    <button class="btn-oferta">
+      Contratar Magia...
+    </button>
   </div>
-
-  <button class="btn-oferta">
-    Contratar Magia...
-  </button>
 
 </div>
 `;
@@ -794,7 +794,6 @@ html+=`</div>`; // fecha scroll
 }
 
 });
-
 // ✅ renderiza o HTML corretamente
 document.getElementById("fixo").innerHTML=html;
 
