@@ -12,20 +12,40 @@
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background:#fff;
+background:linear-gradient(to bottom,#fffdf5,#fff4cc,#ffe8a3);
 max-width:500px;
 margin:auto;
 color:#222;
 }
 
+/* 🔥 CAPA */
+.capa{
+width:100%;
+height:200px;
+background-size:cover;
+background-position:center;
+position:relative;
+}
+
+.capa::after{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.35));
+}
+
+/* FOTO */
 .foto{
-width:140px;
-height:140px;
-margin:30px auto 10px;
+width:130px;
+height:130px;
+margin:-65px auto 10px;
 border-radius:50%;
 padding:4px;
 background:linear-gradient(45deg,#e6c068,#b8860b);
 position:relative;
+z-index:2;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
 
 .foto img{
@@ -62,7 +82,8 @@ animation:pulse 1.2s infinite;
 margin:20px;
 padding:20px;
 border-radius:20px;
-background:#f7f7f7;
+background:#ffffff;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
 .sobre{
@@ -73,13 +94,16 @@ margin-bottom:20px;
 border:1px solid #f1d27a;
 }
 
+/* 🔥 DEPOIMENTOS MELHORADOS */
 .depo{
-margin-top:10px;
+margin-top:12px;
 font-size:14px;
-padding:12px;
-background:#fff8dc;
-border-radius:12px;
+padding:14px;
+background:linear-gradient(135deg,#fff8dc,#fff1b8);
+border-radius:14px;
 border:1px solid #f1d27a;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+font-weight:500;
 }
 
 .btn-fixo{
@@ -96,6 +120,7 @@ background:linear-gradient(45deg,#00cc66,#00bfa6);
 color:#fff;
 font-size:18px;
 font-weight:bold;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
 .espaco{height:90px;}
@@ -104,6 +129,9 @@ font-weight:bold;
 </head>
 
 <body>
+
+<!-- 🔥 CAPA NOVA -->
+<div class="capa" id="capa"></div>
 
 <div class="foto">
 <img id="foto">
@@ -145,6 +173,46 @@ const foto = localStorage.getItem("consultorImagem");
 if(!nome || !foto){
 document.body.innerHTML="Erro ao carregar consultor";
 }
+
+// 🔥 CAPAS FIXAS
+const capas = [
+"https://i.ibb.co/mrdk70zX/Whats-App-Image-2026-04-10-at-19-24-45-4.jpg",
+"https://i.ibb.co/Swc8GKCc/Whats-App-Image-2026-04-10-at-19-24-45-3.jpg",
+"https://i.ibb.co/dJbW3d4Q/Whats-App-Image-2026-04-10-at-19-24-45-2.jpg",
+"https://i.ibb.co/hFDSCK1r/Whats-App-Image-2026-04-10-at-19-24-44.jpg",
+"https://i.ibb.co/zT9qK4jT/Whats-App-Image-2026-04-10-at-19-24-44-5.jpg",
+"https://i.ibb.co/6RrhGwhx/Whats-App-Image-2026-04-10-at-19-24-44-4.jpg",
+"https://i.ibb.co/WvrN2HSS/Whats-App-Image-2026-04-10-at-19-24-44-3.jpg",
+"https://i.ibb.co/wr8sytTz/Whats-App-Image-2026-04-10-at-19-24-44-2.jpg",
+"https://i.ibb.co/yFg7ZHZS/Whats-App-Image-2026-04-10-at-19-24-44-1.jpg",
+"https://i.ibb.co/0xBRs42/Whats-App-Image-2026-04-10-at-19-24-43.jpg",
+"https://i.ibb.co/zWjfGJKy/Whats-App-Image-2026-04-10-at-19-24-43-1.jpg",
+"https://i.ibb.co/SXSQCpZC/Whats-App-Image-2026-04-10-at-19-24-42.jpg",
+"https://i.ibb.co/8QGzN1H/Whats-App-Image-2026-04-10-at-19-24-45.jpg",
+"https://i.ibb.co/MHQwR0q/Whats-App-Image-2026-04-10-at-19-24-45-1.jpg"
+];
+
+const capasPorConsultor = {
+"Pai Márcio": "https://i.ibb.co/G4k87RDV/Whats-App-Image-2026-04-10-at-14-23-45.jpg",
+"Samya": capas[0],
+"Aislyn": capas[1],
+"Tulipa": capas[2],
+"Esmeralda": capas[3],
+"Thabata": capas[4],
+"Analu": capas[5],
+"Benedita": capas[6],
+"Estrela": capas[7],
+"Sulamita": capas[8],
+"Adria": capas[9],
+"M.Padilha": capas[10],
+"Sara": capas[11],
+"7 Saias": capas[12],
+"Odara": capas[13]
+};
+
+// aplicar capa
+document.getElementById("capa").style.backgroundImage =
+`url(${capasPorConsultor[nome]})`;
 
 // GÊNERO
 const masculino = ["Pai Márcio"];
