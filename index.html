@@ -455,6 +455,43 @@ img{
   font-size:18px;
   font-weight:600;
 }
+
+/* 🔥 CARD OFERTAS (COLE AQUI) */
+.card-oferta{
+  flex:0 0 auto;
+  width:85%;
+  max-width:320px;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  overflow:hidden;
+  text-align:center;
+  padding-bottom:15px;
+}
+
+.card-oferta img{
+  width:100%;
+  display:block;
+}
+
+.texto-oferta{
+  padding:12px;
+  font-size:15px;
+  color:#5f5f8a;
+}
+
+.btn-oferta{
+  width:85%;
+  margin:10px auto 0;
+  padding:14px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(45deg,#00bfa6,#1abc9c);
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+}
+
 </style>
 </head>
 <body>
@@ -462,7 +499,6 @@ img{
 <div class="topo-novo">
   <img src="https://i.ibb.co/CpTCs8s9/Design-sem-nome-removebg-preview.png">
   <span class="ola">Olá :)</span>
-
   <!-- NOVA IMAGEM -->
   <img class="logo-direita" src="https://i.ibb.co/FqhZTCZg/logo-192-removebg-preview.png">
 </div>
@@ -709,6 +745,7 @@ html+=`
 // 🔥 NOVA SEÇÃO (OFERTAS ESPECIAIS)
 if(index === 2){
 
+// 🔥 TÍTULO
 html+=`
 <div class="titulo">
   <img src="https://i.ibb.co/QvGk7YvL/Chat-GPT-Image-9-04-2026-18-51-25-removebg-preview.png">
@@ -716,9 +753,48 @@ html+=`
 </div>
 `;
 
+// 🔥 SCROLL (igual aos cards)
+html+=`<div class="scroll">`;
+
+// 🔥 CARD 1
+html+=`
+<div class="card-oferta">
+
+  <img src="https://i.ibb.co/BWYnvNR/Whats-App-Image-2026-04-09-at-20-54-28-1.jpg">
+
+  <div class="texto-oferta">
+    Curioso(a) para saber o que o amor reserva para você?
+  </div>
+
+  <button class="btn-oferta">
+    Encomende uma leitura...
+  </button>
+
+</div>
+`;
+
+// 🔥 CARD 2
+html+=`
+<div class="card-oferta">
+
+  <img src="https://i.ibb.co/3ycG35td/Whats-App-Image-2026-04-09-at-20-54-28.jpg">
+
+  <div class="texto-oferta">
+    Resolva seus caminhos amorosos com ajuda espiritual.
+  </div>
+
+  <button class="btn-oferta">
+    Contratar Magia...
+  </button>
+
+</div>
+`;
+
+html+=`</div>`; // fecha scroll
 }
 
 });
+
 // ✅ renderiza o HTML corretamente
 document.getElementById("fixo").innerHTML=html;
 
