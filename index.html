@@ -644,6 +644,7 @@ function pessoas(){
 function card(c){
 
 const online = estaOnline(c.nome);
+window.onlineSemana = online; // 🔥 salva global
 
 return `
 <a class="card" 
@@ -728,7 +729,7 @@ if(index === 0){
 const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
 const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
-const online = estaOnline(c.nome);
+const online = window.onlineSemana;
 
 html+=`
 <div class="card-destaque">
