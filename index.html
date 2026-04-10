@@ -642,9 +642,7 @@ function pessoas(){
 }
 
 function card(c){
-
 const online = estaOnline(c.nome);
-window.onlineSemana = online; // 🔥 salva global
 
 return `
 <a class="card" 
@@ -663,6 +661,7 @@ localStorage.setItem('consultorImagem','${c.img}');
   </svg>
   ${tempo()}
 </div>
+
 <div class="foto">
 <img src="${c.img}">
 ${online ? '<div class="online"></div>' : ''}
@@ -729,7 +728,10 @@ if(index === 0){
 const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
 const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
-const online = window.onlineSemana;
+
+// ✅ AQUI SIM salva o status correto
+const online = estaOnline(c.nome);
+window.onlineSemana = online;
 
 html+=`
 <div class="card-destaque">
@@ -767,7 +769,6 @@ html+=`
 </div>
 `;
 }
-
 // 🔥 NOVA SEÇÃO (OFERTAS ESPECIAIS)
 if(index === 2){
 
@@ -925,7 +926,9 @@ function renderDestaque(){
 const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
 const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
-const online = estaOnline(c.nome);
+
+// ✅ USA O MESMO STATUS (NÃO recalcula)
+const online = window.onlineSemana;
 
 // 🔥 FOTO + NOME
 document.getElementById("fotoSemana").src=c.img;
@@ -945,10 +948,9 @@ descricoes[c.nome] || "Estou aqui para te ajudar com clareza.";
 // 🔥 BOTÃO (controle correto)
 const btn = document.getElementById("btnSemana");
 
-// 🔥 só executa se o botão existir (não quebra a função)
+// 🔥 só executa se o botão existir
 if(btn){
 
-  // 🔥 SEMPRE atualiza estado corretamente
   if(online){
 
     btn.style.display = "block";
@@ -961,12 +963,14 @@ if(btn){
     };
 
   }else{
+
     btn.style.display = "none";
+
   }
 
-} // ✅ fecha corretamente (SEM else extra)
+}
 
-} // ✅ FECHA A FUNÇÃO renderDestaque AQUI
+} // ✅ FECHA A FUNÇÃO renderDestaque CORRETAMENTE
 
 
 // 🔥 CONTROLE DO TIPO ATUAL (FORA DA FUNÇÃO)
@@ -989,6 +993,7 @@ function trocar(tipo,el){
     behavior:"smooth"
   });
 }
+
 // 🔥 INICIALIZA
 renderPrincipal(tipoAtual);
 
@@ -1060,7 +1065,7 @@ function abrirPWA(){
     titulo.innerText="INSTALAR NO IPHONE";
     texto.innerHTML="Siga os passos abaixo:";
     steps.innerHTML=`
-    1. Toque em <b>Compartilhar ⤴️</b><br>
+    1. Toque em <b>Compartilhar ⤴</b><br>
     2. Role a tela<br>
     3. Toque em <b>Adicionar à Tela de Início</b><br>
     4. Confirmar
