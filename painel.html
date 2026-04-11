@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Painel Consultor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:linear-gradient(180deg,#fffdf5,#ffe8a3);
+}
+
+.topo{
+  padding:15px;
+  text-align:center;
+  font-size:20px;
+  font-weight:700;
+  color:#b8860b;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:10px;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.pergunta{
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.user{
+  font-size:12px;
+  color:#777;
+  margin-bottom:5px;
+}
+
+select,textarea,input{
+  width:100%;
+  margin-top:6px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-family:Poppins;
+}
+
+textarea{
+  min-height:70px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  margin-top:6px;
+  font-weight:600;
+}
+
+.btn-resp{background:#ffd700;}
+.btn-del{background:#ff4d4d;color:#fff;}
+
+.respostas{
+  margin-top:10px;
+  border-top:1px solid #eee;
+  padding-top:10px;
+}
+
+.resp-item{
+  display:flex;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.resp-item img{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+}
+
+.resp-text{
+  background:#f7f7f7;
+  padding:8px;
+  border-radius:8px;
+  font-size:13px;
+}
+
+.resp-img{
+  width:100%;
+  border-radius:8px;
+  margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topo">Painel do Consultor</div>
+
+<div class="container" id="lista"></div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "chat-6cee5.firebaseapp.com",
+  projectId: "chat-6cee5"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const consultores = [
+["Pai Márcio","https://i.ibb.co/RGZzCfFC/Captura-de-tela-2026-04-02-001847.png"],
+["Samya","https://i.ibb.co/m570rCkG/Whats-App-Image-2026-04-03-at-22-36-29-1.jpg"],
+["Aislyn","https://i.ibb.co/5WtRK6mQ/Whats-App-Image-2026-04-03-at-22-36-29-2.jpg"],
+["Tulipa","https://i.ibb.co/0pNhf839/Whats-App-Image-2026-04-03-at-22-36-29.jpg"],
+["Esmeralda","https://i.ibb.co/8LMGQ4s9/Chat-GPT-Image-7-04-2026-07-47-54.png"],
+["Thabata","https://www.mestresmisticos.com.br/Assets/Imagens/2025/06/28/d5969655ef-1-_3.webp"],
+["Analu","https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp"],
+["Benedita","https://www.mestresmisticos.com.br/Assets/Imagens/2025/10/23/9f9ffa4ba9-1-_3.webp"],
+["Estrela","https://www.mestresmisticos.com.br/Assets/Imagens/2026/01/01/b2a24fc4f7-1-_3.webp"],
+["Sulamita","https://www.rainhasdotarot.com.br/Assets/Imagens/2024/05/27/47a447851c-1-.jpg"],
+["Adria","https://www.mestresmisticos.com.br/Assets/Imagens/2025/07/25/d6152621b2-1-_3.webp"],
+["M.Padilha","https://www.rainhasdotarot.com.br/Assets/Imagens/2025/01/27/699974ac8a-1-.jpg"],
+["Sara","https://www.rainhasdotarot.com.br/Assets/Imagens/2024/09/04/9a6f4cec30-1-.jpg"],
+["7 Saias","https://www.rainhasdotarot.com.br/Assets/Imagens/2024/02/29/e43513a707-1-.jpg"],
+["Odara","https://www.rainhasdotarot.com.br/Assets/Imagens/2024/01/15/91bb2a4455-1-.jpg"]
+];
+
+const lista = document.getElementById("lista");
+
+db.collection("perguntas").orderBy("data","desc")
+.onSnapshot(snap=>{
+  lista.innerHTML="";
+
+  snap.forEach(doc=>{
+    let d=doc.data();
+
+    lista.innerHTML+=`
+    <div class="card">
+
+      <div class="user">${d.nome}</div>
+      <div class="pergunta">${d.pergunta}</div>
+
+      <select id="c${doc.id}">
+        ${consultores.map(c=>`
+          <option value="${c[0]}|${c[1]}">${c[0]}</option>
+        `).join("")}
+      </select>
+
+      <textarea id="r${doc.id}" placeholder="Digite sua resposta"></textarea>
+      <input type="file" id="img${doc.id}">
+
+      <button class="btn-resp" onclick="responder('${doc.id}')">
+        Enviar Resposta
+      </button>
+
+      <button class="btn-del" onclick="apagar('${doc.id}')">
+        Excluir Pergunta
+      </button>
+
+      <div class="respostas">
+        ${
+          d.respostas
+          ? d.respostas.map(r=>`
+            <div class="resp-item">
+              <img src="${r.foto}">
+              <div class="resp-text">
+                <b>${r.nome}</b><br>${r.texto}
+                ${r.img ? `<img class="resp-img" src="${r.img}">` : ""}
+              </div>
+            </div>
+          `).join("")
+          : ""
+        }
+      </div>
+
+    </div>
+    `;
+  });
+});
+
+function responder(id){
+  let val=document.getElementById("c"+id).value.split("|");
+  let texto=document.getElementById("r"+id).value;
+  let file=document.getElementById("img"+id).files[0];
+
+  if(texto.trim()===""){
+    alert("Digite uma resposta");
+    return;
+  }
+
+  if(file){
+    let reader=new FileReader();
+    reader.onload=function(e){
+      salvar(id,val,texto,e.target.result);
+    }
+    reader.readAsDataURL(file);
+  }else{
+    salvar(id,val,texto,null);
+  }
+}
+
+function salvar(id,val,texto,img){
+  db.collection("perguntas").doc(id).update({
+    respostas: firebase.firestore.FieldValue.arrayUnion({
+      nome: val[0],
+      foto: val[1],
+      texto: texto,
+      img: img || ""
+    })
+  });
+}
+
+function apagar(id){
+  if(confirm("Deseja excluir essa pergunta?")){
+    db.collection("perguntas").doc(id).delete();
+  }
+}
+</script>
+
+</body>
+</html>
