@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box;}
+
 body{
   font-family:'Poppins', sans-serif;
   background:linear-gradient(180deg,#fffdf5,#ffe8a3);
@@ -18,7 +20,7 @@ body{
 /* TOPO */
 .topo{
   text-align:center;
-  font-size:22px;
+  font-size:20px;
   font-weight:700;
   padding:15px;
   color:#b8860b;
@@ -33,31 +35,35 @@ body{
 
 /* BLOCO */
 .pergunta{
-  margin:18px 0;
+  margin:16px 0;
 }
 
 /* MSG */
 .msg{
   display:flex;
-  gap:10px;
-  margin:10px 0;
+  gap:8px;
+  margin:8px 0;
+  align-items:flex-start;
 }
 
-/* FOTO PERFIL */
+/* FOTO AJUSTADA (PERFEITA) */
 .foto{
-  width:45px;
-  height:45px;
+  width:40px;
+  height:40px;
   border-radius:50%;
   object-fit:cover;
+  flex-shrink:0;
 }
 
-/* BALÃO */
+/* BALÃO MELHORADO */
 .balao{
   background:#fff;
-  padding:12px;
+  padding:10px 12px;
   border-radius:14px;
-  max-width:85%;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+  max-width:80%;
+  box-shadow:0 3px 10px rgba(0,0,0,0.06);
+  font-size:14px;
+  line-height:1.4;
 }
 
 /* CONSULTOR */
@@ -65,22 +71,24 @@ body{
   flex-direction:row-reverse;
 }
 
-/* IMAGEM REAL */
+/* IMAGEM MENOR E BONITA */
 .resposta-img{
   width:100%;
+  max-width:230px;
   height:auto;
-  margin-top:10px;
+  margin-top:8px;
   border-radius:12px;
   cursor:pointer;
+  display:block;
 }
 
-/* 🔥 BOTÃO PERSONALIZADO COM IMAGEM */
+/* BOTÃO */
 .btn{
   position:fixed;
   bottom:80px;
-  right:20px;
-  width:70px;
-  height:70px;
+  right:15px;
+  width:65px;
+  height:65px;
   border-radius:50%;
   overflow:hidden;
   cursor:pointer;
@@ -105,7 +113,7 @@ body{
 }
 
 .viewer img{
-  max-width:95%;
+  max-width:92%;
   max-height:85%;
   border-radius:12px;
 }
@@ -122,7 +130,6 @@ body{
   background:#ffd700;
   font-size:22px;
   font-weight:bold;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -133,7 +140,7 @@ body{
 
 <div class="chat" id="chat"></div>
 
-<!-- 🔥 BOTÃO COM IMAGEM -->
+<!-- BOTÃO -->
 <div class="btn" onclick="irPergunta()">
   <img src="https://i.ibb.co/cS6qbPpp/Whats-App-Image-2026-04-10-at-20-40-23-removebg-preview.png">
 </div>
@@ -204,12 +211,12 @@ db.collection("perguntas").orderBy("data","desc")
   });
 });
 
-/* 🔥 REDIRECIONAR */
+/* REDIRECIONAR */
 function irPergunta(){
-  window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perguntas.html";
+  window.location.href="https://onlinecartomantes-dotcom.github.io/aplicativo/perguntas.html";
 }
 
-/* ABRIR IMAGEM */
+/* ABRIR */
 function abrir(src){
   document.getElementById("viewer").style.display="flex";
   document.getElementById("imgView").src = src;
