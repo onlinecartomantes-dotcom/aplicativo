@@ -1253,7 +1253,13 @@ function consultoresOcupados(){
 
 // 🔥 MOSTRAR POPUP
 function mostrarPopup(){
+// 🔥 BLOQUEIO DE HORÁRIO (2h às 10h)
+const hora = new Date().getHours();
 
+if(hora >= 2 && hora < 10){
+  agendarPopup();
+  return;
+}
   const ocupados = consultoresOcupados();
 
   if(ocupados.length === 0){
@@ -1276,8 +1282,8 @@ cards.forEach(card => {
   }
 });
 
-// 🔥 SE ESTIVER ONLINE NA TELA → NÃO MOSTRA
-if(estaComBolinha){
+// 🔥 DUPLA VERIFICAÇÃO (LÓGICA + TELA)
+if(estaOnline(random.nome) || estaComBolinha){
   agendarPopup();
   return;
 }
