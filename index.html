@@ -1215,6 +1215,96 @@ function clicarContratar(nome, imagem){
   window.location.href='/aplicativo/perfil.html';
 }
 </script>
+<!-- 🔥 POPUP OCUPADO -->
+<div id="popupOcupado" style="
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ffe58a;
+color:#000;
+padding:12px 16px;
+border-radius:12px;
+font-weight:600;
+font-size:13px;
+box-shadow:0 6px 18px rgba(0,0,0,0.2);
+display:none;
+z-index:99999;
+max-width:90%;
+text-align:center;
+">
+</div>
+
+<script>
+
+// 🔥 LISTA TOTAL
+function todosConsultores(){
+  return [
+    ...banco.clareza,
+    ...banco.motivacao,
+    ...banco.esperanca
+  ];
+}
+
+// 🔥 PEGA OCUPADOS
+function consultoresOcupados(){
+  return todosConsultores().filter(c => !estaOnline(c.nome));
+}
+
+// 🔥 MOSTRAR POPUP
+function mostrarPopup(){
+
+  const ocupados = consultoresOcupados();
+
+  if(ocupados.length === 0){
+    agendarPopup();
+    return;
+  }
+
+  let random = ocupados[Math.floor(Math.random() * ocupados.length)];
+
+// 🔥 CONFIRMA SE AINDA ESTÁ OFFLINE
+if(estaOnline(random.nome)){
+  agendarPopup();
+  return;
+}
+
+  const popup = document.getElementById("popupOcupado");
+
+  popup.innerText = `💬 ${random.nome} está em atendimento`;
+
+  popup.style.display = "block";
+  popup.style.opacity = "0";
+  popup.style.transform = "translateX(-50%) translateY(20px)";
+
+  setTimeout(()=>{
+    popup.style.transition = "0.3s";
+    popup.style.opacity = "1";
+    popup.style.transform = "translateX(-50%) translateY(0)";
+  },50);
+
+  setTimeout(()=>{
+    popup.style.opacity = "0";
+    popup.style.transform = "translateX(-50%) translateY(20px)";
+
+    setTimeout(()=>{
+      popup.style.display = "none";
+      agendarPopup();
+    },300);
+
+  },3000);
+}
+
+// 🔥 TEMPO ALEATÓRIO
+function agendarPopup(){
+  const tempo = Math.random() * 5000 + 4000;
+  setTimeout(mostrarPopup, tempo);
+}
+
+// 🔥 INICIA
+setTimeout(agendarPopup, 3000);
+
+</script>
 
 </body>
 </html>
