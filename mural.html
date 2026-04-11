@@ -162,6 +162,7 @@ const chat = document.getElementById("chat");
 
 /* 🔥 LISTENER OTIMIZADO */
 db.collection("perguntas")
+// .orderBy("timestamp", "asc") // 🔥 garante ordem correta (antigo em cima, novo embaixo)
 .onSnapshot(snapshot => {
 
   let htmlTotal = "";
@@ -182,7 +183,7 @@ db.collection("perguntas")
       </div>
     `;
 
-    /* 🔥 RESPOSTAS (STORAGE LINK) */
+    /* 🔥 RESPOSTAS */
     if(d.respostas && Array.isArray(d.respostas)){
       d.respostas.forEach(r=>{
 
@@ -214,13 +215,18 @@ db.collection("perguntas")
 
   chat.innerHTML = htmlTotal;
 
+  /* 🔥 SCROLL AUTOMÁTICO */
+  setTimeout(() => {
+    chat.scrollTop = chat.scrollHeight;
+  }, 100);
+
 }, error => {
 
   console.error("🔥 ERRO:", error);
   alert("Erro ao carregar dados");
 
 });
-
+    
 /* 🔥 ABRIR IMAGEM */
 function abrir(src){
   document.getElementById("viewer").style.display="flex";
