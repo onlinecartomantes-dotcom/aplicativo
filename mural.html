@@ -43,7 +43,7 @@ body{
   margin:10px 0;
 }
 
-/* 🔥 FOTO PERFIL (AGORA SEPARADO) */
+/* FOTO PERFIL */
 .foto{
   width:45px;
   height:45px;
@@ -65,7 +65,7 @@ body{
   flex-direction:row-reverse;
 }
 
-/* 🔥 IMAGEM REAL (SEM CORTAR) */
+/* IMAGEM REAL */
 .resposta-img{
   width:100%;
   height:auto;
@@ -74,21 +74,23 @@ body{
   cursor:pointer;
 }
 
-/* BOTÃO */
+/* 🔥 BOTÃO PERSONALIZADO COM IMAGEM */
 .btn{
   position:fixed;
   bottom:80px;
   right:20px;
-  background:linear-gradient(45deg,#ffd700,#ffcc00);
-  width:60px;
-  height:60px;
+  width:70px;
+  height:70px;
   border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
+  overflow:hidden;
   cursor:pointer;
-  box-shadow:0 6px 20px rgba(0,0,0,0.2);
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
+
+.btn img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 /* VIEWER */
@@ -131,7 +133,10 @@ body{
 
 <div class="chat" id="chat"></div>
 
-<div class="btn" onclick="location.href='pergunta.html'">+</div>
+<!-- 🔥 BOTÃO COM IMAGEM -->
+<div class="btn" onclick="irPergunta()">
+  <img src="https://i.ibb.co/cS6qbPpp/Whats-App-Image-2026-04-10-at-20-40-23-removebg-preview.png">
+</div>
 
 <!-- VIEWER -->
 <div id="viewer" class="viewer">
@@ -199,7 +204,12 @@ db.collection("perguntas").orderBy("data","desc")
   });
 });
 
-/* ABRIR */
+/* 🔥 REDIRECIONAR */
+function irPergunta(){
+  window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perguntas.html";
+}
+
+/* ABRIR IMAGEM */
 function abrir(src){
   document.getElementById("viewer").style.display="flex";
   document.getElementById("imgView").src = src;
