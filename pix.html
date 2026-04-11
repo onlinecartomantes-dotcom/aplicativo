@@ -16,36 +16,27 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* 🔥 CENTRALIZAÇÃO */
 body{
   margin:0;
   font-family:'Poppins', sans-serif;
   background:#f5f5f5;
-
   min-height:100dvh;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-/* 🔥 ANIMAÇÃO DE ENTRADA */
+/* CONTAINER */
 .container{
   width:100%;
   max-width:420px;
   padding:20px 16px;
-
   animation:fadeIn 0.5s ease;
 }
 
 @keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translateY(20px) scale(0.98);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 /* CARD */
@@ -54,6 +45,49 @@ body{
   border-radius:20px;
   padding:20px;
   box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* IMAGEM LIMPA (SEM FUNDO) */
+.topo-img{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+
+/* TEXTO ABAIXO DA IMAGEM */
+.texto-info{
+  text-align:center;
+  font-weight:700;
+  color:#2e7d32;
+  font-size:14px;
+  margin-bottom:12px;
+  line-height:1.4;
+}
+
+/* URGÊNCIA */
+.urgencia{
+  background:#fff8cc;
+  border:1px solid #e6c068;
+  color:#5a4a00;
+  padding:12px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:700;
+  margin-bottom:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  animation:pulse 1.2s infinite;
+}
+
+.urgencia span{
+  font-size:22px;
+  display:block;
+  margin-top:4px;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.03);}
+  100%{transform:scale(1);}
 }
 
 /* OPÇÕES */
@@ -66,11 +100,6 @@ body{
   font-weight:600;
   display:flex;
   justify-content:space-between;
-  transition:0.2s;
-}
-
-.option:active{
-  transform:scale(0.97);
 }
 
 .option.selected{
@@ -89,22 +118,10 @@ body{
   color:#fff;
   font-size:17px;
   font-weight:700;
-  box-shadow:0 6px 18px rgba(0,0,0,0.2);
-  transition:0.2s;
-}
-
-.btn:active{
-  transform:scale(0.97);
 }
 
 .btn:disabled{
   opacity:0.5;
-}
-
-/* 🔥 LOADING */
-.btn.loading{
-  opacity:0.7;
-  pointer-events:none;
 }
 
 /* AVISO */
@@ -120,7 +137,7 @@ body{
   color:#5a4a00;
 }
 
-/* INSTAGRAM */
+/* INSTAGRAM FIX */
 .app-view body{
   display:block;
 }
@@ -134,6 +151,19 @@ body{
 
   <div class="box">
 
+    <!-- IMAGEM SEM FUNDO -->
+    <img class="topo-img" src="https://i.ibb.co/6h28fNp/Chat-GPT-Image-11-04-2026-19-41-52.png">
+
+    <!-- TEXTO COMPLETO ABAIXO -->
+    <div class="texto-info">
+         </div>
+
+    <!-- URGÊNCIA -->
+    <div class="urgencia">
+      Seu consultor pode sair em:
+      <span id="contador">10</span>
+    </div>
+
     <div id="opcoes"></div>
 
     <button id="btn" class="btn" disabled>
@@ -141,7 +171,7 @@ body{
     </button>
 
     <div class="aviso">
-      ⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página, você será direcionado automaticamente para o atendimento.
+      ⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página Você será direcionado para chat de atendimento.
     </div>
 
   </div>
@@ -155,6 +185,27 @@ const ua = navigator.userAgent.toLowerCase();
 if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
   document.body.classList.add("app-view");
 }
+
+// CONTADOR 5 A 30
+const contadorEl = document.getElementById("contador");
+
+function iniciarContagem(){
+  let tempo = Math.floor(Math.random() * 26) + 5;
+  contadorEl.innerText = tempo;
+
+  const intervalo = setInterval(()=>{
+    tempo--;
+    contadorEl.innerText = tempo;
+
+    if(tempo <= 0){
+      clearInterval(intervalo);
+      iniciarContagem();
+    }
+
+  },1000);
+}
+
+iniciarContagem();
 
 // DADOS
 const nome = localStorage.getItem("consultorNome");
@@ -173,7 +224,6 @@ let minutosSelecionados = null;
 const opcoes = document.getElementById("opcoes");
 const btn = document.getElementById("btn");
 
-// GERAR OPÇÕES
 minutos.forEach(m=>{
 
   const preco = (m * valor).toFixed(2);
@@ -187,7 +237,6 @@ minutos.forEach(m=>{
   `;
 
   div.onclick = () => {
-
     document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
     div.classList.add("selected");
 
@@ -201,11 +250,11 @@ minutos.forEach(m=>{
 
 });
 
-// PAGAMENTO COM LOADING
+// PAGAMENTO
 btn.onclick = () => {
 
-  btn.classList.add("loading");
   btn.innerText = "Processando...";
+  btn.disabled = true;
 
   setTimeout(()=>{
 
@@ -215,7 +264,7 @@ btn.onclick = () => {
     window.location.href =
     `https://pagamentopix.helioho.st/index.php?valor=${valorFormatado}&descricao=${descricao}`;
 
-  }, 800); // 🔥 delay suave estilo app
+  }, 800);
 
 };
 
