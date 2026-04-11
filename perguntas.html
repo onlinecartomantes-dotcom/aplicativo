@@ -116,7 +116,6 @@ textarea{
     <div class="titulo">Escreva sua pergunta ✨</div>
 
     <input id="nome" class="input" placeholder="Ex: M.S • 12/05/1998">
-
     <textarea id="pergunta" class="input" placeholder="Digite sua pergunta aqui..."></textarea>
 
     <button id="btnEnviar" class="btn" onclick="enviar()">Enviar Pergunta</button>
@@ -139,19 +138,18 @@ textarea{
 
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "chat-6cee5.firebaseapp.com",
-  projectId: "chat-6cee5"
+  apiKey: "AIzaSyDL13nI9U6o7EBlLburfoUsRgd24si8bAg",
+  authDomain: "arquivos-e9875.firebaseapp.com",
+  projectId: "arquivos-e9875"
 };
 
 firebase.initializeApp(firebaseConfig);
-
 const db = firebase.firestore();
 
-/* 🔥 FORÇA ONLINE (PWA CORRIGIDO) */
+/* 🔥 FORÇA ONLINE (corrige bug no PWA) */
 db.enableNetwork().catch(()=>{});
 
-/* 🔥 ENVIO */
+/* 🔥 ENVIO (COMPATÍVEL COM STORAGE NO PAINEL) */
 function enviar(){
 
   const btn = document.getElementById("btnEnviar");
@@ -169,7 +167,11 @@ function enviar(){
   db.collection("perguntas").add({
     nome: nome,
     pergunta: pergunta,
+
+    /* 🔥 IMPORTANTE PRA SINCRONIZAR */
     data: firebase.firestore.FieldValue.serverTimestamp(),
+
+    /* 🔥 ESSENCIAL PRO STORAGE FUNCIONAR */
     respostas: []
   })
   .then(()=>{
