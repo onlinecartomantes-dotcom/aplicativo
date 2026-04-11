@@ -1,4 +1,4 @@
-const CACHE_NAME = "cartomantes-v6";
+const CACHE_NAME = "cartomantes-v7";
 
 const urlsToCache = [
   "/aplicativo/",
@@ -35,28 +35,39 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-/* 🔥 FETCH CORRIGIDO (AQUI ESTÁ A SOLUÇÃO) */
+/* 🔥 FETCH CORRIGIDO TOTAL */
 self.addEventListener("fetch", event => {
 
   const url = event.request.url;
 
-  /* 🔥 NÃO INTERFERIR NO FIREBASE */
+  /* 🔥 NÃO INTERFERIR NO FIREBASE (CRÍTICO) */
   if (
     url.includes("googleapis.com") ||
     url.includes("firestore") ||
     url.includes("firebase") ||
     url.includes("gstatic")
   ) {
-    return; // deixa ir direto
+    return;
   }
 
-  /* 🔥 NÃO CACHEAR HTML (MURAL PRECISA SER LIVE) */
+  /* 🔥 NÃO INTERFERIR EM UPLOAD / POST (ENVIO DE IMAGEM) */
+  if (event.request.method !== "GET") {
+    return;
+  }
+
+  /* 🔥 NÃO INTERFERIR EM IMAGENS (ESSENCIAL PRA FUNCIONAR NO CELULAR) */
+  if (event.request.destination === "image") {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  /* 🔥 HTML SEMPRE ONLINE (MURAL TEMPO REAL) */
   if (event.request.mode === "navigate") {
     event.respondWith(fetch(event.request));
     return;
   }
 
-  /* 🔥 CACHE APENAS ARQUIVOS ESTÁTICOS */
+  /* 🔥 CACHE SOMENTE ARQUIVOS LEVES */
   event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request);
