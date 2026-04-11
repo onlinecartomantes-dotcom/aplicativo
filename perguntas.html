@@ -149,7 +149,10 @@ const db = firebase.firestore();
 /* 🔥 FORÇA ONLINE (corrige bug no PWA) */
 db.enableNetwork().catch(()=>{});
 
-/* 🔥 ENVIO (COMPATÍVEL COM STORAGE NO PAINEL) */
+/* 🔥 ENVIO (ANTI-SPAM + BLOQUEIO DE REPETIDAS) */
+
+let ultimoEnvio = 0;
+
 function enviar(){
 
   const btn = document.getElementById("btnEnviar");
@@ -161,39 +164,74 @@ function enviar(){
     return;
   }
 
+  /* 🔥 ANTI-SPAM (10s) */
+  const agora = Date.now();
+  if(agora - ultimoEnvio < 10000){
+    alert("⏳ Aguarde alguns segundos antes de enviar novamente");
+    return;
+  }
+
+  ultimoEnvio = agora;
+
   btn.disabled = true;
-  btn.innerText = "Enviando...";
+  btn.innerText = "Verificando...";
 
-  db.collection("perguntas").add({
-    nome: nome,
-    pergunta: pergunta,
+  /* 🔥 NORMALIZA TEXTO */
+  const perguntaNormalizada = pergunta
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
 
-    /* 🔥 IMPORTANTE PRA SINCRONIZAR */
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  /* 🔥 VERIFICA REPETIDA */
+  db.collection("perguntas")
+  .where("pergunta_normalizada", "==", perguntaNormalizada)
+  .get()
+  .then(snapshot => {
 
-    /* 🔥 ESSENCIAL PRO STORAGE FUNCIONAR */
-    respostas: []
-  })
-  .then(()=>{
+    if(!snapshot.empty){
+      alert("⚠️ Essa pergunta já foi enviada!");
+      btn.disabled = false;
+      btn.innerText = "Enviar Pergunta";
+      return;
+    }
 
-    document.getElementById("msgSucesso").style.display="block";
+    /* 🔥 SALVA */
+    btn.innerText = "Enviando...";
 
-    document.getElementById("nome").value="";
-    document.getElementById("pergunta").value="";
+    db.collection("perguntas").add({
+      nome: nome,
+      pergunta: pergunta,
+      pergunta_normalizada: perguntaNormalizada,
 
-    setTimeout(()=>{
-      window.location.href="https://onlinecartomantes-dotcom.github.io/aplicativo/mural.html";
-    },1200);
+      /* 🔥 TIMESTAMP */
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 
-  })
-  .catch((err)=>{
-    console.error("Erro:", err);
-    alert("Erro ao enviar. Verifique sua internet.");
-    btn.disabled = false;
-    btn.innerText = "Enviar Pergunta";
+      respostas: []
+    })
+
+    .then(()=>{
+
+      document.getElementById("msgSucesso").style.display="block";
+
+      document.getElementById("nome").value="";
+      document.getElementById("pergunta").value="";
+
+      setTimeout(()=>{
+        window.location.href="https://onlinecartomantes-dotcom.github.io/aplicativo/mural.html";
+      },1200);
+
+    })
+
+    .catch((err)=>{
+      console.error("Erro:", err);
+      alert("Erro ao enviar. Verifique sua internet.");
+      btn.disabled = false;
+      btn.innerText = "Enviar Pergunta";
+    });
+
   });
+
 }
 </script>
-
 </body>
 </html>
