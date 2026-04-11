@@ -166,7 +166,7 @@ function enviar(){
 
   /* 🔥 ANTI-SPAM (10s) */
   const agora = Date.now();
-  if(agora - ultimoEnvio < 10000){
+  if(agora - ultimoEnvio < 300000){
     alert("⏳ Aguarde alguns segundos antes de enviar novamente");
     return;
   }
