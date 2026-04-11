@@ -207,7 +207,7 @@ Este trabalho de amarração amorosa é voltado para quem deseja transformar sua
 
 <script>
 // CONTADOR TEMPO
-let time = 600;
+let time = Math.floor(Math.random() * 600) + 300;
 const timer = document.getElementById('timer');
 
 setInterval(() => {
@@ -219,7 +219,7 @@ setInterval(() => {
 }, 1000);
 
 // VENDAS ALEATÓRIAS
-let sales = Math.floor(Math.random() * 11) + 20;
+let sales = Math.floor(Math.random() * 6) + 5;
 document.getElementById("salesText").innerHTML =
 " Entre " + sales + " a " + (sales + 5) + " pessoas compraram hoje";
 
