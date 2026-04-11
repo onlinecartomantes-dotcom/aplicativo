@@ -169,7 +169,7 @@ function enviar(){
     pergunta: pergunta,
 
     /* 🔥 IMPORTANTE PRA SINCRONIZAR */
-    data: firebase.firestore.FieldValue.serverTimestamp(),
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 
     /* 🔥 ESSENCIAL PRO STORAGE FUNCIONAR */
     respostas: []
