@@ -47,47 +47,36 @@ body{
   box-shadow:0 8px 25px rgba(0,0,0,0.08);
 }
 
-/* IMAGEM LIMPA (SEM FUNDO) */
+/* IMAGEM */
 .topo-img{
   width:100%;
   border-radius:12px;
   margin-bottom:10px;
 }
 
-/* TEXTO ABAIXO DA IMAGEM */
+/* TEXTO INFORMATIVO */
 .texto-info{
   text-align:center;
-  font-weight:700;
-  color:#2e7d32;
-  font-size:14px;
+  font-weight:600;
+  color:#1b5e20; /* verde escuro */
+  font-size:13px;
   margin-bottom:12px;
-  line-height:1.4;
+  line-height:1.3;
 }
 
-/* URGÊNCIA */
+/* 🔥 URGÊNCIA SEM FUNDO */
 .urgencia{
-  background:#fff8cc;
-  border:1px solid #e6c068;
-  color:#5a4a00;
-  padding:12px;
-  border-radius:12px;
   text-align:center;
   font-weight:700;
   margin-bottom:14px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  animation:pulse 1.2s infinite;
+  color:#1b5e20;
+  font-size:13px;
 }
 
 .urgencia span{
-  font-size:22px;
+  font-size:20px;
   display:block;
   margin-top:4px;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.03);}
-  100%{transform:scale(1);}
 }
 
 /* OPÇÕES */
@@ -151,17 +140,19 @@ body{
 
   <div class="box">
 
-    <!-- IMAGEM SEM FUNDO -->
+    <!-- IMAGEM -->
     <img class="topo-img" src="https://i.ibb.co/6h28fNp/Chat-GPT-Image-11-04-2026-19-41-52.png">
 
-    <!-- TEXTO COMPLETO ABAIXO -->
+    <!-- TEXTO -->
     <div class="texto-info">
-         </div>
+     
+    </div>
 
-    <!-- URGÊNCIA -->
+    <!-- URGÊNCIA LIMPA -->
     <div class="urgencia">
-      Seu consultor pode sair em:
-      <span id="contador">10</span>
+      🔥 Seu consultor está disponível agora<br>
+      pode sair em:
+      <span id="contador">20</span>
     </div>
 
     <div id="opcoes"></div>
@@ -171,7 +162,7 @@ body{
     </button>
 
     <div class="aviso">
-      ⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página Você será direcionado para chat de atendimento.
+      ⚠️ Após o pagamento aguarde até 10 segundos. Não saia da página. Você será direcionado para o atendimento.
     </div>
 
   </div>
