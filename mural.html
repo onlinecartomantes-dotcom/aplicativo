@@ -54,10 +54,19 @@ body{
   max-width:80%;
   box-shadow:0 3px 10px rgba(0,0,0,0.06);
 
-  /* 🔥 CORREÇÃO */
+  /* 🔥 CORREÇÕES */
   word-break: break-word;
   overflow-wrap: break-word;
+
+  /* 🔥 GARANTE ORDEM TEXTO → IMAGEM */
+  display:flex;
+  flex-direction:column;
 }
+
+.balao b{
+  margin-bottom:4px;
+}
+
 .consultor{
   flex-direction:row-reverse;
 }
@@ -71,6 +80,8 @@ body{
   object-fit:cover;
   cursor:pointer;
   transition:0.2s;
+
+  display:block; /* 🔥 evita quebra errada */
 }
 
 .resposta-img:active{
