@@ -790,12 +790,7 @@ html+=`
   <div class="img-box">
     <img src="https://i.ibb.co/BWYnvNR/Whats-App-Image-2026-04-09-at-20-54-28-1.jpg">
 
-    <button class="btn-oferta"
-onclick="
-  localStorage.setItem('consultorNome','Analu');
-  localStorage.setItem('consultorImagem','https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp');
-  window.location.href='/aplicativo/perfil.html';
-">
+  <button class="btn-oferta" onclick="clicarContratar('Analu','https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp')">
   Contratar leitura...
 </button>
   </div>
@@ -1175,6 +1170,27 @@ padding:15px;
   </div>
 
 </div>
+
+<!-- 🔥 FUNÇÕES (COLE AQUI) -->
+<script>
+function podeContratar(){
+  const hora = new Date().getHours();
+  return !(hora >= 2 && hora < 10);
+}
+
+function clicarContratar(nome, imagem){
+
+  if(!podeContratar()){
+    alert("⏳ Atendimento disponível após às 10h");
+    return;
+  }
+
+  localStorage.setItem('consultorNome', nome);
+  localStorage.setItem('consultorImagem', imagem);
+
+  window.location.href='/aplicativo/perfil.html';
+}
+</script>
 
 </body>
 </html>
