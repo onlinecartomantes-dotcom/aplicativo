@@ -1,22 +1,33 @@
-const CACHE_NAME = "cartomantes-v3";
+const CACHE_NAME = "cartomantes-v4";
 
+/* 🔥 TODOS OS ARQUIVOS DO SEU APP */
 const urlsToCache = [
+  "/aplicativo/",
   "/aplicativo/index.html",
+  "/aplicativo/mural.html",
+  "/aplicativo/painel.html",
   "/aplicativo/perfil.html",
+  "/aplicativo/perguntas.html",
+  "/aplicativo/pix.html",
+  "/aplicativo/trabalho.html",
+
+  "/aplicativo/logo.png",
   "/aplicativo/logo-192.png",
-  "/aplicativo/logo-512.png"
+  "/aplicativo/logo-512.png",
+
+  "/aplicativo/manifest.json"
 ];
 
-// instalar
+/* 🔥 INSTALAÇÃO */
 self.addEventListener("install", event => {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// ativar
+/* 🔥 ATIVAÇÃO */
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -29,20 +40,38 @@ self.addEventListener("activate", event => {
       );
     })
   );
+  self.clients.claim();
 });
 
-// 🔥 FETCH CORRIGIDO (ANTI TELA BRANCA)
+/* 🔥 FETCH INTELIGENTE (SEM BUG / SEM TELA BRANCA) */
 self.addEventListener("fetch", event => {
+
+  /* só pega GET */
+  if (event.request.method !== "GET") return;
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
+
+        /* salva cache atualizado */
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+
         return response;
+
       })
       .catch(() => {
+
         return caches.match(event.request)
           .then(response => {
+
+            /* fallback */
             return response || caches.match("/aplicativo/index.html");
+
           });
+
       })
   );
 });
