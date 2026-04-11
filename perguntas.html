@@ -2,67 +2,168 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<title>Mural</title>
+<title>Enviar Pergunta</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{font-family:Poppins;background:#fff4cc;margin:0;}
-.chat{max-width:500px;margin:auto;padding:10px;}
-
-.pergunta{
-margin:15px 0;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.msg{
-display:flex;
-gap:10px;
-margin:8px 0;
+html, body{
+  height:100%;
 }
 
-.msg img{
-width:45px;height:45px;border-radius:50%;
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:linear-gradient(180deg,#fffdf5,#ffe8a3);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:
+    env(safe-area-inset-top)
+    15px
+    env(safe-area-inset-bottom);
+
 }
 
-.balao{
-background:#fff;
-padding:10px;
-border-radius:10px;
-max-width:80%;
+/* CONTAINER */
+.container{
+  width:100%;
+  max-width:420px;
 }
 
-.consultor{
-flex-direction:row-reverse;
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.12);
 }
 
-.resposta-img{
-width:100%;
-margin-top:8px;
-border-radius:10px;
+/* TÍTULO */
+.titulo{
+  font-size:20px;
+  font-weight:700;
+  text-align:center;
+  color:#b8860b;
+  margin-bottom:18px;
 }
 
+/* INPUTS */
+.input{
+  width:100%;
+  padding:15px;
+  margin-top:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  font-size:14px;
+  outline:none;
+  transition:0.2s;
+  background:#fafafa;
+}
+
+.input:focus{
+  border-color:#ffd700;
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(255,215,0,0.25);
+}
+
+/* TEXTAREA */
+textarea{
+  min-height:110px;
+  resize:none;
+}
+
+/* BOTÃO */
 .btn{
-position:fixed;
-bottom:80px;
-right:20px;
-background:#ffd700;
-width:60px;
-height:60px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-cursor:pointer;
+  width:100%;
+  padding:15px;
+  margin-top:18px;
+  background:linear-gradient(45deg,#ffd700,#ffcc00);
+  border:none;
+  border-radius:14px;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn:active{
+  transform:scale(0.97);
+}
+
+/* OBS */
+.obs{
+  font-size:12px;
+  margin-top:14px;
+  color:#666;
+  text-align:center;
+  line-height:1.5;
+}
+
+/* SUCESSO */
+.sucesso{
+  display:none;
+  margin-top:15px;
+  background:#e6ffed;
+  color:#0f5132;
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:600;
+  animation:fade 0.4s ease;
+}
+
+/* ANIMAÇÃO */
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="chat" id="chat"></div>
-<div class="btn" onclick="location.href='pergunta.html'">+</div>
+<div class="container">
 
+  <div class="card">
+
+    <div class="titulo">Escreva sua pergunta ✨</div>
+
+    <input id="nome" class="input" placeholder="Ex: M.S • 12/05/1998">
+
+    <textarea id="pergunta" class="input" placeholder="Digite sua pergunta aqui..."></textarea>
+
+    <button class="btn" onclick="enviar()">Enviar Pergunta</button>
+
+    <div id="msgSucesso" class="sucesso">
+      ✨ Mensagem enviada com sucesso!
+    </div>
+
+    <div class="obs">
+      ⚠️ As respostas dependem da disponibilidade dos consultores.<br>
+      Volte ao mural para ver sua resposta.
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
@@ -76,44 +177,34 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const chat = document.getElementById("chat");
+function enviar(){
 
-db.collection("perguntas").orderBy("data","desc")
-.onSnapshot(snap=>{
-  chat.innerHTML="";
+  let nome = document.getElementById("nome").value.trim();
+  let pergunta = document.getElementById("pergunta").value.trim();
 
-  snap.forEach(doc=>{
-    let d = doc.data();
+  if(nome === "" || pergunta === ""){
+    alert("Preencha todos os campos");
+    return;
+  }
 
-    let html = `
-    <div class="pergunta">
+  db.collection("perguntas").add({
+    nome:nome,
+    pergunta:pergunta,
+    data:new Date(),
+    respostas:[]
+  }).then(()=>{
 
-      <div class="msg">
-        <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
-        <div class="balao">
-          <b>${d.nome}</b><br>${d.pergunta}
-        </div>
-      </div>
-    `;
+    document.getElementById("msgSucesso").style.display="block";
 
-    if(d.respostas){
-      d.respostas.forEach(r=>{
-        html += `
-        <div class="msg consultor">
-          <img src="${r.foto}">
-          <div class="balao">
-            <b>${r.nome}</b><br>${r.texto}
-            ${r.img ? `<img class="resposta-img" src="${r.img}">` : ""}
-          </div>
-        </div>
-        `;
-      });
-    }
+    document.getElementById("nome").value="";
+    document.getElementById("pergunta").value="";
 
-    html += `</div>`;
-    chat.innerHTML += html;
+    setTimeout(()=>{
+      window.location.href="index.html";
+    },2000);
+
   });
-});
+}
 </script>
 
 </body>
