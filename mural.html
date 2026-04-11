@@ -162,7 +162,7 @@ const chat = document.getElementById("chat");
 
 /* 🔥 LISTENER OTIMIZADO */
 db.collection("perguntas")
-// .orderBy("timestamp", "asc") // 🔥 garante ordem correta (antigo em cima, novo embaixo)
+.orderBy("timestamp", "asc") // 🔥 ordem correta (antigo em cima, novo embaixo)
 .onSnapshot(snapshot => {
 
   let htmlTotal = "";
@@ -225,8 +225,7 @@ db.collection("perguntas")
   console.error("🔥 ERRO:", error);
   alert("Erro ao carregar dados");
 
-});
-    
+});    
 /* 🔥 ABRIR IMAGEM */
 function abrir(src){
   document.getElementById("viewer").style.display="flex";
