@@ -85,10 +85,16 @@ textarea{
   font-weight:600;
   font-size:15px;
   cursor:pointer;
+  transition:0.2s;
 }
 
 .btn:active{
   transform:scale(0.97);
+}
+
+.btn:disabled{
+  opacity:0.6;
+  cursor:not-allowed;
 }
 
 .obs{
@@ -128,7 +134,7 @@ textarea{
 
     <textarea id="pergunta" class="input" placeholder="Digite sua pergunta aqui..."></textarea>
 
-    <button class="btn" onclick="enviar()">Enviar Pergunta</button>
+    <button id="btnEnviar" class="btn" onclick="enviar()">Enviar Pergunta</button>
 
     <div id="msgSucesso" class="sucesso">
       ✨ Mensagem enviada com sucesso!
@@ -156,35 +162,47 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+/* 🔥 FORÇA ONLINE (IMPORTANTE PWA) */
+firebase.firestore().enableNetwork();
+
 function enviar(){
 
-  let nome = document.getElementById("nome").value.trim();
-  let pergunta = document.getElementById("pergunta").value.trim();
+  const btn = document.getElementById("btnEnviar");
+  const nome = document.getElementById("nome").value.trim();
+  const pergunta = document.getElementById("pergunta").value.trim();
 
   if(nome === "" || pergunta === ""){
     alert("Preencha todos os campos");
     return;
   }
 
+  /* 🔥 EVITA DUPLO CLIQUE */
+  btn.disabled = true;
+  btn.innerText = "Enviando...";
+
   db.collection("perguntas").add({
-    nome:nome,
-    pergunta:pergunta,
-    data:new Date(),
-    respostas:[]
-  }).then(()=>{
+    nome: nome,
+    pergunta: pergunta,
+    data: new Date(),
+    respostas: []
+  })
+  .then(()=>{
 
     document.getElementById("msgSucesso").style.display="block";
 
     document.getElementById("nome").value="";
     document.getElementById("pergunta").value="";
 
-    /* 🔥 REDIRECIONA PARA O MURAL */
     setTimeout(()=>{
       window.location.href="https://onlinecartomantes-dotcom.github.io/aplicativo/mural.html";
     },1500);
 
-  }).catch(()=>{
-    alert("Erro ao enviar. Tente novamente.");
+  })
+  .catch((err)=>{
+    console.error(err);
+    alert("Erro ao enviar. Verifique sua internet.");
+    btn.disabled = false;
+    btn.innerText = "Enviar Pergunta";
   });
 }
 </script>
