@@ -14,23 +14,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body{
-  height:100%;
-}
-
 body{
   margin:0;
   font-family:'Poppins', sans-serif;
   background:linear-gradient(180deg,#fffdf5,#ffe8a3);
-
   display:flex;
   align-items:center;
   justify-content:center;
-
-  padding:
-    env(safe-area-inset-top)
-    15px
-    env(safe-area-inset-bottom);
+  min-height:100vh;
+  padding:15px;
 }
 
 .container{
@@ -85,7 +77,6 @@ textarea{
   font-weight:600;
   font-size:15px;
   cursor:pointer;
-  transition:0.2s;
 }
 
 .btn:active{
@@ -113,12 +104,6 @@ textarea{
   border-radius:12px;
   text-align:center;
   font-weight:600;
-  animation:fade 0.4s ease;
-}
-
-@keyframes fade{
-  from{opacity:0; transform:translateY(10px);}
-  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -160,30 +145,31 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
 const db = firebase.firestore();
 
-/* 🔥 FORÇA ONLINE (IMPORTANTE PWA) */
-firebase.firestore().enableNetwork();
+/* 🔥 FORÇA ONLINE (PWA CORRIGIDO) */
+db.enableNetwork().catch(()=>{});
 
+/* 🔥 ENVIO */
 function enviar(){
 
   const btn = document.getElementById("btnEnviar");
   const nome = document.getElementById("nome").value.trim();
   const pergunta = document.getElementById("pergunta").value.trim();
 
-  if(nome === "" || pergunta === ""){
+  if(!nome || !pergunta){
     alert("Preencha todos os campos");
     return;
   }
 
-  /* 🔥 EVITA DUPLO CLIQUE */
   btn.disabled = true;
   btn.innerText = "Enviando...";
 
   db.collection("perguntas").add({
     nome: nome,
     pergunta: pergunta,
-    data: new Date(),
+    data: firebase.firestore.FieldValue.serverTimestamp(),
     respostas: []
   })
   .then(()=>{
@@ -195,11 +181,11 @@ function enviar(){
 
     setTimeout(()=>{
       window.location.href="https://onlinecartomantes-dotcom.github.io/aplicativo/mural.html";
-    },1500);
+    },1200);
 
   })
   .catch((err)=>{
-    console.error(err);
+    console.error("Erro:", err);
     alert("Erro ao enviar. Verifique sua internet.");
     btn.disabled = false;
     btn.innerText = "Enviar Pergunta";
