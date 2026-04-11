@@ -1,255 +1,211 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Mural</title>
+<title>Perguntas Express</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;}
-
 body{
-  margin:0;
   font-family:'Poppins', sans-serif;
-  background: linear-gradient(180deg, #fffdf5 0%, #fff4cc 40%, #ffe8a3 100%);
+  background:linear-gradient(180deg,#fffdf5,#ffe8a3);
+  margin:0;
 }
 
-.chat{
-  max-width:500px;
-  margin:auto;
-  padding:15px;
-}
-
-.titulo-topo{
+/* TOPO */
+.topo{
   text-align:center;
-  font-size:26px;
+  font-size:22px;
   font-weight:700;
-  margin:10px 0 20px;
+  padding:15px;
   color:#b8860b;
 }
 
-.msg-cliente{
-  display:flex;
-  gap:10px;
+/* CHAT */
+.chat{
+  max-width:500px;
+  margin:auto;
+  padding:10px;
+}
+
+/* BLOCO */
+.pergunta{
   margin:18px 0;
 }
 
-.msg-consultor{
+/* MSG */
+.msg{
   display:flex;
-  flex-direction:row-reverse;
   gap:10px;
-  margin:18px 0;
+  margin:10px 0;
 }
 
-.msg-cliente img,
-.msg-consultor img{
-  width:50px;
-  height:50px;
+/* 🔥 FOTO PERFIL (AGORA SEPARADO) */
+.foto{
+  width:45px;
+  height:45px;
   border-radius:50%;
-  padding:2px;
-  background:linear-gradient(45deg,#ffd700,#e6c068);
+  object-fit:cover;
 }
 
-.balao,.resposta{
+/* BALÃO */
+.balao{
   background:#fff;
-  padding:14px;
-  border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  padding:12px;
+  border-radius:14px;
   max-width:85%;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
 }
 
-.info{
-  font-size:12px;
-  color:#999;
-  margin-bottom:6px;
-  font-weight:600;
+/* CONSULTOR */
+.consultor{
+  flex-direction:row-reverse;
 }
 
-.nome{
-  font-weight:700;
-  margin-bottom:6px;
-}
-
-.texto{
-  font-size:14px;
-  line-height:1.6;
-  color:#444;
-}
-
-.cartas{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-}
-
-.cartas img{
-  width:75px;
-  border-radius:10px;
+/* 🔥 IMAGEM REAL (SEM CORTAR) */
+.resposta-img{
+  width:100%;
+  height:auto;
+  margin-top:10px;
+  border-radius:12px;
   cursor:pointer;
 }
 
+/* BOTÃO */
+.btn{
+  position:fixed;
+  bottom:80px;
+  right:20px;
+  background:linear-gradient(45deg,#ffd700,#ffcc00);
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,0.2);
+}
+
+/* VIEWER */
 .viewer{
-  display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.95);
-  justify-content:center;
+  display:none;
   align-items:center;
+  justify-content:center;
   z-index:999;
 }
 
 .viewer img{
-  max-width:90%;
+  max-width:95%;
+  max-height:85%;
   border-radius:12px;
 }
 
+/* BOTÃO X */
 .fechar{
   position:absolute;
   top:20px;
   right:20px;
-  background:#ffd700;
-  color:#000;
-  border:none;
   width:45px;
   height:45px;
+  border:none;
   border-radius:50%;
+  background:#ffd700;
   font-size:22px;
   font-weight:bold;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="chat">
-<div class="titulo-topo">Mural</div>
+<div class="topo">Perguntas Express ✨</div>
 
-<!-- 1 -->
-<div class="msg-cliente">
-<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
-<div class="balao">
-<div class="info">M.R.S • 16/09/1995</div>
-Eu e o R.A (12/03/1993) tivemos uma discussão forte há alguns dias e desde então ele não me procurou mais. Mesmo assim sinto que ainda existe algo entre nós. Você vê ele voltando a falar comigo ou devo tentar seguir em frente?
-</div>
-</div>
+<div class="chat" id="chat"></div>
 
-<div class="msg-consultor">
-<img src="https://i.ibb.co/RGZzCfFC/Captura-de-tela-2026-04-02-001847.png">
-<div class="resposta">
-<div class="nome">Pai Márcio</div>
-<div class="texto">
-Existe sentimento sim, isso não acabou. Mas vejo muito orgulho e dificuldade de comunicação por parte dele. Ele tende a voltar, porém não no tempo que você espera. O melhor é não ficar presa a isso, pois isso pode atrasar sua vida.
-</div>
-<div class="cartas">
-<img src="https://i.ibb.co/G4k87RDV/Whats-App-Image-2026-04-10-at-14-23-45.jpg" onclick="abrir(this.src)">
-</div>
-</div>
-</div>
+<div class="btn" onclick="location.href='pergunta.html'">+</div>
 
-<!-- 2 -->
-<div class="msg-cliente">
-<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
-<div class="balao">
-<div class="info">J.P.A • 22/11/1997</div>
-Fiz uma entrevista semana passada para uma vaga que eu queria muito. Ainda não tive retorno e estou ansioso. Você vê eu sendo chamado ou devo continuar procurando outras oportunidades?
-</div>
-</div>
-
-<div class="msg-consultor">
-<img src="https://i.ibb.co/m570rCkG/Whats-App-Image-2026-04-03-at-22-36-29-1.jpg">
-<div class="resposta">
-<div class="nome">Samya</div>
-<div class="texto">
-Existe possibilidade, mas vejo demora e indecisão por parte da empresa. As cartas indicam que você não deve parar sua busca, pois algo melhor pode surgir mais rápido do que essa resposta.
-</div>
-<div class="cartas">
-<img src="https://i.ibb.co/7xx5c6Mb/Whats-App-Image-2026-04-10-at-02-35-24.jpg" onclick="abrir(this.src)">
-</div>
-</div>
-</div>
-
-<!-- 3 -->
-<div class="msg-cliente">
-<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
-<div class="balao">
-<div class="info">A.C.F • 03/02/1990</div>
-Eu estava ficando com o L.S (28/07/1988) e do nada ele começou a se afastar, demorando para responder e ficando estranho. Você vê se ele ainda tem interesse ou se já tem outra pessoa?
-</div>
-</div>
-
-<div class="msg-consultor">
-<img src="https://i.ibb.co/5WtRK6mQ/Whats-App-Image-2026-04-03-at-22-36-29-2.jpg">
-<div class="resposta">
-<div class="nome">Aislyn</div>
-<div class="texto">
-Ele ainda pensa em você, mas vejo instabilidade emocional e indecisão. Não vejo outra pessoa fixa no momento, mas ele está confuso e distante. Pode voltar, porém sem clareza no início.
-</div>
-<div class="cartas">
-<img src="https://i.ibb.co/99QcWLTf/Whats-App-Image-2026-04-10-at-02-35-24-5.jpg" onclick="abrir(this.src)">
-</div>
-</div>
-</div>
-
-<!-- 4 -->
-<div class="msg-cliente">
-<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
-<div class="balao">
-<div class="info">L.T.S • 10/05/1992</div>
-Meu relacionamento com D.R (21/01/1990) não está como antes, sinto ele mais frio e distante. Você vê melhora ou estamos caminhando para um afastamento?
-</div>
-</div>
-
-<div class="msg-consultor">
-<img src="https://i.ibb.co/0pNhf839/Whats-App-Image-2026-04-03-at-22-36-29.jpg">
-<div class="resposta">
-<div class="nome">Tulipa</div>
-<div class="texto">
-Existe desgaste emocional, mas não vejo um término agora. Vejo que ainda há sentimento, porém falta diálogo. Se houver conversa sincera, há chance real de melhora.
-</div>
-<div class="cartas">
-<img src="https://i.ibb.co/fdy1GdyW/Whats-App-Image-2026-04-10-at-02-35-24-4.jpg" onclick="abrir(this.src)">
-</div>
-</div>
-</div>
-
-<!-- 5 -->
-<div class="msg-cliente">
-<img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
-<div class="balao">
-<div class="info">R.M.L • 14/08/1998</div>
-Estou solteira há bastante tempo e sinto que minha vida amorosa está parada. Você vê a chegada de alguém novo ainda esse ano?
-</div>
-</div>
-
-<div class="msg-consultor">
-<img src="https://i.ibb.co/8LMGQ4s9/Chat-GPT-Image-7-04-2026-07-47-54.png">
-<div class="resposta">
-<div class="nome">Esmeralda</div>
-<div class="texto">
-Sim, vejo a chegada de uma pessoa nova de forma inesperada. É alguém que entra devagar, mas com conexão verdadeira. O momento pede abertura emocional.
-</div>
-<div class="cartas">
-<img src="https://i.ibb.co/0pdpRym9/Whats-App-Image-2026-04-10-at-02-35-24-3.jpg" onclick="abrir(this.src)">
-</div>
-</div>
-</div>
-
-</div>
-
+<!-- VIEWER -->
 <div id="viewer" class="viewer">
-<button class="fechar" onclick="fechar()">×</button>
-<img id="imgView">
+  <button class="fechar" onclick="fechar()">×</button>
+  <img id="imgView">
 </div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "chat-6cee5.firebaseapp.com",
+  projectId: "chat-6cee5"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const chat = document.getElementById("chat");
+
+db.collection("perguntas").orderBy("data","desc")
+.onSnapshot(snap=>{
+  chat.innerHTML="";
+
+  snap.forEach(doc=>{
+    let d = doc.data();
+
+    let html = `
+    <div class="pergunta">
+
+      <div class="msg">
+        <img class="foto" src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png">
+        <div class="balao">
+          <b>${d.nome}</b><br>${d.pergunta}
+        </div>
+      </div>
+    `;
+
+    if(d.respostas){
+      d.respostas.forEach(r=>{
+        html += `
+        <div class="msg consultor">
+          <img class="foto" src="${r.foto}">
+          <div class="balao">
+            <b>${r.nome}</b><br>${r.texto}
+
+            ${r.img ? `
+              <img 
+                class="resposta-img" 
+                src="${r.img}" 
+                onclick="abrir('${r.img}')"
+              >
+            ` : ""}
+          </div>
+        </div>
+        `;
+      });
+    }
+
+    html += `</div>`;
+    chat.innerHTML += html;
+  });
+});
+
+/* ABRIR */
 function abrir(src){
   document.getElementById("viewer").style.display="flex";
   document.getElementById("imgView").src = src;
 }
+
+/* FECHAR */
 function fechar(){
   document.getElementById("viewer").style.display="none";
 }
