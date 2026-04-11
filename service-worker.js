@@ -1,11 +1,10 @@
-const CACHE_NAME = "cartomantes-v4";
+const CACHE_NAME = "cartomantes-v5";
 
-/* 🔥 TODOS OS ARQUIVOS DO SEU APP */
+/* 🔥 ARQUIVOS DO APP (ATUALIZADO) */
 const urlsToCache = [
   "/aplicativo/",
   "/aplicativo/index.html",
   "/aplicativo/mural.html",
-  "/aplicativo/painel.html",
   "/aplicativo/perfil.html",
   "/aplicativo/perguntas.html",
   "/aplicativo/pix.html",
@@ -43,17 +42,15 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-/* 🔥 FETCH INTELIGENTE (SEM BUG / SEM TELA BRANCA) */
+/* 🔥 FETCH ESTÁVEL */
 self.addEventListener("fetch", event => {
 
-  /* só pega GET */
   if (event.request.method !== "GET") return;
 
   event.respondWith(
     fetch(event.request)
       .then(response => {
 
-        /* salva cache atualizado */
         const responseClone = response.clone();
         caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, responseClone);
@@ -66,10 +63,7 @@ self.addEventListener("fetch", event => {
 
         return caches.match(event.request)
           .then(response => {
-
-            /* fallback */
             return response || caches.match("/aplicativo/index.html");
-
           });
 
       })
