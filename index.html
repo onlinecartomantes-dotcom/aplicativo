@@ -1263,12 +1263,24 @@ function mostrarPopup(){
 
   let random = ocupados[Math.floor(Math.random() * ocupados.length)];
 
-// 🔥 CONFIRMA SE AINDA ESTÁ OFFLINE
-if(estaOnline(random.nome)){
+// 🔥 VERIFICA SE TEM BOLINHA NO CARD (NA TELA)
+const cards = document.querySelectorAll(".card");
+
+let estaComBolinha = false;
+
+cards.forEach(card => {
+  const nome = card.querySelector(".nome")?.innerText;
+
+  if(nome === random.nome && card.querySelector(".online")){
+    estaComBolinha = true;
+  }
+});
+
+// 🔥 SE ESTIVER ONLINE NA TELA → NÃO MOSTRA
+if(estaComBolinha){
   agendarPopup();
   return;
 }
-
   const popup = document.getElementById("popupOcupado");
 
   popup.innerText = `💬 ${random.nome} está em atendimento`;
