@@ -185,7 +185,12 @@ color:inherit;
 transform:scale(0.98);
 }
 
-/* FUNDO */
+/* 🔥 BASE DO CARD (IMPORTANTE) */
+.card{
+  position:relative;
+}
+
+/* 🔥 FUNDO DO CARD */
 .card::before{
   content:"";
   position:absolute;
@@ -194,46 +199,38 @@ transform:scale(0.98);
   background-size:cover;
   background-position:center;
   opacity:0.5;
-  z-index:0; /* 🔥 garante que fique atrás */
+  z-index:0; /* fica atrás */
 }
 
-/* 🔥 garante que todo conteúdo fique acima */
+/* 🔥 CONTEÚDO SEMPRE NA FRENTE */
 .card *{
   position:relative;
   z-index:1;
 }
-
-/* 🔥 relógio acima de tudo */
+/* ⏰ TEMPO (PEQUENO, LIMPO E RESPONSIVO) */
 .tempo{
   position:absolute;
-  top:10px;
-  left:10px;
-  z-index:2;
-}
-/* GARANTE QUE TEXTO FIQUE NA FRENTE */
-.card *{
-position:relative;
-z-index:1;
-}
-/* ⏰ TEMPO COM RELÓGIO */
-.tempo{
-position:absolute;
-top:10px;
-left:10px;
-display:flex;
-align-items:center;
-gap:6px;
-background:#fff3cd;
-color:#b8860b;
-font-size:11px;
-font-weight:bold;
-padding:5px 10px;
-border-radius:20px;
-}
+  top:8px;
+  left:2px;   /* 🔥 mais pra esquerda */
 
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+
+  background:#fff3cd;
+  color:#b8860b;
+  font-size:10px;
+  font-weight:bold;
+  padding:4px 8px;
+  border-radius:15px;
+
+  z-index:999;
+  max-width:70%;
+}
+/* 🔥 ícone menor */
 .tempo svg{
-width:14px;
-height:14px;
+  width:12px;
+  height:12px;
 }
 
 /* FOTO */
@@ -243,12 +240,13 @@ height:14px;
   max-width:140px;
   max-height:140px;
   margin:auto;
-  margin-top:5px; /* sobe um pouco */
+  margin-top:5px;
   border-radius:50%;
   padding:4px;
   background:linear-gradient(45deg,#e6c068,#b8860b);
   position:relative;
 }
+
 .foto img{
   width:100%;
   height:100%;
@@ -591,58 +589,157 @@ function buscar(nome){
   return [...banco.clareza,...banco.motivacao,...banco.esperanca]
   .find(c=>c.nome===nome);
 }
+// 🟢 CONTROLE DE ONLINE/OFFLINE (NOVO)
 
-// 🟢 CONTROLE PERSISTENTE
-let statusOnline = JSON.parse(localStorage.getItem("statusOnline")) || {};
-let ultimoUpdate = localStorage.getItem("ultimoUpdate") || 0;
+// 🔥 AGENDA DOS CONSULTORES
+const agenda = {
+  "Pai Márcio": { inicio: 10, fim: 18, pausa: [14, 15] },
+  "Samya": { inicio: 10, fim: 22 },
+  "Aislyn": { inicio: 12, fim: 20 },
+  "Tulipa": { inicio: 10, fim: 17 },
 
-// 🟢 CONTROLE DE ONLINE/OFFLINE (PROFISSIONAL)
-function estaOnline(nome) {
+  "Esmeralda": { inicio: 10, fim: 23 },
+  "Thabata": { inicio: 11, fim: 19 },
+  "Analu": { inicio: 10, fim: 21 },
+  "Benedita": { inicio: 10, fim: 18 },
+
+  "Estrela": { inicio: 10, fim: 22 },
+  "Sulamita": { inicio: 13, fim: 21 },
+  "Adria": { inicio: 10, fim: 19 },
+  "M.Padilha": { inicio: 10, fim: 23 },
+  "Sara": { inicio: 10, fim: 20 },
+  "7 Saias": { inicio: 12, fim: 22 },
+  "Odara": { inicio: 10, fim: 18 }
+};
+
+// 🔥 CONTROLE REAL (CORRIGIDO E ESTÁVEL)
+let controleStatus = JSON.parse(localStorage.getItem("controleStatus")) || {};
+
+function statusConsultor(nome){
+
   const agora = new Date();
+  const agoraMs = Date.now();
   const hora = agora.getHours();
 
-  // 🔒 Entre 2h e 10h → todos offline
-  if (hora >= 2 && hora < 10) {
-    return false;
+  const a = agenda[nome];
+
+  const dentroHorario = a && hora >= a.inicio && hora < a.fim;
+
+  // 🔥 inicialização inteligente
+  if(!controleStatus[nome]){
+    controleStatus[nome] = {
+      online: dentroHorario ? Math.random() < 0.6 : false,
+      mudouEm: agoraMs
+    };
   }
 
-  const agoraMs = Date.now();
+  const estado = controleStatus[nome];
 
-  // ⏱️ Atualiza somente a cada 1 minuto
-  if (agoraMs - ultimoUpdate > 10000) {
+ // 🔴 FORA DO EXPEDIENTE (COM HORÁRIO FIXO REAL)
+if(!a || hora < a.inicio || hora >= a.fim){
 
-    statusOnline = {};
+  // 🔥 cria data de hoje no horário de fechamento
+  let fechamento = new Date();
+  fechamento.setHours(a?.fim || 23, 0, 0, 0);
 
-    const todos = [
-      ...banco.clareza,
-      ...banco.motivacao,
-      ...banco.esperanca
-    ];
-
-    todos.forEach(c => {
-      statusOnline[c.nome] = Math.random() > 0.4;
-    });
-
-    localStorage.setItem("statusOnline", JSON.stringify(statusOnline));
-    localStorage.setItem("ultimoUpdate", agoraMs);
+  // 🔥 se ainda não chegou no fechamento hoje → pega o de ontem
+  if(agora < fechamento){
+    fechamento.setDate(fechamento.getDate() - 1);
   }
 
-  return statusOnline[nome];
+  const minutosOffline = Math.floor((agoraMs - fechamento.getTime()) / 60000);
+
+  return {
+    online: false,
+    tempo: minutosOffline
+  };
 }
 
-// ⏰ TEMPO
-function tempo(){
-  let t=["≈1h","≈33m","≈2h"];
-  return t[Math.floor(Math.random()*t.length)];
+// ⏸ PAUSA (CORRIGIDO E COM TEMPO REAL)
+if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
+
+  // força offline
+  if(estado.online){
+    estado.online = false;
+    estado.mudouEm = agoraMs;
+  }
+
+  // salva estado
+  localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
+
+  // calcula tempo desde o início da pausa
+  let pausaInicio = new Date();
+  pausaInicio.setHours(a.pausa[0], 0, 0, 0);
+
+  const minutosOffline = Math.floor((agoraMs - pausaInicio.getTime()) / 60000);
+
+  return {
+    online:false,
+    tempo:minutosOffline
+  };
+}
+
+// 🔥 TROCA INTELIGENTE (COM TEMPO MÍNIMO)
+const tempoMinimo = 2; // minutos mínimos no mesmo estado
+
+if(agoraMs - estado.mudouEm > tempoMinimo * 60000){
+
+  if(Math.random() < 0.3){
+    estado.online = !estado.online;
+    estado.mudouEm = agoraMs;
+  }
+
+}
+// 🔥 salva sempre
+localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
+
+const minutosPassados = Math.floor((agoraMs - estado.mudouEm)/60000);
+
+// 🟢 ONLINE → FILA REAL
+if(estado.online){
+
+  // 🔥 quantidade de pessoas na fila (1 a 4)
+  const fila = Math.floor(Math.random()*4)+1;
+
+  // 🔥 tempo base por pessoa (5 a 10 minutos)
+  const tempoBase = 5 + Math.floor(Math.random()*6);
+
+  // 🔥 tempo total de espera
+  const tempoFila = fila * tempoBase;
+
+  return { 
+    online:true, 
+    tempo:tempoFila,
+    fila:fila
+  };
+}
+
+// 🔴 OFFLINE → TEMPO REAL
+return { online:false, tempo:minutosPassados };
+}
+
+// ⏱ FORMATAR TEMPO
+function formatarTempo(min){
+
+  if(min >= 60){
+    const h = Math.floor(min/60);
+    const m = min % 60;
+    return m > 0 ? `${h}h ${m}m` : `${h}h`;
+  }
+
+  return min + " min";
 }
 
 // 👥 PESSOAS
 function pessoas(){
   return Math.floor(Math.random()*53)+20;
 }
-
+// 🔥 CARD
 function card(c){
-const online = estaOnline(c.nome);
+
+const status = statusConsultor(c.nome);
+const online = status.online;
+const tempoTxt = formatarTempo(status.tempo);
 
 return `
 <a class="card" 
@@ -652,14 +749,20 @@ onclick="
 localStorage.setItem('consultorNome','${c.nome}');
 localStorage.setItem('consultorImagem','${c.img}');
 "
-` : `href="javascript:void(0)"` }>
+` : `href="javascript:void(0)"`}>
 
 <div class="tempo">
   <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
     <circle cx="12" cy="12" r="9"></circle>
     <path d="M12 7v5l3 2"></path>
   </svg>
-  ${tempo()}
+  <span>
+    ${
+      online 
+      ? "≈ " + tempoTxt
+      : "Offline há " + tempoTxt
+    }
+  </span>
 </div>
 
 <div class="foto">
@@ -668,7 +771,15 @@ ${online ? '<div class="online"></div>' : ''}
 </div>
 
 <div class="nome">${c.nome}</div>
-<div class="desc">Compatibilidade amorosa,Sessão de...</div>
+
+<div class="desc">
+${
+  online
+  ? "Compatibilidade amorosa,Sessão de..."
+  : "Indisponível • offline há " + tempoTxt
+}
+</div>
+
 <div class="foot">${pessoas()} pessoas ajudadas/90 dias</div>
 
 </a>`;
@@ -730,9 +841,8 @@ const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
 
 // ✅ AQUI SIM salva o status correto
-const online = estaOnline(c.nome);
-window.onlineSemana = online;
-
+const status = statusConsultor(c.nome);
+const online = status.online;
 html+=`
 <div class="card-destaque">
 
@@ -946,31 +1056,36 @@ const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
 const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
 
-// ✅ USA O MESMO STATUS (NÃO recalcula)
-const online = window.onlineSemana;
+// ✅ USA O MESMO STATUS (CORRETO)
+const status = statusConsultor(c.nome);
+const online = status.online;
 
 // 🔥 FOTO + NOME
 document.getElementById("fotoSemana").src=c.img;
 document.getElementById("nomeSemana").innerText=c.nome;
 
 // 🔥 INFO
-document.getElementById("pessoasSemana").innerText=
+document.getElementById("pessoasSemana").innerText =
 (Math.floor(Math.random()*300)+200)+" pessoas ajudadas";
 
-document.getElementById("tempoTexto").innerText=
-"≈"+(Math.floor(Math.random()*3)+1)+"h";
+// 🔥 TEMPO (CORRIGIDO - SEM DUPLICAR STATUS)
+const tempoTxt = formatarTempo(status.tempo);
 
-document.getElementById("descSemana").innerText=
+document.getElementById("tempoTexto").innerText =
+  status.online
+    ? "≈ " + tempoTxt
+    : "Offline há " + tempoTxt;
+
+// 🔥 DESCRIÇÃO
+document.getElementById("descSemana").innerText =
 descricoes[c.nome] || "Estou aqui para te ajudar com clareza.";
 
-
-// 🔥 BOTÃO (controle correto)
+// 🔥 BOTÃO
 const btn = document.getElementById("btnSemana");
 
-// 🔥 só executa se o botão existir
 if(btn){
 
-  if(online){
+  if(status.online){
 
     btn.style.display = "block";
     btn.innerText = "Consultar " + c.nome;
@@ -982,17 +1097,15 @@ if(btn){
     };
 
   }else{
-
     btn.style.display = "none";
-
   }
 
 }
 
-} // ✅ FECHA A FUNÇÃO renderDestaque CORRETAMENTE
+} // ✅ FIM renderDestaque
 
 
-// 🔥 CONTROLE DO TIPO ATUAL (FORA DA FUNÇÃO)
+// 🔥 CONTROLE DO TIPO ATUAL
 let tipoAtual = "clareza";
 
 
@@ -1013,17 +1126,71 @@ function trocar(tipo,el){
   });
 }
 
+
 // 🔥 INICIALIZA
 renderPrincipal(tipoAtual);
 
 
-// 🔥 ATUALIZA AUTOMÁTICO
+// 🔥 ATUALIZAÇÃO SUAVE
 setInterval(() => {
+
+  document.querySelectorAll(".card").forEach(card => {
+
+    const nome = card.querySelector(".nome")?.innerText;
+    if(!nome) return;
+
+    const status = statusConsultor(nome);
+    const tempoTxt = formatarTempo(status.tempo);
+
+    const tempoEl = card.querySelector(".tempo");
+
+    if(tempoEl){
+
+      let texto = tempoEl.querySelector("span");
+
+      if(!texto){
+        texto = document.createElement("span");
+        tempoEl.appendChild(texto);
+      }
+
+      texto.textContent =
+        status.online ? "≈ " + tempoTxt : "Offline há " + tempoTxt;
+    }
+
+    const foto = card.querySelector(".foto");
+    if(!foto) return;
+
+    if(status.online){
+
+      if(!foto.querySelector(".online")){
+        const bolinha = document.createElement("div");
+        bolinha.className = "online";
+        foto.appendChild(bolinha);
+      }
+
+    }else{
+
+      const bolinha = foto.querySelector(".online");
+      if(bolinha) bolinha.remove();
+    }
+
+    const desc = card.querySelector(".desc");
+
+    if(desc){
+      desc.innerText = status.online
+        ? "Compatibilidade amorosa,Sessão de..."
+        : "Indisponível • offline há " + tempoTxt;
+    }
+
+  });
+
   renderDestaque();
-}, 10000);
+
+},10000);
+
 
 /* =========================
-   🔥 PWA + DETECÇÃO
+🔥 PWA + DETECÇÃO
 ========================= */
 
 const ua = navigator.userAgent.toLowerCase();
@@ -1056,6 +1223,8 @@ function abrirPWA(){
   if(window.matchMedia('(display-mode: standalone)').matches) return;
 
   const popup = document.getElementById("pwaPopup");
+  if(!popup) return;
+
   const titulo = document.getElementById("pwaTitulo");
   const texto = document.getElementById("pwaTexto");
   const steps = document.getElementById("pwaSteps");
@@ -1129,7 +1298,8 @@ function abrirPWA(){
 }
 
 function fecharPWA(){
-  document.getElementById("pwaPopup").style.display="none";
+  const popup = document.getElementById("pwaPopup");
+  if(popup) popup.style.display="none";
 }
 
 setTimeout(abrirPWA,2000);
@@ -1197,15 +1367,15 @@ padding:15px;
 
 <!-- 🔥 FUNÇÕES (COLE AQUI) -->
 <script>
-function podeContratar(){
-  const hora = new Date().getHours();
-  return !(hora >= 2 && hora < 10);
+function podeContratar(nome){
+  const status = statusConsultor(nome);
+  return status.online;
 }
 
 function clicarContratar(nome, imagem){
 
-  if(!podeContratar()){
-    alert("⏳ Atendimento disponível após às 10h");
+  if(!podeContratar(nome)){
+    alert("⏳ Consultor indisponível no momento");
     return;
   }
 
@@ -1248,7 +1418,7 @@ function todosConsultores(){
 
 // 🔥 PEGA OCUPADOS
 function consultoresOcupados(){
-  return todosConsultores().filter(c => !estaOnline(c.nome));
+  return todosConsultores().filter(c => !statusConsultor(c.nome).online);
 }
 
 // 🔥 MOSTRAR POPUP
@@ -1283,36 +1453,50 @@ cards.forEach(card => {
 });
 
 // 🔥 DUPLA VERIFICAÇÃO (LÓGICA + TELA)
-if(estaOnline(random.nome) || estaComBolinha){
+const status = statusConsultor(random.nome);
+
+// 🔥 se estiver online OU já aparece online na tela → não mostra popup
+if(status.online || estaComBolinha){
   agendarPopup();
   return;
 }
-  const popup = document.getElementById("popupOcupado");
 
-  popup.innerText = `💬 ${random.nome} está em atendimento`;
+const popup = document.getElementById("popupOcupado");
 
-  popup.style.display = "block";
+// 🔥 segurança extra
+if(!popup){
+  agendarPopup();
+  return;
+}
+
+// 🔥 mensagem
+popup.innerText = `💬 ${random.nome} está em atendimento`;
+
+// 🔥 reset visual
+popup.style.display = "block";
+popup.style.opacity = "0";
+popup.style.transform = "translateX(-50%) translateY(20px)";
+popup.style.transition = "none";
+
+// 🔥 anima entrada
+setTimeout(()=>{
+  popup.style.transition = "0.3s";
+  popup.style.opacity = "1";
+  popup.style.transform = "translateX(-50%) translateY(0)";
+},50);
+
+// 🔥 anima saída
+setTimeout(()=>{
   popup.style.opacity = "0";
   popup.style.transform = "translateX(-50%) translateY(20px)";
 
   setTimeout(()=>{
-    popup.style.transition = "0.3s";
-    popup.style.opacity = "1";
-    popup.style.transform = "translateX(-50%) translateY(0)";
-  },50);
+    popup.style.display = "none";
+    agendarPopup();
+  },300);
 
-  setTimeout(()=>{
-    popup.style.opacity = "0";
-    popup.style.transform = "translateX(-50%) translateY(20px)";
-
-    setTimeout(()=>{
-      popup.style.display = "none";
-      agendarPopup();
-    },300);
-
-  },3000);
+},3000);
 }
-
 // 🔥 TEMPO ALEATÓRIO
 function agendarPopup(){
   const tempo = Math.random() * 5000 + 4000;
