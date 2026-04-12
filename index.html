@@ -636,23 +636,26 @@ function statusConsultor(nome){
 
   const estado = controleStatus[nome];
 
-// 🔴 FORA DO EXPEDIENTE (TEMPO REAL A PARTIR DE AGORA)
+// 🔴 FORA DO EXPEDIENTE (BASEADO NO FIM DO EXPEDIENTE)
 if(!a || hora < a.inicio || hora >= a.fim){
 
-  // 🔥 se ainda não existe registro → começa AGORA
-  if(!estado.offlineDesde){
-    estado.offlineDesde = agoraMs;
-    localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
+  let offlineDesde = new Date();
+
+  // 🔥 define o horário de saída (fim do expediente)
+  offlineDesde.setHours(a?.fim || 23, 0, 0, 0);
+
+  // 🔥 se ainda não chegou no fim hoje → usa o de ontem
+  if(agora < offlineDesde){
+    offlineDesde.setDate(offlineDesde.getDate() - 1);
   }
 
-  const minutosOffline = Math.floor((agoraMs - estado.offlineDesde) / 60000);
+  const minutosOffline = Math.floor((agoraMs - offlineDesde.getTime()) / 60000);
 
   return {
     online: false,
     tempo: minutosOffline
   };
 }
-
 // ⏸ PAUSA (CORRIGIDO E COM TEMPO REAL)
 if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
 
