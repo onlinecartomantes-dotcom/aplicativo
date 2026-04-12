@@ -1356,83 +1356,6 @@ if("serviceWorker" in navigator){
 
 </script>
 
-<!-- 🔥 POPUP -->
-<div id="pwaPopup" style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.9);
-z-index:99999;
-align-items:center;
-justify-content:center;
-padding:15px;
-">
-
-  <div style="
-  background:#000;
-  color:#fff;
-  padding:20px;
-  border-radius:15px;
-  max-width:340px;
-  width:100%;
-  text-align:center;
-  box-shadow:0 0 25px rgba(255,215,0,0.4);
-  ">
-
-    <h2 id="pwaTitulo" style="color:#ffd700;"></h2>
-    <div id="pwaTexto"></div>
-    <div id="pwaSteps" style="margin-top:10px;text-align:left;"></div>
-
-    <button id="pwaBtn" style="
-    margin-top:12px;
-    padding:12px;
-    width:100%;
-    border:none;
-    border-radius:10px;
-    background:#ffd700;
-    font-weight:bold;
-    ">
-      CONTINUAR
-    </button>
-
-    <button onclick="fecharPWA()" style="
-    margin-top:8px;
-    padding:10px;
-    width:100%;
-    border:none;
-    border-radius:10px;
-    background:#333;
-    color:#fff;
-    ">
-      AGORA NÃO
-    </button>
-
-  </div>
-
-</div>
-
-<!-- 🔥 FUNÇÕES (COLE AQUI) -->
-<script>
-function podeContratar(nome){
-  const status = getStatus(nome);
-  return status.online;
-}
-
-function clicarContratar(nome, imagem){
-
-  const status = getStatus(nome);
-
-  if(!status.online){
-    alert("⏳ Consultor indisponível no momento");
-    return;
-  }
-
-  localStorage.setItem('consultorNome', nome);
-  localStorage.setItem('consultorImagem', imagem);
-
-  window.location.href='/aplicativo/perfil.html';
-}
-</script>
 <!-- 🔥 POPUP OCUPADO -->
 <div id="popupOcupado" style="
 position:fixed;
@@ -1450,8 +1373,7 @@ display:none;
 z-index:99999;
 max-width:90%;
 text-align:center;
-">
-</div>
+"></div>
 
 <script>
 
@@ -1464,21 +1386,30 @@ function todosConsultores(){
   ];
 }
 
-// 🔥 PEGA OCUPADOS
+// 🔥 PEGA CONSULTORES NO HORÁRIO (SEM BUG)
 function consultoresOcupados(){
- return todosConsultores().filter(c => !getStatus(c.nome).online);
-}
-// 🔥 MOSTRAR POPUP
-function mostrarPopup(){
-// 🔥 BLOQUEIO DE HORÁRIO (2h às 10h)
-const hora = new Date().getHours();
+  const hora = new Date().getHours();
 
-if(hora >= 2 && hora < 10){
-  agendarPopup();
-  return;
+  return todosConsultores().filter(c => {
+    const a = agenda[c.nome];
+    return a && hora >= a.inicio && hora < a.fim;
+  });
 }
+
+// 🔥 MOSTRAR POPUP (BLINDADO)
+function mostrarPopup(){
+
+  const hora = new Date().getHours();
+
   const ocupados = consultoresOcupados();
 
+  // 🔥 BLOQUEIO INTELIGENTE (madrugada)
+  if(hora >= 2 && hora < 10 && ocupados.length === 0){
+    agendarPopup();
+    return;
+  }
+
+  // 🔥 se não tiver ninguém no horário → tenta de novo
   if(ocupados.length === 0){
     agendarPopup();
     return;
@@ -1486,74 +1417,55 @@ if(hora >= 2 && hora < 10){
 
   let random = ocupados[Math.floor(Math.random() * ocupados.length)];
 
-// 🔥 VERIFICA SE TEM BOLINHA NO CARD (NA TELA)
-const cards = document.querySelectorAll(".card");
+  const popup = document.getElementById("popupOcupado");
 
-let estaComBolinha = false;
-
-cards.forEach(card => {
-  const nome = card.querySelector(".nome")?.innerText;
-
-  if(nome === random.nome && card.querySelector(".online")){
-    estaComBolinha = true;
+  if(!popup){
+    agendarPopup();
+    return;
   }
-});
 
-// 🔥 DUPLA VERIFICAÇÃO (LÓGICA + TELA)
-const status = getStatus(random.nome);
+  // 🔥 mensagem (SEM depender de online/offline)
+  popup.innerText = `💬 ${random.nome} está em atendimento`;
 
-// 🔥 se estiver online OU já aparece online na tela → não mostra popup
-if(status.online || estaComBolinha){
-  agendarPopup();
-  return;
-}
-
-const popup = document.getElementById("popupOcupado");
-
-// 🔥 segurança extra
-if(!popup){
-  agendarPopup();
-  return;
-}
-
-// 🔥 mensagem
-popup.innerText = `💬 ${random.nome} está em atendimento`;
-
-// 🔥 reset visual
-popup.style.display = "block";
-popup.style.opacity = "0";
-popup.style.transform = "translateX(-50%) translateY(20px)";
-popup.style.transition = "none";
-
-// 🔥 anima entrada
-setTimeout(()=>{
-  popup.style.transition = "0.3s";
-  popup.style.opacity = "1";
-  popup.style.transform = "translateX(-50%) translateY(0)";
-},50);
-
-// 🔥 anima saída
-setTimeout(()=>{
+  // 🔥 reset
+  popup.style.display = "block";
   popup.style.opacity = "0";
   popup.style.transform = "translateX(-50%) translateY(20px)";
+  popup.style.transition = "none";
 
+  // 🔥 entrada
   setTimeout(()=>{
-    popup.style.display = "none";
-    agendarPopup();
-  },300);
+    popup.style.transition = "0.3s";
+    popup.style.opacity = "1";
+    popup.style.transform = "translateX(-50%) translateY(0)";
+  },50);
 
-},3000);
+  // 🔥 saída
+  setTimeout(()=>{
+    popup.style.opacity = "0";
+    popup.style.transform = "translateX(-50%) translateY(20px)";
+
+    setTimeout(()=>{
+      popup.style.display = "none";
+      agendarPopup();
+    },300);
+
+  },3000);
 }
-// 🔥 TEMPO ALEATÓRIO
+
+// 🔥 LOOP ESTÁVEL (NÃO TRAVA)
 function agendarPopup(){
-  const tempo = Math.random() * 5000 + 4000;
-  setTimeout(mostrarPopup, tempo);
+  const tempo = Math.random() * 4000 + 3000; // 3s a 7s
+  setTimeout(() => {
+    mostrarPopup();
+  }, tempo);
 }
 
-// 🔥 INICIA
-setTimeout(agendarPopup, 3000);
+// 🔥 START GARANTIDO
+setTimeout(() => {
+  mostrarPopup();
+}, 2000);
 
 </script>
-
 </body>
 </html>
