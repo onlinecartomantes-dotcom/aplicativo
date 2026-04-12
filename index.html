@@ -593,7 +593,7 @@ function buscar(nome){
 
 // 🔥 AGENDA DOS CONSULTORES
 const agenda = {
-  "Pai Márcio": { inicio: 10, fim: 18, pausa: [14, 15] },
+ "Pai Márcio": { inicio: 10, fim: 22 },
   "Samya": { inicio: 10, fim: 22 },
   "Aislyn": { inicio: 12, fim: 20 },
   "Tulipa": { inicio: 10, fim: 17 },
@@ -636,19 +636,19 @@ function statusConsultor(nome){
 
   const estado = controleStatus[nome];
 
- // 🔴 FORA DO EXPEDIENTE (COM HORÁRIO FIXO REAL)
+// 🔴 FORA DO EXPEDIENTE (CORRIGIDO - TEMPO REAL CERTO)
 if(!a || hora < a.inicio || hora >= a.fim){
 
-  // 🔥 cria data de hoje no horário de fechamento
-  let fechamento = new Date();
-  fechamento.setHours(a?.fim || 23, 0, 0, 0);
+  // 🔥 usa o INÍCIO do expediente (não fechamento)
+  let inicioHoje = new Date();
+  inicioHoje.setHours(a?.inicio || 10, 0, 0, 0);
 
-  // 🔥 se ainda não chegou no fechamento hoje → pega o de ontem
-  if(agora < fechamento){
-    fechamento.setDate(fechamento.getDate() - 1);
+  // 🔥 se ainda não chegou no horário de início → continua hoje mesmo
+  if(agora < inicioHoje){
+    inicioHoje.setDate(inicioHoje.getDate());
   }
 
-  const minutosOffline = Math.floor((agoraMs - fechamento.getTime()) / 60000);
+  const minutosOffline = Math.floor((agoraMs - inicioHoje.getTime()) / 60000);
 
   return {
     online: false,
@@ -656,19 +656,20 @@ if(!a || hora < a.inicio || hora >= a.fim){
   };
 }
 
+
 // ⏸ PAUSA (CORRIGIDO E COM TEMPO REAL)
 if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
 
-  // força offline
+  // 🔥 força offline durante pausa
   if(estado.online){
     estado.online = false;
     estado.mudouEm = agoraMs;
   }
 
-  // salva estado
+  // 🔥 salva estado
   localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
 
-  // calcula tempo desde o início da pausa
+  // 🔥 calcula tempo desde início da pausa
   let pausaInicio = new Date();
   pausaInicio.setHours(a.pausa[0], 0, 0, 0);
 
@@ -679,7 +680,6 @@ if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
     tempo:minutosOffline
   };
 }
-
 // 🔥 TROCA INTELIGENTE (COM TEMPO MÍNIMO)
 const tempoMinimo = 3 + Math.floor(Math.random()*3); 
 // entre 3 e 5 minutos
