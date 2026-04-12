@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -681,7 +682,8 @@ if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
 }
 
 // 🔥 TROCA INTELIGENTE (COM TEMPO MÍNIMO)
-const tempoMinimo = 2; // minutos mínimos no mesmo estado
+const tempoMinimo = 3 + Math.floor(Math.random()*3); 
+// entre 3 e 5 minutos
 
 if(agoraMs - estado.mudouEm > tempoMinimo * 60000){
 
