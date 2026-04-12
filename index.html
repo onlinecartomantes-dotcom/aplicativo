@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -751,14 +750,13 @@ const online = status.online;
 const tempoTxt = formatarTempo(status.tempo);
 
 return `
-<a class="card" 
-${online ? `
-href="https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html"
+<a class="card"
+data-online="${online}"
 onclick="
-localStorage.setItem('consultorNome','${c.nome}');
-localStorage.setItem('consultorImagem','${c.img}');
+const online = this.getAttribute('data-online') === 'true';
+abrirPerfil('${c.nome}','${c.img}', online);
 "
-` : `href="javascript:void(0)"`}>
+href="javascript:void(0)">
 <div class="tempo">
   <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
     <circle cx="12" cy="12" r="9"></circle>
@@ -1127,15 +1125,19 @@ if(btn){
 }
 
 } // ✅ FIM renderDestaque
+
 function abrirPerfil(nome, img, online){
 
+  // 🔥 TRAVA ABSOLUTA (NUNCA ENTRA OFFLINE)
   if(!online){
     return;
   }
 
+  // 🔥 SALVA DADOS
   localStorage.setItem('consultorNome', nome);
   localStorage.setItem('consultorImagem', img);
 
+  // 🔥 REDIRECIONA
   window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html";
 }
 
@@ -1165,19 +1167,21 @@ function trocar(tipo,el){
 renderPrincipal(tipoAtual);
 
 
-// 🔥 ATUALIZAÇÃO SUAVE
+// 🔥 ATUALIZAÇÃO SUAVE (ESTÁVEL E SEM BUG)
 setInterval(() => {
 
-statusCache = Object.create(null);
+  // 🔥 limpa cache pra recalcular (ok com 10s)
+  statusCache = Object.create(null);
 
   document.querySelectorAll(".card").forEach(card => {
 
     const nome = card.querySelector(".nome")?.innerText;
     if(!nome) return;
 
-    const status = getStatus(nome); // ✅ USAR CACHE
+    const status = getStatus(nome);
     const tempoTxt = formatarTempo(status.tempo);
 
+    // 🔥 ATUALIZA TEMPO
     const tempoEl = card.querySelector(".tempo");
 
     if(tempoEl){
@@ -1192,6 +1196,7 @@ statusCache = Object.create(null);
       texto.textContent = "≈ " + tempoTxt;
     }
 
+    // 🔥 ATUALIZA BOLINHA
     const foto = card.querySelector(".foto");
     if(!foto) return;
 
@@ -1209,6 +1214,7 @@ statusCache = Object.create(null);
       if(bolinha) bolinha.remove();
     }
 
+    // 🔥 ATUALIZA DESCRIÇÃO
     const desc = card.querySelector(".desc");
 
     if(desc){
@@ -1217,12 +1223,15 @@ statusCache = Object.create(null);
         : "Indisponível • offline há " + tempoTxt;
     }
 
+    // 🔥 🔥 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
+    // salva estado atual no card (TRAVA VISUAL = TRAVA DE CLIQUE)
+    card.setAttribute("data-online", status.online);
+
   });
 
   renderDestaque();
 
 }, 10000);
-
 /* =========================
 🔥 PWA + DETECÇÃO
 ========================= */
@@ -1408,7 +1417,9 @@ function podeContratar(nome){
 
 function clicarContratar(nome, imagem){
 
-  if(!podeContratar(nome)){
+  const status = getStatus(nome);
+
+  if(!status.online){
     alert("⏳ Consultor indisponível no momento");
     return;
   }
