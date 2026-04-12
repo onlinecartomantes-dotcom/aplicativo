@@ -636,26 +636,22 @@ function statusConsultor(nome){
 
   const estado = controleStatus[nome];
 
-// 🔴 FORA DO EXPEDIENTE (CORRIGIDO - TEMPO REAL CERTO)
+// 🔴 FORA DO EXPEDIENTE (TEMPO REAL A PARTIR DE AGORA)
 if(!a || hora < a.inicio || hora >= a.fim){
 
-  // 🔥 usa o INÍCIO do expediente (não fechamento)
-  let inicioHoje = new Date();
-  inicioHoje.setHours(a?.inicio || 10, 0, 0, 0);
-
-  // 🔥 se ainda não chegou no horário de início → continua hoje mesmo
-  if(agora < inicioHoje){
-    inicioHoje.setDate(inicioHoje.getDate());
+  // 🔥 se ainda não existe registro → começa AGORA
+  if(!estado.offlineDesde){
+    estado.offlineDesde = agoraMs;
+    localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
   }
 
-  const minutosOffline = Math.floor((agoraMs - inicioHoje.getTime()) / 60000);
+  const minutosOffline = Math.floor((agoraMs - estado.offlineDesde) / 60000);
 
   return {
     online: false,
     tempo: minutosOffline
   };
 }
-
 
 // ⏸ PAUSA (CORRIGIDO E COM TEMPO REAL)
 if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
@@ -697,6 +693,10 @@ localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
 
 const minutosPassados = Math.floor((agoraMs - estado.mudouEm)/60000);
 
+// 🔥 RESET DO CONTADOR OFFLINE (AQUI 👇)
+if(estado.online){
+  estado.offlineDesde = null;
+}
 // 🟢 ONLINE → FILA REAL
 if(estado.online){
 
