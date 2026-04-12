@@ -750,7 +750,6 @@ localStorage.setItem('consultorNome','${c.nome}');
 localStorage.setItem('consultorImagem','${c.img}');
 "
 ` : `href="javascript:void(0)"`}>
-
 <div class="tempo">
   <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
     <circle cx="12" cy="12" r="9"></circle>
@@ -1098,7 +1097,17 @@ if(btn){
 }
 
 } // ✅ FIM renderDestaque
+function abrirPerfil(nome, img, online){
 
+  if(!online){
+    return;
+  }
+
+  localStorage.setItem('consultorNome', nome);
+  localStorage.setItem('consultorImagem', img);
+
+  window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html";
+}
 
 // 🔥 CONTROLE DO TIPO ATUAL
 let tipoAtual = "clareza";
