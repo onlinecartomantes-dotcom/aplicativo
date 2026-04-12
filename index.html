@@ -758,9 +758,7 @@ localStorage.setItem('consultorImagem','${c.img}');
   </svg>
   <span>
     ${
-      online 
-      ? "≈ " + tempoTxt
-      : "Offline há " + tempoTxt
+     "≈ " + tempoTxt
     }
   </span>
 </div>
@@ -1071,10 +1069,7 @@ document.getElementById("pessoasSemana").innerText =
 // 🔥 TEMPO (CORRIGIDO - SEM DUPLICAR STATUS)
 const tempoTxt = formatarTempo(status.tempo);
 
-document.getElementById("tempoTexto").innerText =
-  status.online
-    ? "≈ " + tempoTxt
-    : "Offline há " + tempoTxt;
+document.getElementById("tempoTexto").innerText = "≈ " + tempoTxt;
 
 // 🔥 DESCRIÇÃO
 document.getElementById("descSemana").innerText =
@@ -1153,8 +1148,7 @@ setInterval(() => {
         tempoEl.appendChild(texto);
       }
 
-      texto.textContent =
-        status.online ? "≈ " + tempoTxt : "Offline há " + tempoTxt;
+        texto.textContent = "≈ " + tempoTxt;
     }
 
     const foto = card.querySelector(".foto");
