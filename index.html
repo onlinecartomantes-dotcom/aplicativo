@@ -614,7 +614,8 @@ const agenda = {
 
 // 🔥 CONTROLE REAL (CORRIGIDO E ESTÁVEL)
 let controleStatus = JSON.parse(localStorage.getItem("controleStatus")) || {};
-
+// 👇 NOVO (CACHE GLOBAL)
+statusCache = Object.create(null);
 function statusConsultor(nome){
 
   const agora = new Date();
@@ -717,7 +718,13 @@ if(estado.online){
 // 🔴 OFFLINE → TEMPO REAL
 return { online:false, tempo:minutosPassados };
 }
-
+// 👇 COLE AQUI
+function getStatus(nome){
+  if(!statusCache[nome]){
+    statusCache[nome] = statusConsultor(nome);
+  }
+  return statusCache[nome];
+}
 // ⏱ FORMATAR TEMPO
 function formatarTempo(min){
 
@@ -737,7 +744,7 @@ function pessoas(){
 // 🔥 CARD
 function card(c){
 
-const status = statusConsultor(c.nome);
+const status = getStatus(c.nome);
 const online = status.online;
 const tempoTxt = formatarTempo(status.tempo);
 
@@ -838,7 +845,7 @@ const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
 
 // ✅ AQUI SIM salva o status correto
-const status = statusConsultor(c.nome);
+const status = getStatus(c.nome);
 const online = status.online;
 html+=`
 <div class="card-destaque">
@@ -1054,8 +1061,30 @@ const semana=Math.floor(Date.now()/604800000);
 const c=todos[semana % todos.length];
 
 // ✅ USA O MESMO STATUS (CORRETO)
-const status = statusConsultor(c.nome);
+const status = getStatus(c.nome);
 const online = status.online;
+
+// 🔥 SINCRONIZA A BOLINHA (NOVO)
+const foto = document.querySelector(".foto-destaque");
+
+if(foto){
+
+  if(online){
+
+    if(!foto.querySelector(".online")){
+      const bolinha = document.createElement("div");
+      bolinha.className = "online";
+      foto.appendChild(bolinha);
+    }
+
+  }else{
+
+    const bolinha = foto.querySelector(".online");
+    if(bolinha) bolinha.remove();
+
+  }
+
+}
 
 // 🔥 FOTO + NOME
 document.getElementById("fotoSemana").src=c.img;
@@ -1065,9 +1094,8 @@ document.getElementById("nomeSemana").innerText=c.nome;
 document.getElementById("pessoasSemana").innerText =
 (Math.floor(Math.random()*300)+200)+" pessoas ajudadas";
 
-// 🔥 TEMPO (CORRIGIDO - SEM DUPLICAR STATUS)
+// 🔥 TEMPO
 const tempoTxt = formatarTempo(status.tempo);
-
 document.getElementById("tempoTexto").innerText = "≈ " + tempoTxt;
 
 // 🔥 DESCRIÇÃO
@@ -1138,12 +1166,14 @@ renderPrincipal(tipoAtual);
 // 🔥 ATUALIZAÇÃO SUAVE
 setInterval(() => {
 
+statusCache = Object.create(null);
+
   document.querySelectorAll(".card").forEach(card => {
 
     const nome = card.querySelector(".nome")?.innerText;
     if(!nome) return;
 
-    const status = statusConsultor(nome);
+    const status = getStatus(nome); // ✅ USAR CACHE
     const tempoTxt = formatarTempo(status.tempo);
 
     const tempoEl = card.querySelector(".tempo");
@@ -1157,7 +1187,7 @@ setInterval(() => {
         tempoEl.appendChild(texto);
       }
 
-        texto.textContent = "≈ " + tempoTxt;
+      texto.textContent = "≈ " + tempoTxt;
     }
 
     const foto = card.querySelector(".foto");
@@ -1189,8 +1219,7 @@ setInterval(() => {
 
   renderDestaque();
 
-},10000);
-
+}, 10000);
 
 /* =========================
 🔥 PWA + DETECÇÃO
@@ -1371,7 +1400,7 @@ padding:15px;
 <!-- 🔥 FUNÇÕES (COLE AQUI) -->
 <script>
 function podeContratar(nome){
-  const status = statusConsultor(nome);
+  const status = getStatus(nome);
   return status.online;
 }
 
@@ -1421,9 +1450,8 @@ function todosConsultores(){
 
 // 🔥 PEGA OCUPADOS
 function consultoresOcupados(){
-  return todosConsultores().filter(c => !statusConsultor(c.nome).online);
+ return todosConsultores().filter(c => !getStatus(c.nome).online);
 }
-
 // 🔥 MOSTRAR POPUP
 function mostrarPopup(){
 // 🔥 BLOQUEIO DE HORÁRIO (2h às 10h)
@@ -1456,7 +1484,7 @@ cards.forEach(card => {
 });
 
 // 🔥 DUPLA VERIFICAÇÃO (LÓGICA + TELA)
-const status = statusConsultor(random.nome);
+const status = getStatus(random.nome);
 
 // 🔥 se estiver online OU já aparece online na tela → não mostra popup
 if(status.online || estaComBolinha){
