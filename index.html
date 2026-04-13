@@ -789,7 +789,7 @@ ${online ? '<div class="online"></div>' : ''}
 ${
   online
   ? "Estou Disponível"
-  : "Indisponível • offline há " + tempoTxt
+  : "Indisponível há " + tempoTxt
 }
 </div>
 
@@ -1241,7 +1241,7 @@ setInterval(() => {
     if(desc){
       desc.innerText = status.online
         ? "Estou Disponível"
-        : "Indisponível • offline há " + tempoTxt;
+        : "Indisponível há " + tempoTxt;
     }
 
     // 🔥 🔥 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
