@@ -589,6 +589,12 @@ function buscar(nome){
   return [...banco.clareza,...banco.motivacao,...banco.esperanca]
   .find(c=>c.nome===nome);
 }
+// 🔥 👇 COLE AQUI
+function clicarContratar(nome, imagem){
+  localStorage.setItem('consultorNome', nome);
+  localStorage.setItem('consultorImagem', imagem);
+  window.location.href = "/aplicativo/perfil.html";
+}
 // 🟢 CONTROLE DE ONLINE/OFFLINE (NOVO)
 
 // 🔥 AGENDA DOS CONSULTORES
@@ -900,38 +906,41 @@ html+=`
 // 🔥 SCROLL (igual aos cards)
 html+=`<div class="scroll">`;
 
-// 🔥 CARD 1
+// 🔥 CARD 1 (CONTRATAR LEITURA)
 html+=`
 <div class="card-oferta">
 
   <div class="img-box">
     <img src="https://i.ibb.co/BWYnvNR/Whats-App-Image-2026-04-09-at-20-54-28-1.jpg">
 
-  <button class="btn-oferta" onclick="clicarContratar('Analu','https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp')">
-  Contratar leitura...
-</button>
+    <button class="btn-oferta"
+    onclick="clicarContratar('Analu','https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp')">
+      Consultar agora
+    </button>
+
   </div>
 
 </div>
 `;
-// 🔥 CARD 2
+
+// 🔥 CARD 2 (MAGIA)
 html+=`
 <div class="card-oferta">
 
   <div class="img-box">
     <img src="https://i.ibb.co/1tLqv29M/jkhk.png">
 
-   <button class="btn-oferta"
-   onclick="window.location.href='https://onlinecartomantes-dotcom.github.io/aplicativo/trabalho.html'">
-     Contratar Magia...
-   </button>
+    <button class="btn-oferta"
+    onclick="window.location.href='https://onlinecartomantes-dotcom.github.io/aplicativo/trabalho.html'">
+      Contratar Magia
+    </button>
 
   </div>
 
 </div>
 `;
 
-// 🔥 FECHA SCROLL (CARDS)
+// 🔥 FECHA SCROLL
 html+=`</div>`; 
 
 } // fecha if
@@ -1461,11 +1470,81 @@ function agendarPopup(){
   }, tempo);
 }
 
-// 🔥 START GARANTIDO
+// 🔥 START GARANTIDO (ESPERA O PWA PRIMEIRO)
 setTimeout(() => {
-  mostrarPopup();
-}, 2000);
+
+  const pwa = document.getElementById("pwaPopup");
+
+  // 🔥 se o popup de instalação estiver aberto, espera fechar
+  if(pwa && pwa.style.display === "flex"){
+
+    const check = setInterval(() => {
+      if(pwa.style.display === "none"){
+        clearInterval(check);
+        mostrarPopup();
+      }
+    }, 500);
+
+  } else {
+    mostrarPopup();
+  }
+
+}, 6000);
 
 </script>
+<!-- 🔥 POPUP PWA (INSTALAÇÃO) -->
+<div id="pwaPopup" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.9);
+z-index:99999;
+align-items:center;
+justify-content:center;
+padding:15px;
+">
+
+  <div style="
+  background:#000;
+  color:#fff;
+  padding:20px;
+  border-radius:15px;
+  max-width:340px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 0 25px rgba(255,215,0,0.4);
+  ">
+
+    <h2 id="pwaTitulo" style="color:#ffd700;"></h2>
+    <div id="pwaTexto"></div>
+    <div id="pwaSteps" style="margin-top:10px;text-align:left;"></div>
+
+    <button id="pwaBtn" style="
+    margin-top:12px;
+    padding:12px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#ffd700;
+    font-weight:bold;
+    ">
+      CONTINUAR
+    </button>
+
+    <button onclick="fecharPWA()" style="
+    margin-top:8px;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#333;
+    color:#fff;
+    ">
+      AGORA NÃO
+    </button>
+
+  </div>
+
+</div>
 </body>
 </html>
