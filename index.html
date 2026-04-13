@@ -1605,5 +1605,109 @@ atualizarSaudacao();
 setInterval(atualizarSaudacao, 60000);
 </script>
 <!-- 🔥 FIM -->
+<!-- 🔥 BOTÃO FLUTUANTE AJUSTADO -->
+<style>
+.botao-flutuante {
+  position: fixed;
+  bottom: 90px; /* 👈 sobe pra não bater nos cards */
+  right: 15px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #FFD700, #FFC300);
+  color: black;
+  border: 2px solid white;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  z-index: 9998;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* 🔥 POPUP */
+.popup-video {
+  position: fixed;
+  bottom: 170px; /* 👈 fica acima do botão */
+  right: 15px;
+  z-index: 9999;
+  display: none;
+}
+
+.popup-box {
+  position: relative;
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.7) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.popup-box video {
+  width: 220px; /* 👈 tamanho controlado */
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+}
+
+/* 🔥 BOTÃO FECHAR */
+.fechar-popup {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #FFD700;
+  color: black;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 26px;
+  cursor: pointer;
+}
+</style>
+
+<!-- 🔥 BOTÃO -->
+<button class="botao-flutuante" onclick="abrirPopup()">OLÁ</button>
+
+<!-- 🔥 POPUP -->
+<div class="popup-video" id="popupVideo">
+  <div class="popup-box">
+
+    <div class="fechar-popup" onclick="fecharPopup()">×</div>
+
+    <video id="videoPopup" autoplay muted controls>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+
+  </div>
+</div>
+
+<script>
+function abrirPopup(){
+  document.getElementById("popupVideo").style.display = "block";
+}
+
+function fecharPopup(){
+  const popup = document.getElementById("popupVideo");
+  popup.style.display = "none";
+
+  const video = document.getElementById("videoPopup");
+  video.pause();
+  video.currentTime = 0;
+}
+<script>
 </body>
 </html>
