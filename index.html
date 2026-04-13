@@ -1696,22 +1696,39 @@ setInterval(atualizarSaudacao, 60000);
 
     <div class="fechar-popup" onclick="fecharPopup()">×</div>
 
-    <video id="videoPopup" autoplay muted playsinline controls>
-  <source src="https://onlinecartomantes-dotcom.github.io/aplicativo/video.mp4" type="video/mp4">
-</video>
+    <video id="videoPopup" muted playsinline controls>
+      <source src="https://onlinecartomantes-dotcom.github.io/aplicativo/video.mp4" type="video/mp4">
+    </video>
 
   </div>
 </div>
 <script>
+let popupAberto = false;
+
 function abrirPopup(){
-  document.getElementById("popupVideo").style.display = "block";
+  const popup = document.getElementById("popupVideo");
+  const video = document.getElementById("videoPopup");
+
+  if(popupAberto) return;
+
+  popup.style.display = "block";
+  popupAberto = true;
+
+  video.currentTime = 0;
+  video.muted = true;
+  video.play().catch(() => {});
 }
 
 function fecharPopup(){
   const popup = document.getElementById("popupVideo");
+  const video = document.getElementById("videoPopup");
+
+  if(!popupAberto) return;
+
+  popupAberto = false;
+
   popup.style.display = "none";
 
-  const video = document.getElementById("videoPopup");
   video.pause();
   video.currentTime = 0;
 }
