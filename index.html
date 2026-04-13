@@ -1657,7 +1657,7 @@ setInterval(atualizarSaudacao, 60000);
 }
 
 .popup-box video {
-  width: 75vw;
+  width: 60vw;
   max-width: 280px;
   height: auto;
   border-radius: 12px;
@@ -1666,17 +1666,24 @@ setInterval(atualizarSaudacao, 60000);
 /* 🔥 BOTÃO FECHAR */
 .fechar-popup {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: -12px;
+  right: -12px;
+
   background: #FFD700;
   color: black;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
+
+  width: 36px;       /* 👈 maior */
+  height: 36px;      /* 👈 maior */
+  line-height: 36px;
+
+  font-size: 18px;   /* 👈 X maior */
   font-weight: bold;
+
+  border-radius: 50%;
   text-align: center;
-  line-height: 26px;
   cursor: pointer;
+
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
 }
 </style>
 
@@ -1684,8 +1691,8 @@ setInterval(atualizarSaudacao, 60000);
 <button class="botao-flutuante" onclick="abrirPopup()">OLÁ</button>
 
 <!-- 🔥 POPUP -->
-<div class="popup-video" id="popupVideo">
-  <div class="popup-box">
+<div class="popup-video" id="popupVideo" onclick="fecharPopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
 
     <div class="fechar-popup" onclick="fecharPopup()">×</div>
 
