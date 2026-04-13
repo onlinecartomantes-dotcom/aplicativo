@@ -1406,14 +1406,28 @@ function todosConsultores(){
 
 // 🔥 PEGA CONSULTORES NO HORÁRIO (SEM BUG)
 function consultoresOcupados(){
+
   const hora = new Date().getHours();
 
   return todosConsultores().filter(c => {
-    const a = agenda[c.nome];
-    return a && hora >= a.inicio && hora < a.fim;
-  });
-}
 
+    const a = agenda[c.nome];
+    if(!a) return false;
+
+    // ✅ dentro do horário
+    const dentroHorario = hora >= a.inicio && hora < a.fim;
+
+    if(!dentroHorario) return false;
+
+    // ✅ pega status REAL (igual ao card)
+    const status = getStatus(c.nome);
+
+    // ✅ regra principal
+    return status && status.online === false;
+
+  });
+
+}
 // 🔥 MOSTRAR POPUP (BLINDADO)
 function mostrarPopup(){
 
