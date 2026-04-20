@@ -79,7 +79,7 @@ body{
 .ola{
   font-size:32px;
   font-weight:600;
-  color:#000;
+  color: var(--text);
 }
 
 /* BOX */
@@ -153,12 +153,14 @@ body{
 margin:12px 15px 6px;
 font-weight:700;
 font-size:18px;
-color:#333;
+
+/* 🔥 COR DINÂMICA */
+color: var(--text);
+
 display:flex;
 align-items:center;
 gap:12px;
 }
-
 .titulo img{
 width:40px;
 }
@@ -185,33 +187,42 @@ min-height:150px;
 border-radius:20px;
 padding:16px 10px;
 position:relative;
-background:#fff;
+
+/* 🔥 AGORA DINÂMICO */
+background: var(--card);
+
 box-shadow:0 6px 18px rgba(0,0,0,0.08);
 scroll-snap-align:center;
 overflow:hidden;
 text-align:center;
 
-/* 🔥 CORREÇÃO DO LINK */
+/* 🔥 LINK CORRETO */
 display:block;
 text-decoration:none;
 color:inherit;
-}
 
-/* 🔥 REMOVE AZUL E SUBLINHADO DE TUDO */
+/* 🔥 TRANSIÇÃO BONITA */
+transition: all 0.3s ease;
+}
+/* 🔥 LINK DO CARD (CORRIGIDO) */
 .card{
-text-decoration:none;
-color:inherit;
-}
-/* 🔥 EFEITO DE CLIQUE (OPCIONAL TOP) */
-.card:active{
-transform:scale(0.98);
-}
+  display:block;
+  text-decoration:none;
+  color:inherit;
 
-/* 🔥 BASE DO CARD (IMPORTANTE) */
-.card{
   position:relative;
 }
 
+/* 🔥 REMOVE AZUL E SUBLINHADO */
+.card{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* 🔥 EFEITO DE CLIQUE */
+.card:active{
+  transform:scale(0.98);
+}
 /* 🔥 FUNDO DO CARD */
 .card::before{
   content:"";
@@ -239,8 +250,10 @@ transform:scale(0.98);
   align-items:center;
   gap:4px;
 
-  background:#fff3cd;
-  color:#b8860b;
+  /* 🔥 AGORA DINÂMICO */
+  background: var(--box);
+  color: var(--subtext);
+
   font-size:10px;
   font-weight:bold;
   padding:4px 8px;
@@ -249,12 +262,15 @@ transform:scale(0.98);
   z-index:999;
   max-width:70%;
 }
-/* 🔥 ícone menor */
+
+/* 🔥 ÍCONE MENOR */
 .tempo svg{
   width:12px;
   height:12px;
-}
 
+  /* 🔥 COR DINÂMICA */
+  stroke: var(--subtext);
+}
 /* FOTO */
 .foto{
   width:30vw;
@@ -299,19 +315,25 @@ transform:scale(0.98);
 text-align:center;
 }
 
+/* 🔥 NOME */
 .nome{
   margin-top:15px; /* mais próximo da foto */
   font-weight:600;
-   font-size:clamp(18px, 5vw, 26px);
-  color:#333;
+  font-size:clamp(18px, 5vw, 26px);
+
+  /* 🔥 DINÂMICO */
+  color: var(--text);
 }
 
+/* 🔥 DESCRIÇÃO */
 .desc{
   font-size:clamp(14px, 4vw, 18px);
-  color:#c47a00; /* voltou para o dourado/amarelo */
+
+  /* 🔥 DINÂMICO */
+  color: var(--subtext);
+
   margin-top:8px;
 }
-
 .foot{
   font-size:13px;
   margin-top:15px;
@@ -428,19 +450,19 @@ img{
 /* 🔥 NOME (AGORA DESCE DE VERDADE) */
 .card-destaque .nome-destaque{
   display:block;
-  margin-top:5px; /* 👈 AGORA FUNCIONA DE VERDADE */
+  margin-top:5px; /* 👈 espaçamento correto */
   font-weight:600;
   font-size:clamp(18px, 5vw, 26px);
-  color:#333;
-}
 
+  /* 🔥 AGORA DINÂMICO */
+  color: var(--text);
+}
 /* 🔥 SUB */
 .sub{
   font-size:clamp(14px, 4vw, 18px);
-  color:#c47a00;
+  color: var(--subtext);
   margin-top:12px;
 }
-
 /* 🔥 INFO */
 .info{
   display:flex;
@@ -457,30 +479,36 @@ img{
   font-size:13px;
 }
 
-/* 🔥 TEMPO */
+/* 🔥 TEMPO (AGORA DINÂMICO) */
 #tempoSemana{
   display:flex;
   align-items:center;
   gap:6px;
-  background:#fff3cd;
-  color:#b8860b;
+
+  /* 🔥 DINÂMICO */
+  background: var(--box);
+  color: var(--subtext);
+
   font-size:11px;
   font-weight:bold;
   padding:5px 10px;
   border-radius:20px;
 }
 
+/* 🔥 ÍCONE (CORRIGIDO - SEM DUPLICAÇÃO) */
 #tempoSemana svg{
   width:14px;
   height:14px;
-  stroke:#b8860b;
+  stroke: var(--subtext);
 }
 
 /* 🔥 TEXTO */
 .texto{
   margin-top:15px;
   font-size:14px;
-  color:#555;
+
+  /* 🔥 DINÂMICO */
+  color: var(--text);
 }
 
 /* 🔥 BOTÃO */
@@ -496,7 +524,7 @@ img{
   font-weight:600;
 }
 
-/* 🔥 CARD OFERTA (NOVO MODELO) */
+/* 🔥 CARD OFERTA */
 .card-oferta{
   flex:0 0 auto;
   width:85%;
@@ -511,7 +539,7 @@ img{
   position:relative;
 }
 
-/* IMAGEM */
+/* 🔥 IMAGEM */
 .img-box img{
   width:100%;
   display:block;
@@ -538,10 +566,57 @@ img{
   box-shadow:0 6px 18px rgba(0,0,0,0.2);
 }
 
+/* =========================
+🔥 DARK MODE FINAL
+========================= */
+
+/* 🔥 REMOVE BRANCOS INLINE */
+.dark div[style*="background:#fff"]{
+  background:#020617 !important;
+  color:#fff !important;
+}
+
+/* 🔥 TEXTOS */
+.dark .ola,
+.dark .titulo,
+.dark .nome{
+  color:#ffffff !important;
+}
+
+.dark .desc{
+  color:#facc15 !important;
+}
+
+.dark .texto{
+  color:#cbd5e1 !important;
+}
+
+/* 🔥 BOX */
+.dark .box{
+  background:#020617 !important;
+}
+
+/* 🔥 CARDS */
+.dark .card{
+  background:#020617 !important;
+}
+
+/* 🔥 OPÇÕES */
+.dark .op{
+  background:#0f172a !important;
+  color:#facc15 !important;
+  border:2px solid rgba(250,204,21,0.3) !important;
+}
+
+/* 🔥 BOTÃO TOPO */
+.dark #toggleTema{
+  background:#facc15 !important;
+  color:#000 !important;
+}
+
 </style>
 </head>
 <body>
-
 <div class="topo-novo">
 
   <img src="https://i.ibb.co/CpTCs8s9/Design-sem-nome-removebg-preview.png">
@@ -1780,51 +1855,74 @@ function fecharPopup(){
 </script>
 
 <!-- =========================
-🌙 SCRIPT DO TEMA (ETAPA 3)
+🌙 SCRIPT DO TEMA (VERSÃO PRO)
 ========================= -->
 <script>
 
+// 🔥 detecta tema automático (opcional)
+function detectarTemaSistema(){
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+// 🔥 aplica tema
 function aplicarTema(){
 
-  const tema = localStorage.getItem("tema");
+  let tema = localStorage.getItem("tema");
+
+  // 🔥 se nunca escolheu → usa sistema
+  if(!tema){
+    tema = detectarTemaSistema() ? "dark" : "light";
+  }
+
+  const btn = document.getElementById("toggleTema");
 
   if(tema === "dark"){
     document.body.classList.add("dark");
-
-    const btn = document.getElementById("toggleTema");
     if(btn) btn.innerText = "☀️";
-
   }else{
     document.body.classList.remove("dark");
-
-    const btn = document.getElementById("toggleTema");
     if(btn) btn.innerText = "🌙";
   }
 
 }
 
+// 🔥 alternar tema
+function alternarTema(){
+
+  const escuro = document.body.classList.contains("dark");
+
+  if(escuro){
+    localStorage.setItem("tema","light");
+  }else{
+    localStorage.setItem("tema","dark");
+  }
+
+  aplicarTema();
+}
+
+// 🔥 inicia tudo
 document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.getElementById("toggleTema");
 
-  if(!btn) return;
-
-  btn.onclick = () => {
-
-    const escuro = document.body.classList.contains("dark");
-
-    if(escuro){
-      localStorage.setItem("tema","light");
-    }else{
-      localStorage.setItem("tema","dark");
-    }
-
-    aplicarTema();
-  };
+  if(btn){
+    btn.onclick = alternarTema;
+  }
 
   aplicarTema();
 
 });
+
+// 🔥 atualiza se sistema mudar (TOP nível)
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+
+  // só aplica automático se usuário NÃO escolheu manual
+  if(!localStorage.getItem("tema")){
+    aplicarTema();
+  }
+
+});
+
 </script>
 
 </body>
