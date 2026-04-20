@@ -16,18 +16,39 @@
 
 *{box-sizing:border-box;}
 
+/* 🔥 VARIÁVEIS DE TEMA (ETAPA 1) */
+:root{
+  --bg: linear-gradient(180deg, #fffdf5 0%, #fff4cc 40%, #ffe8a3 100%);
+  --card: #fff;
+  --text: #333;
+  --subtext: #c47a00;
+  --box: #fff;
+}
+
+/* 🌙 MODO ESCURO */
+.dark{
+  --bg: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+  --card: #111827;
+  --text: #f1f5f9;
+  --subtext: #facc15;
+  --box: #1e293b;
+}
+
 body{
   margin:0;
   font-family:'Poppins', sans-serif;
 
-  /* 🔥 FUNDO MAIS BONITO E SUAVE */
-  background: linear-gradient(180deg, #fffdf5 0%, #fff4cc 40%, #ffe8a3 100%);
+  /* 🔥 AGORA DINÂMICO */
+  background: var(--bg);
   background-attachment: fixed;
 
   overflow-x:hidden;
 
-  max-width:500px;  /* 👈 mantém */
-  margin:auto;      /* 👈 mantém */
+  max-width:500px;
+  margin:auto;
+
+  /* 🔥 TRANSIÇÃO SUAVE */
+  transition: all 0.3s ease;
 }
 
 /* TOPO */
@@ -49,22 +70,25 @@ body{
   box-shadow:none;
   background:none;
 }
+
 /* só posiciona a da direita */
 .logo-direita{
   margin-left:auto;
 }
+
 .ola{
   font-size:32px;
   font-weight:600;
   color:#000;
 }
+
 /* BOX */
 .box{
-background:#fff;
-margin:15px;
-padding:15px;
-border-radius:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  background: var(--box);
+  margin:15px;
+  padding:15px;
+  border-radius:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
 /* OPÇÕES */
@@ -73,21 +97,20 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
   gap:10px;
   margin-top:5px;
 
-  overflow-x:hidden; /* ✅ padrão SEM scroll */
+  overflow-x:hidden;
   scroll-behavior:smooth;
   justify-content:space-between;
 
-  /* 👇 esconder barra de rolagem */
-  scrollbar-width:none; /* Firefox */
+  scrollbar-width:none;
 }
 
 .opcoes::-webkit-scrollbar{
-  display:none; /* Chrome, Safari, Instagram */
+  display:none;
 }
 
 .op{
-  flex:1;              /* ✅ divide espaço no Chrome/Safari */
-  min-width:0;         /* ✅ evita quebrar no Safari */
+  flex:1;
+  min-width:0;
   padding:12px 6px;
   border-radius:16px;
   border:2px solid #e6c068;
@@ -96,7 +119,7 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
   font-weight:bold;
   cursor:pointer;
   background:#f7f1e3;
-  white-space:nowrap; /* evita quebrar texto */
+  white-space:nowrap;
 }
 
 .op img{
@@ -107,7 +130,7 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
   margin-bottom:6px;
 }
 
-/* 👇 SOMENTE INSTAGRAM / FACEBOOK (volta o scroll) */
+/* 👇 INSTAGRAM / FACEBOOK */
 .app-view .opcoes{
   overflow-x:auto;
   justify-content:flex-start;
@@ -118,7 +141,6 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
   min-width:120px;
   padding:14px 10px;
 }
-
 .op.active{
   background:linear-gradient(45deg,#ffd700,#e6c068);
   color:#fff;
@@ -322,13 +344,16 @@ img{
 
 /* 🔥 CARD DESTAQUE (PADRÃO DOS CARDS) */
 .card-destaque{
-  background:#fff;
+  background: var(--card); /* 🔥 antes era #fff */
   margin:15px;
   padding:20px;
   border-radius:20px;
   box-shadow:0 6px 18px rgba(0,0,0,0.08);
   position:relative;
   overflow:hidden;
+
+  /* 🔥 animação suave */
+  transition: all 0.3s ease;
 }
 
 .card-destaque::before{
@@ -345,7 +370,6 @@ img{
   position:relative;
   z-index:2;
 }
-
 /* 🔥 TOPO CORRIGIDO (ESSA É A CHAVE) */
 .topo-destaque{
   display:flex;
@@ -519,14 +543,33 @@ img{
 <body>
 
 <div class="topo-novo">
+
   <img src="https://i.ibb.co/CpTCs8s9/Design-sem-nome-removebg-preview.png">
+
   <span class="ola">Olá :)</span>
+
+  <!-- 🔥 BOTÃO MODO ESCURO -->
+  <button id="toggleTema" style="
+  margin-left:auto;
+  background:#111;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:20px;
+  font-size:14px;
+  cursor:pointer;
+  ">
+    🌙
+  </button>
+
   <!-- NOVA IMAGEM -->
   <img class="logo-direita" src="https://i.ibb.co/FqhZTCZg/logo-192-removebg-preview.png">
+
 </div>
 
 <div class="box">
 <div class="titulo">O que está procurando?</div><div class="opcoes">
+
 <div class="op active" onclick="trocar('clareza',this)">
 <img src="https://i.ibb.co/TMVkVXN6/pp.png">Clareza
 </div>
@@ -538,10 +581,13 @@ img{
 <div class="op" onclick="trocar('esperanca',this)">
 <img src="https://i.ibb.co/ccP46cMj/kkkkk.png">Esperança
 </div>
+
 </div>
 </div>
+
 <div id="principal"></div>
 <div id="fixo"></div>
+
 <script>
 const banco={
 clareza:[
@@ -1732,5 +1778,54 @@ function fecharPopup(){
   }
 }
 </script>
+
+<!-- =========================
+🌙 SCRIPT DO TEMA (ETAPA 3)
+========================= -->
+<script>
+
+function aplicarTema(){
+
+  const tema = localStorage.getItem("tema");
+
+  if(tema === "dark"){
+    document.body.classList.add("dark");
+
+    const btn = document.getElementById("toggleTema");
+    if(btn) btn.innerText = "☀️";
+
+  }else{
+    document.body.classList.remove("dark");
+
+    const btn = document.getElementById("toggleTema");
+    if(btn) btn.innerText = "🌙";
+  }
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const btn = document.getElementById("toggleTema");
+
+  if(!btn) return;
+
+  btn.onclick = () => {
+
+    const escuro = document.body.classList.contains("dark");
+
+    if(escuro){
+      localStorage.setItem("tema","light");
+    }else{
+      localStorage.setItem("tema","dark");
+    }
+
+    aplicarTema();
+  };
+
+  aplicarTema();
+
+});
+</script>
+
 </body>
 </html>
