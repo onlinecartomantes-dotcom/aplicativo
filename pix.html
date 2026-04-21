@@ -227,21 +227,23 @@ minutos.forEach(m=>{
     <div>R$ ${preco}</div>
   `;
 
-  div.onclick = () => {
-    document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
-    div.classList.add("selected");
+div.onclick = () => {
+  document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+  div.classList.add("selected");
 
-    precoFinal = preco;
-    minutosSelecionados = m;
+  precoFinal = preco;
+  minutosSelecionados = m;
 
-    btn.disabled = false;
-  };
+  btn.disabled = false;
+};
 
-  opcoes.appendChild(div);
+opcoes.appendChild(div);
 
 });
 
+// =========================
 // PAGAMENTO
+// =========================
 btn.onclick = () => {
 
   btn.innerText = "Processando...";
@@ -249,11 +251,12 @@ btn.onclick = () => {
 
   setTimeout(()=>{
 
-    const valorFormatado = precoFinal.replace('.', ',');
+    // 🔥 descrição dinâmica
     const descricao = encodeURIComponent(`Consulta com ${nome} - ${minutosSelecionados} minutos`);
 
+    // 🔥 REDIRECIONA PARA SEU RENDER
     window.location.href =
-    `https://pagamentopix.helioho.st/index.php?valor=${valorFormatado}&descricao=${descricao}`;
+    `https://api-ovz6.onrender.com/?valor=${precoFinal}&descricao=${descricao}`;
 
   }, 800);
 
