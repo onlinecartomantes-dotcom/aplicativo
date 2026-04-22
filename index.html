@@ -608,74 +608,137 @@ img{
  color:#000 !important;
 }
 
-/* ===== LOJA ===== */
+/* ===== LOJA PRODUTOS ===== */
 
-.scroll-loja{
+.scroll{
+display:flex;
+gap:14px;
 overflow-x:auto;
 padding:10px 15px;
+scroll-behavior:smooth;
+-webkit-overflow-scrolling:touch;
 scrollbar-width:none;
 }
 
-.scroll-loja::-webkit-scrollbar{
+.scroll::-webkit-scrollbar{
 display:none;
 }
 
-.grid-loja{
-display:grid;
-grid-template-rows:repeat(2,auto);
-grid-auto-flow:column;
-grid-auto-columns:190px;
-gap:14px;
+.produto-card{
+flex:0 0 auto;
+width:86%;
+max-width:320px;
+min-width:260px;
+background:var(--card);
+border-radius:24px;
+padding:14px;
+box-shadow:0 8px 22px rgba(0,0,0,.08);
+scroll-snap-align:center;
+transition:.25s;
 }
 
-.produto-card{
-background:var(--card);
-border-radius:20px;
-padding:12px;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
+.produto-card:active{
+transform:scale(.98);
 }
 
 .produto-img{
 background:#fff6c9;
-height:140px;
-border-radius:18px;
+height:190px;
+border-radius:22px;
 display:flex;
 align-items:center;
 justify-content:center;
-padding:10px;
-margin-bottom:10px;
+padding:14px;
+margin-bottom:14px;
+overflow:hidden;
 }
 
 .produto-img img{
 max-width:100%;
-max-height:120px;
+max-height:170px;
 object-fit:contain;
+display:block;
 }
 
 .produto-nome{
-font-size:13px;
+font-size:15px;
 font-weight:700;
 color:var(--text);
-line-height:1.3;
-height:52px;
+line-height:1.35;
+min-height:72px;
+max-height:72px;
 overflow:hidden;
-margin-bottom:10px;
+margin-bottom:14px;
 }
 
 .produto-btn{
 display:block;
+width:100%;
 text-align:center;
-padding:12px;
+padding:14px;
 border-radius:18px;
 background:linear-gradient(45deg,#00bfa6,#1abc9c);
 color:#fff;
 font-weight:700;
 text-decoration:none;
-font-size:14px;
+font-size:15px;
+box-shadow:0 6px 18px rgba(0,191,166,.25);
 }
 
-</style>
-</style>
+.produto-btn:active{
+transform:scale(.98);
+}
+
+/* MODO ESCURO */
+.dark .produto-card{
+background:#020617 !important;
+}
+
+.dark .produto-img{
+background:#1e293b !important;
+}
+
+.dark .produto-nome{
+color:#fff !important;
+}
+
+.dark .produto-btn{
+background:linear-gradient(45deg,#facc15,#eab308);
+color:#000 !important;
+}
+
+/* CELULAR */
+@media(max-width:600px){
+
+.produto-card{
+width:88%;
+min-width:250px;
+max-width:280px;
+padding:12px;
+}
+
+.produto-img{
+height:170px;
+}
+
+.produto-img img{
+max-height:150px;
+}
+
+.produto-nome{
+font-size:14px;
+min-height:66px;
+max-height:66px;
+}
+
+.produto-btn{
+font-size:14px;
+padding:13px;
+}
+
+}
+
+</style></style>
 </head>
 <body>
 <div class="topo-novo">
@@ -1141,17 +1204,17 @@ html += `
 </div>
 
 <div class="scroll">
-    
+
 <!-- PRODUTO 1 -->
 <div class="produto-card">
 <div class="produto-img">
 <img src="https://m.media-amazon.com/images/I/71rfEmEOuuL._AC_SX679_.jpg">
 </div>
 <div class="produto-nome">
-Banho de Ervas Especiais do Amor
+Banho de Ervas Especiais do Amor - Desejando o Amor 150g | Bendito Seja
 </div>
 <a href="https://amzn.to/4cFxA8T" target="_blank" class="produto-btn">
-Comprar
+Comprar Agora
 </a>
 </div>
 
@@ -1161,10 +1224,10 @@ Comprar
 <img src="https://m.media-amazon.com/images/I/71va7DJzifL._AC_SX679_.jpg">
 </div>
 <div class="produto-nome">
-Banho de 8 Ervas Premium
+Banho de 8 Ervas – 8 Ervas Premium da Naturopoly | Limpeza e Proteção
 </div>
 <a href="https://amzn.to/4mGy7fc" target="_blank" class="produto-btn">
-Comprar
+Comprar Agora
 </a>
 </div>
 
@@ -1174,10 +1237,10 @@ Comprar
 <img src="https://m.media-amazon.com/images/I/61SKAp0kzHL._AC_SX679_.jpg">
 </div>
 <div class="produto-nome">
-Kit Velas Aromáticas
+Kit 2 Velas Aromáticas Premium no Copo de Vidro Lavanda e Alecrim
 </div>
 <a href="https://amzn.to/428o0qp" target="_blank" class="produto-btn">
-Comprar
+Comprar Agora
 </a>
 </div>
 
@@ -1187,10 +1250,10 @@ Comprar
 <img src="https://m.media-amazon.com/images/I/61TX81Si8DL._AC_SX679_.jpg">
 </div>
 <div class="produto-nome">
-Guia Proteção Exu
+Guia de Proteção de Exu 7x7 Preto e Vermelho Umbanda Candomblé
 </div>
 <a href="https://amzn.to/4u3YbU9" target="_blank" class="produto-btn">
-Comprar
+Comprar Agora
 </a>
 </div>
 
@@ -1200,10 +1263,75 @@ Comprar
 <img src="https://m.media-amazon.com/images/I/51Wwm+nzjtL._AC_SX679_.jpg">
 </div>
 <div class="produto-nome">
-Guia Oxossi Verde
+Guia de Proteção de Oxossi em Miçanga Verde Umbanda Candomblé
 </div>
 <a href="https://amzn.to/4tqFH06" target="_blank" class="produto-btn">
-Comprar
+Comprar Agora
+</a>
+</div>
+
+<!-- PRODUTO 6 -->
+<div class="produto-card">
+<div class="produto-img">
+<img src="https://m.media-amazon.com/images/I/51PHtE7HOqL._AC_SX679_.jpg">
+</div>
+<div class="produto-nome">
+Colar Guia de Proteção Bênção de Iemanjá Azul e Branco
+</div>
+<a href="https://amzn.to/4tXck5u" target="_blank" class="produto-btn">
+Comprar Agora
+</a>
+</div>
+
+<!-- PRODUTO 7 -->
+<div class="produto-card">
+<div class="produto-img">
+<img src="https://m.media-amazon.com/images/I/51J73d6PTQL._AC_SX679_.jpg">
+</div>
+<div class="produto-nome">
+Pingente de Coruja com Olho Grego – Proteção Espiritual
+</div>
+<a href="https://amzn.to/4u86Tkt" target="_blank" class="produto-btn">
+Comprar Agora
+</a>
+</div>
+
+<!-- PRODUTO 8 -->
+<div class="produto-card">
+<div class="produto-img">
+<img src="https://m.media-amazon.com/images/I/61KjmrBuGwL._AC_SX679_.jpg">
+</div>
+<div class="produto-nome">
+Maria Padilha Pombagira Imagem Umbanda Candomblé Resina
+</div>
+<a href="https://amzn.to/4sNfIPi" target="_blank" class="produto-btn">
+Comprar Agora
+</a>
+</div>
+
+<!-- PRODUTO 9 -->
+<div class="produto-card">
+<div class="produto-img">
+<img src="https://m.media-amazon.com/images/I/71udIhz5qEL._AC_SX679_.jpg">
+</div>
+<div class="produto-nome">
+Imagem Zé Pelintra Em Resina Umbanda Candomblé
+</div>
+<a href="https://amzn.to/4tZSbeW" target="_blank" class="produto-btn">
+Comprar Agora
+</a>
+</div>
+
+<!-- PRODUTO 10 -->
+<div class="produto-card">
+<div class="produto-img">
+<img src="https://m.media-amazon.com/images/I/71MWuEIgK8L._AC_SX679_.jpg">
+</div>
+<div class="produto-nome">
+Kit 10 Caixas Incenso Indiano Darshan Orixás Mistos
+</div>
+<a href="https://amzn.to/3OWgpYK" target="_blank" class="produto-btn">
+Comprar Agora
 </a>
 </div>
 
