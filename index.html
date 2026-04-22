@@ -330,9 +330,20 @@ transition: all 0.3s ease;
 
 /* DESCRIÇÃO */
 .desc{
-  font-size:clamp(18px, 4.5vw, 24px); /* maior */
-  font-weight:700;
   margin-top:8px;
+
+  height:52px;                 /* trava altura igual */
+  display:flex;
+  align-items:center;          /* centraliza vertical */
+  justify-content:center;      /* centraliza horizontal */
+
+  text-align:center;
+  line-height:1.2;
+
+  font-size:clamp(13px,3vw,18px);
+  font-weight:600;
+
+  padding:0 6px;
 }
 /* 🔥 CORREÇÃO DO TEXTO QUE ESTOURA */
 .foot{
@@ -1090,9 +1101,9 @@ href="javascript:void(0)">
 <div class="desc"
 style="
 color:${online ? '#00cc66' : '#c47a00'};
-font-weight:${online ? '700' : '600'};
-font-size:${online ? 'clamp(16px,4vw,22px)' : 'clamp(13px,3vw,18px)'};
-text-shadow:${online ? '0 0 8px rgba(0,204,102,.35)' : 'none'};
+font-weight:600;
+font-size:clamp(13px,3vw,18px);
+text-shadow:none;
 line-height:1.2;
 ">
 ${
@@ -1610,7 +1621,7 @@ setInterval(() => {
       if(bolinha) bolinha.remove();
     }
 
-   // 🔥 ATUALIZA DESCRIÇÃO
+  // 🔥 ATUALIZA DESCRIÇÃO
 const desc = card.querySelector(".desc");
 
 if(desc){
@@ -1619,9 +1630,9 @@ if(desc){
 
     desc.innerText = "Estou Disponível";
     desc.style.color = "#00cc66";
-    desc.style.fontWeight = "700";
-    desc.style.fontSize = "clamp(16px,4vw,22px)";
-    desc.style.textShadow = "0 0 8px rgba(0,204,102,.35)";
+    desc.style.fontWeight = "600";
+    desc.style.fontSize = "clamp(13px,3vw,18px)";
+    desc.style.textShadow = "none";
     desc.style.lineHeight = "1.2";
 
   }else{
@@ -1640,7 +1651,6 @@ if(desc){
 // 🔥 🔥 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
 // salva estado atual no card (TRAVA VISUAL = TRAVA DE CLIQUE)
 card.setAttribute("data-online", status.online);
-
 });
   renderDestaque();
 
