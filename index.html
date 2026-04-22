@@ -181,10 +181,10 @@ display:none;
 
 /* CARD */
 .card{
-flex:0 0 auto;
-width:80%;
-max-width:300px;
-min-width:260px; /* 🔥 COLOCA AQUI */
+flex:0 0 280px;
+width:280px;
+max-width:280px;
+min-width:280px;
 min-height:150px;
 border-radius:20px;
 padding:16px 10px;
@@ -1069,26 +1069,32 @@ const online = this.getAttribute('data-online') === 'true';
 abrirPerfil('${c.nome}','${c.img}', online);
 "
 href="javascript:void(0)">
+
 <div class="tempo">
   <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
     <circle cx="12" cy="12" r="9"></circle>
     <path d="M12 7v5l3 2"></path>
   </svg>
   <span>
-    ${
-     "≈ " + tempoTxt
-    }
+    ${"≈ " + tempoTxt}
   </span>
 </div>
 
 <div class="foto">
-<img src="${c.img}">
-${online ? '<div class="online"></div>' : ''}
+  <img src="${c.img}">
+  ${online ? '<div class="online"></div>' : ''}
 </div>
 
 <div class="nome">${c.nome}</div>
 
-<div class="desc">
+<div class="desc"
+style="
+color:${online ? '#00cc66' : '#c47a00'};
+font-weight:${online ? '700' : '600'};
+font-size:${online ? 'clamp(16px,4vw,22px)' : 'clamp(13px,3vw,18px)'};
+text-shadow:${online ? '0 0 8px rgba(0,204,102,.35)' : 'none'};
+line-height:1.2;
+">
 ${
   online
   ? "Estou Disponível"
@@ -1614,16 +1620,18 @@ if(desc){
     desc.innerText = "Estou Disponível";
     desc.style.color = "#00cc66";
     desc.style.fontWeight = "700";
-    desc.style.fontSize = "22px";
+    desc.style.fontSize = "clamp(16px,4vw,22px)";
     desc.style.textShadow = "0 0 8px rgba(0,204,102,.35)";
+    desc.style.lineHeight = "1.2";
 
   }else{
 
     desc.innerText = "Indisponível há " + tempoTxt;
     desc.style.color = "#c47a00";
     desc.style.fontWeight = "600";
-    desc.style.fontSize = "";
+    desc.style.fontSize = "clamp(13px,3vw,18px)";
     desc.style.textShadow = "none";
+    desc.style.lineHeight = "1.2";
 
   }
 
