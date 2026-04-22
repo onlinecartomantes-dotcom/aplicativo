@@ -330,11 +330,10 @@ transition: all 0.3s ease;
 
 /* DESCRIÇÃO */
 .desc{
-  font-size:clamp(14px, 3.5vw, 18px);
-  color: var(--subtext);
+  font-size:clamp(18px, 4.5vw, 24px); /* maior */
+  font-weight:700;
   margin-top:8px;
 }
-
 /* 🔥 CORREÇÃO DO TEXTO QUE ESTOURA */
 .foot{
   font-size:13px;
@@ -1605,21 +1604,36 @@ setInterval(() => {
       if(bolinha) bolinha.remove();
     }
 
-    // 🔥 ATUALIZA DESCRIÇÃO
-    const desc = card.querySelector(".desc");
+   // 🔥 ATUALIZA DESCRIÇÃO
+const desc = card.querySelector(".desc");
 
-    if(desc){
-      desc.innerText = status.online
-        ? "Estou Disponível"
-        : "Indisponível há " + tempoTxt;
-    }
+if(desc){
 
-    // 🔥 🔥 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
-    // salva estado atual no card (TRAVA VISUAL = TRAVA DE CLIQUE)
-    card.setAttribute("data-online", status.online);
+  if(status.online){
 
-  });
+    desc.innerText = "Estou Disponível";
+    desc.style.color = "#00cc66";
+    desc.style.fontWeight = "700";
+    desc.style.fontSize = "22px";
+    desc.style.textShadow = "0 0 8px rgba(0,204,102,.35)";
 
+  }else{
+
+    desc.innerText = "Indisponível há " + tempoTxt;
+    desc.style.color = "#c47a00";
+    desc.style.fontWeight = "600";
+    desc.style.fontSize = "";
+    desc.style.textShadow = "none";
+
+  }
+
+}
+
+// 🔥 🔥 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
+// salva estado atual no card (TRAVA VISUAL = TRAVA DE CLIQUE)
+card.setAttribute("data-online", status.online);
+
+});
   renderDestaque();
 
 }, 10000);
