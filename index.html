@@ -788,48 +788,107 @@ padding:13px;
 <div id="fixo"></div>
 
 <script>
-const banco={
-clareza:[
-{nome:"Pai Márcio",img:"https://i.ibb.co/RGZzCfFC/Captura-de-tela-2026-04-02-001847.png"},
-{nome:"Samya",img:"https://i.ibb.co/m570rCkG/Whats-App-Image-2026-04-03-at-22-36-29-1.jpg"},
-{nome:"Aislyn",img:"https://i.ibb.co/5WtRK6mQ/Whats-App-Image-2026-04-03-at-22-36-29-2.jpg"},
-{nome:"Tulipa",img:"https://i.ibb.co/0pNhf839/Whats-App-Image-2026-04-03-at-22-36-29.jpg"}
-],
-motivacao:[
-{nome:"Esmeralda",img:"https://i.ibb.co/8LMGQ4s9/Chat-GPT-Image-7-04-2026-07-47-54.png"},
-{nome:"Thabata",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/06/28/d5969655ef-1-_3.webp"},
-{nome:"Analu",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/12/19/fe3f4b6a8a-1-_3.webp"},
-{nome:"Benedita",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/10/23/9f9ffa4ba9-1-_3.webp"}
-],
-esperanca:[
-{nome:"Estrela",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2026/01/01/b2a24fc4f7-1-_3.webp"},
-{nome:"Sulamita",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/05/27/47a447851c-1-.jpg"},
-{nome:"Adria",img:"https://www.mestresmisticos.com.br/Assets/Imagens/2025/07/25/d6152621b2-1-_3.webp"},
-{nome:"M.Padilha",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2025/01/27/699974ac8a-1-.jpg"},
-{nome:"Sara",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/09/04/9a6f4cec30-1-.jpg"},
-{nome:"7 Saias",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/02/29/e43513a707-1-.jpg"},
-{nome:"Odara",img:"https://www.rainhasdotarot.com.br/Assets/Imagens/2024/01/15/91bb2a4455-1-.jpg"}
-]
+const banco = {
+  clareza: [
+    {
+      nome: "Pai Márcio",
+      img: "https://i.ibb.co/RGZzCfFC/Captura-de-tela-2026-04-02-001847.png"
+    },
+    {
+      nome: "Tamila",
+      img: "https://i.ibb.co/CpsXshgC/Chat-GPT-Image-22-04-2026-15-39-17.png"
+    },
+    {
+      nome: "Samanta",
+      img: "https://i.ibb.co/dwLc9qZd/Chat-GPT-Image-22-04-2026-15-37-49.png"
+    },
+    {
+      nome: "Dolores",
+      img: "https://i.ibb.co/5WPJxJg2/Chat-GPT-Image-22-04-2026-15-34-05.png"
+    }
+  ],
+
+  motivacao: [
+    {
+      nome: "Esmeralda",
+      img: "https://i.ibb.co/gbtWvVLK/Chat-GPT-Image-22-04-2026-16-00-28.png"
+    },
+    {
+      nome: "Janaina",
+      img: "https://i.ibb.co/qMNGBMVn/Chat-GPT-Image-22-04-2026-15-51-04.png"
+    },
+    {
+      nome: "Pedro",
+      img: "https://i.ibb.co/RTnQqKRg/Chat-GPT-Image-22-04-2026-15-45-42.png"
+    },
+    {
+      nome: "Beatriz",
+      img: "https://i.ibb.co/sv47czwZ/Chat-GPT-Image-22-04-2026-15-31-29.png"
+    }
+  ],
+
+  esperanca: [
+    {
+      nome: "Carlos",
+      img: "https://i.ibb.co/3yqJ4j8H/Chat-GPT-Image-22-04-2026-16-05-26.png"
+    },
+    {
+      nome: "Sulamita",
+      img: "https://i.ibb.co/S4VPBfG6/Captura-de-tela-2026-04-22-162135.png"
+    },
+    {
+      nome: "Adria",
+      img: "https://www.mestresmisticos.com.br/Assets/Imagens/2025/07/25/d6152621b2-1-_3.webp"
+    },
+    {
+      nome: "M.Padilha",
+      img: "https://i.ibb.co/nNzVYy0j/Captura-de-tela-2026-04-22-160919.png"
+    },
+    {
+      nome: "Sara",
+      img: "https://i.ibb.co/wrg1bYrY/Captura-de-tela-2026-04-22-161256.png"
+    },
+    {
+      nome: "7 Saias",
+      img: "https://i.ibb.co/Cs5NrFLp/Captura-de-tela-2026-04-22-161649.png"
+    },
+    {
+      nome: "Odara",
+      img: "https://i.ibb.co/tf3Q4wX/Captura-de-tela-2026-04-22-161905.png"
+    }
+  ]
 };
+const fixo = [
+  {
+    titulo: "Nós temos um futuro juntos?",
+    icone: "https://i.ibb.co/tw8wF0JD/ppp.png",
+    lista: [
+      "Tamila",
+      "Sara",
+      "Sulamita"
+    ]
+  },
 
-const fixo=[
-{
-titulo:"Nós temos um futuro juntos?",
-icone:"https://i.ibb.co/tw8wF0JD/ppp.png",
-lista:["Esmeralda","M.Padilha","Thabata"]
-},
-{
-titulo:"Tem interesse em mim?",
-icone:"https://i.ibb.co/gLMsV9kQ/ppppp.png",
-lista:["Analu","Benedita","Estrela"]
-},
-{
-titulo:"Como atrair o amor?",
-icone:"https://i.ibb.co/DHGtmnwZ/pppppppp.png",
-lista:["Sulamita","Adria","M.Padilha","Sara","7 Saias","Odara"]
-}
+  {
+    titulo: "Tem interesse em mim?",
+    icone: "https://i.ibb.co/gLMsV9kQ/ppppp.png",
+    lista: [
+      "Pedro",
+      "Carlos",
+      "Odara"
+    ]
+  },
+
+  {
+    titulo: "Como atrair o amor?",
+    icone: "https://i.ibb.co/DHGtmnwZ/pppppppp.png",
+    lista: [
+      "Esmeralda",
+      "7 Saias",
+      "Beatriz"
+    ]
+  }
 ];
-
 function buscar(nome){
   return [...banco.clareza,...banco.motivacao,...banco.esperanca]
   .find(c=>c.nome===nome);
@@ -844,25 +903,25 @@ function clicarContratar(nome, imagem){
 
 // 🔥 AGENDA DOS CONSULTORES
 const agenda = {
- "Pai Márcio": { inicio: 10, fim: 22 },
-  "Samya": { inicio: 10, fim: 22 },
-  "Aislyn": { inicio: 12, fim: 20 },
-  "Tulipa": { inicio: 10, fim: 17 },
+  "Pai Márcio": { inicio: 10, fim: 22 },
+  "Tamila": { inicio: 10, fim: 22 },
+  "Samanta": { inicio: 12, fim: 20 },
+  "Dolores": { inicio: 10, fim: 18 },
 
-  "Esmeralda": { inicio: 10, fim: 23 },
-  "Thabata": { inicio: 11, fim: 19 },
-  "Analu": { inicio: 10, fim: 21 },
-  "Benedita": { inicio: 10, fim: 18 },
+  "Esmeralda": { inicio: 10, fim: 22 },
+  "Janaina": { inicio: 10, fim: 19 },
+  "Pedro": { inicio: 11, fim: 21 },
+  "Beatriz": { inicio: 13, fim: 22 },
 
-  "Estrela": { inicio: 10, fim: 22 },
-  "Sulamita": { inicio: 13, fim: 21 },
+  "Carlos": { inicio: 10, fim: 20 },
+  "Sulamita": { inicio: 12, fim: 22 },
   "Adria": { inicio: 10, fim: 19 },
   "M.Padilha": { inicio: 10, fim: 23 },
-  "Sara": { inicio: 10, fim: 20 },
-  "7 Saias": { inicio: 12, fim: 22 },
+
+  "Sara": { inicio: 10, fim: 23 },
+  "7 Saias": { inicio: 14, fim: 23 },
   "Odara": { inicio: 10, fim: 18 }
 };
-
 // 🔥 CONTROLE REAL (CORRIGIDO E ESTÁVEL)
 let controleStatus = JSON.parse(localStorage.getItem("controleStatus")) || {};
 // 👇 NOVO (CACHE GLOBAL)
@@ -1357,21 +1416,21 @@ const descricoes = {
 
 "Pai Márcio":"Sou tarólogo experiente e intuitivo, trabalho com espiritualidade profunda e orientação direta. Minha missão é te mostrar caminhos claros, revelar o que está oculto e te ajudar a tomar decisões com segurança, firmeza e fé em todas as áreas da sua vida.",
 
-"Samya":"Sou taróloga e sensitiva, trabalho com a energia do amor e da intuição em minhas leituras. Estou aqui sempre disposta a te ajudar com carinho, sinceridade e acolhimento, te direcionando da melhor forma para que você encontre paz, clareza e felicidade em sua vida.",
+"Tamila":"Sou taróloga e sensitiva, trabalho com a energia do amor e da intuição em minhas leituras. Estou aqui sempre disposta a te ajudar com carinho, sinceridade e acolhimento, te direcionando da melhor forma para que você encontre paz, clareza e felicidade em sua vida.",
 
-"Aislyn":"Sou sensitiva e trabalho com intuição profunda e conexão espiritual em minhas leituras. Minha missão é te ajudar a enxergar sentimentos ocultos, entender situações e tomar decisões com mais segurança, trazendo clareza, verdade e equilíbrio para sua vida.",
+"Samanta":"Sou sensitiva e trabalho com intuição profunda e conexão espiritual em minhas leituras. Minha missão é te ajudar a enxergar sentimentos ocultos, entender situações e tomar decisões com mais segurança, trazendo clareza, verdade e equilíbrio para sua vida.",
 
-"Tulipa":"Sou taróloga sensitiva e trabalho com energia espiritual e emocional em minhas leituras. Estou aqui para te ajudar com acolhimento e sinceridade, revelando caminhos, trazendo clareza e te guiando para que você encontre paz, equilíbrio e felicidade em sua jornada.",
+"Dolores":"Sou taróloga sensitiva e trabalho com energia espiritual e emocional em minhas leituras. Estou aqui para te ajudar com acolhimento e sinceridade, revelando caminhos, trazendo clareza e te guiando para que você encontre paz, equilíbrio e felicidade em sua jornada.",
 
 "Esmeralda":"Sou especialista em amor e relacionamentos, utilizo minha intuição e sensibilidade para revelar sentimentos ocultos e intenções verdadeiras. Estou aqui para te ajudar com clareza, sinceridade e direcionamento, trazendo respostas que fazem diferença na sua vida.",
 
-"Thabata":"Sou sensitiva e intuitiva, trabalho com energia emocional e espiritual em minhas leituras. Minha missão é te orientar com leveza e verdade, trazendo clareza sobre sentimentos e caminhos, ajudando você a tomar decisões com mais segurança e tranquilidade.",
+"Janaina":"Sou sensitiva e intuitiva, trabalho com energia emocional e espiritual em minhas leituras. Minha missão é te orientar com leveza e verdade, trazendo clareza sobre sentimentos e caminhos, ajudando você a tomar decisões com mais segurança e tranquilidade.",
 
-"Analu":"Realizo leituras profundas e detalhadas com forte conexão espiritual e intuitiva. Estou aqui para te ajudar a entender situações, revelar verdades ocultas e trazer clareza para suas decisões, sempre com sinceridade e direcionamento seguro para sua vida.",
+"Pedro":"Realizo leituras profundas e detalhadas com forte conexão espiritual e intuitiva. Estou aqui para te ajudar a entender situações, revelar verdades ocultas e trazer clareza para suas decisões, sempre com sinceridade e direcionamento seguro para sua vida.",
 
-"Benedita":"Sou taróloga experiente e sensitiva, trabalho com energia espiritual e orientação verdadeira. Minha missão é te ajudar a enxergar caminhos com clareza, trazendo respostas sinceras e direcionamento seguro para que você possa tomar decisões com confiança.",
+"Beatriz":"Sou taróloga experiente e sensitiva, trabalho com energia espiritual e orientação verdadeira. Minha missão é te ajudar a enxergar caminhos com clareza, trazendo respostas sinceras e direcionamento seguro para que você possa tomar decisões com confiança.",
 
-"Estrela":"Trabalho com energia espiritual elevada e intuição profunda em minhas leituras. Estou aqui para te ajudar a encontrar clareza, paz e direção, revelando caminhos e sentimentos com verdade, sempre buscando o melhor para sua vida e seu equilíbrio emocional.",
+"Carlos":"Trabalho com energia espiritual elevada e intuição profunda em minhas leituras. Estou aqui para te ajudar a encontrar clareza, paz e direção, revelando caminhos e sentimentos com verdade, sempre buscando o melhor para sua vida e seu equilíbrio emocional.",
 
 "Sulamita":"Sou especialista em amor e reconciliação, trabalho com energia emocional e espiritual em minhas leituras. Minha missão é te ajudar a entender sentimentos, revelar caminhos e trazer clareza para suas decisões, sempre com carinho e sinceridade.",
 
@@ -1384,8 +1443,8 @@ const descricoes = {
 "7 Saias":"Trabalho com energia espiritual forte e reveladora em minhas leituras. Minha missão é mostrar verdades ocultas, trazer clareza para suas dúvidas e te orientar com firmeza e sinceridade, ajudando você a tomar decisões mais seguras.",
 
 "Odara":"Trabalho com energia positiva e intuição espiritual em minhas leituras. Estou aqui para te ajudar com sinceridade e clareza, revelando caminhos e trazendo direcionamento para que você encontre equilíbrio, paz e felicidade em sua vida."
-};
 
+};
 function renderDestaque(){
 
 const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
