@@ -153,14 +153,10 @@ const destino =
 const msg = document.getElementById("msg");
 const statusTxt = document.getElementById("status");
 
-let tentativas = 0;
-
 async function acordarRender(){
 
-tentativas++;
-
 msg.innerHTML =
-`Conectando ao servidor...<br>Tentativa ${tentativas}`;
+`Conectando ao servidor...`;
 
 statusTxt.innerText = "Aguarde, preparando ambiente seguro...";
 
