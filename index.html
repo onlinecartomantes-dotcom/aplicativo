@@ -748,7 +748,7 @@ padding:13px;
 
 }
 
-</style></style>
+</style>
 </head>
 <body>
 <div class="topo-novo">
@@ -935,7 +935,7 @@ const agenda = {
 // 🔥 CONTROLE REAL (CORRIGIDO E ESTÁVEL)
 let controleStatus = JSON.parse(localStorage.getItem("controleStatus")) || {};
 // 👇 NOVO (CACHE GLOBAL)
-statusCache = Object.create(null);
+window.statusCache = Object.create(null);
 function statusConsultor(nome){
 
   const agora = new Date();
@@ -1238,15 +1238,15 @@ html+=`
 delete statusCache["Esmeralda"];
 const status = getStatus("Esmeralda");
 
-  return status.online
-  ? `<button class="btn-oferta"
-       onclick="clicarContratar('Esmeralda','https://i.ibb.co/gbtWvVLK/Chat-GPT-Image-22-04-2026-16-00-28.png')">
-       Consultar agora
-     </button>`
-  : `<button class="btn-oferta"
-       style="opacity:0.5; pointer-events:none;">
-       Indisponível
-     </button>`;
+return status.online
+? `<button id="btnEsmeralda" class="btn-oferta"
+     onclick="clicarContratar('Esmeralda','https://i.ibb.co/gbtWvVLK/Chat-GPT-Image-22-04-2026-16-00-28.png')">
+     Consultar agora
+   </button>`
+: `<button id="btnEsmeralda" class="btn-oferta"
+     style="opacity:0.5; pointer-events:none;">
+     Indisponível
+   </button>`;
 })()}
 
   </div>
@@ -1571,16 +1571,20 @@ function trocar(tipo,el){
   });
 }
 
+// 🔥 INICIALIZA (CORRETO)
+document.addEventListener("DOMContentLoaded", () => {
 
-// 🔥 INICIALIZA
-renderPrincipal(tipoAtual);
+  renderPrincipal(tipoAtual);
+  renderDestaque();
+  atualizarBotaoEsmeralda();
 
+});
 
 // 🔥 ATUALIZAÇÃO SUAVE (ESTÁVEL E SEM BUG)
 setInterval(() => {
 
-  // 🔥 limpa cache pra recalcular (ok com 10s)
-  statusCache = Object.create(null);
+  // 🔥 limpa cache global
+  window.statusCache = Object.create(null);
 
   document.querySelectorAll(".card").forEach(card => {
 
@@ -1621,40 +1625,44 @@ setInterval(() => {
 
       const bolinha = foto.querySelector(".online");
       if(bolinha) bolinha.remove();
+
     }
 
-  // 🔥 ATUALIZA DESCRIÇÃO
-const desc = card.querySelector(".desc");
+    // 🔥 ATUALIZA DESCRIÇÃO
+    const desc = card.querySelector(".desc");
 
-if(desc){
+    if(desc){
 
-  if(status.online){
+      if(status.online){
 
-    desc.innerText = "Estou Disponível";
-    desc.style.color = "#00cc66";
-    desc.style.fontWeight = "600";
-    desc.style.fontSize = "clamp(13px,3vw,18px)";
-    desc.style.textShadow = "none";
-    desc.style.lineHeight = "1.2";
+        desc.innerText = "Estou Disponível";
+        desc.style.color = "#00cc66";
+        desc.style.fontWeight = "600";
+        desc.style.fontSize = "clamp(13px,3vw,18px)";
+        desc.style.textShadow = "none";
+        desc.style.lineHeight = "1.2";
 
-  }else{
+      }else{
 
-    desc.innerText = "Indisponível há " + tempoTxt;
-    desc.style.color = "#c47a00";
-    desc.style.fontWeight = "600";
-    desc.style.fontSize = "clamp(13px,3vw,18px)";
-    desc.style.textShadow = "none";
-    desc.style.lineHeight = "1.2";
+        desc.innerText = "Indisponível há " + tempoTxt;
+        desc.style.color = "#c47a00";
+        desc.style.fontWeight = "600";
+        desc.style.fontSize = "clamp(13px,3vw,18px)";
+        desc.style.textShadow = "none";
+        desc.style.lineHeight = "1.2";
 
-  }
+      }
 
-}
+    }
 
-// 🔥 🔥 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
-// salva estado atual no card (TRAVA VISUAL = TRAVA DE CLIQUE)
-card.setAttribute("data-online", status.online);
-});
-renderPrincipal(tipoAtual);
+    // 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
+    card.setAttribute("data-online", status.online);
+
+  });
+
+  // 🔥 atualiza extras sem recarregar página
+  renderDestaque();
+  atualizarBotaoEsmeralda();
 
 }, 10000);
 /* =========================
@@ -2106,6 +2114,7 @@ setInterval(atualizarSaudacao, 60000);
 
   </div>
 </div>
+
 <script>
 let popupAberto = false;
 
@@ -2142,7 +2151,7 @@ function fecharPopup(){
 ========================= -->
 <script>
 
-// 🔥 detecta tema automático (opcional)
+// 🔥 detecta tema automático
 function detectarTemaSistema(){
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
@@ -2152,7 +2161,6 @@ function aplicarTema(){
 
   let tema = localStorage.getItem("tema");
 
-  // 🔥 se nunca escolheu → usa sistema
   if(!tema){
     tema = detectarTemaSistema() ? "dark" : "light";
   }
@@ -2169,7 +2177,7 @@ function aplicarTema(){
 
 }
 
-// 🔥 alternar tema
+// 🔥 alterna tema
 function alternarTema(){
 
   const escuro = document.body.classList.contains("dark");
@@ -2183,7 +2191,7 @@ function alternarTema(){
   aplicarTema();
 }
 
-// 🔥 inicia tudo
+// 🔥 inicia
 document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.getElementById("toggleTema");
@@ -2196,15 +2204,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-// 🔥 atualiza se sistema mudar (TOP nível)
+// 🔥 se sistema mudar
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
 
-  // só aplica automático se usuário NÃO escolheu manual
   if(!localStorage.getItem("tema")){
     aplicarTema();
   }
 
 });
+
+/* ===================================
+🔥 BOTÃO OFERTA ESMERALDA TEMPO REAL
+=================================== */
+
+function atualizarBotaoEsmeralda(){
+
+  const btn = document.getElementById("btnEsmeralda");
+  if(!btn) return;
+
+  delete statusCache["Esmeralda"];
+  const status = getStatus("Esmeralda");
+
+  if(status.online){
+
+    btn.innerText = "Consultar agora";
+    btn.style.opacity = "1";
+    btn.style.pointerEvents = "auto";
+
+    btn.onclick = () => {
+      clicarContratar(
+        "Esmeralda",
+        "https://i.ibb.co/gbtWvVLK/Chat-GPT-Image-22-04-2026-16-00-28.png"
+      );
+    };
+
+  }else{
+
+    btn.innerText = "Indisponível";
+    btn.style.opacity = "0.5";
+    btn.style.pointerEvents = "none";
+    btn.onclick = null;
+
+  }
+
+}
+
 
 </script>
 
