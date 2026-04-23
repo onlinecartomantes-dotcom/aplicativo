@@ -1,149 +1,305 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amarração Amorosa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Trabalhos Espirituais</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #fff9cc, #ffe066);
-    text-align: center;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
-    padding: 15px;
+html{
+    scroll-behavior:smooth;
 }
 
-.top-image {
-    width: 100%;
-    border-radius: 12px;
+body{
+    font-family:'Poppins',sans-serif;
+    color:#fff;
+    min-height:100vh;
+    background:
+    linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.88)),
+    url('https://i.ibb.co/rG8y7dtQ/Chat-GPT-Image-23-04-2026-00-14-09.png') center center/cover no-repeat fixed;
 }
 
-h1 {
-    color: #cc0000;
-    font-size: 34px;
-    margin-top: 20px;
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top center, rgba(255,215,0,.18), transparent 40%),
+    radial-gradient(circle at bottom center, rgba(255,180,0,.10), transparent 35%);
+    pointer-events:none;
+    z-index:0;
 }
 
-.rating {
-    font-size: 20px;
-    color: #ffcc00;
-    margin-top: 10px;
+.container{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:1300px;
+    margin:auto;
+    padding:15px;
 }
 
-.rating span {
-    color: #333;
-    font-size: 16px;
+/* TOPO */
+
+header{
+    text-align:center;
+    padding:28px 15px;
+    border-radius:18px;
+    border:1px solid rgba(255,215,0,.22);
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(8px);
+    margin-bottom:20px;
 }
 
-.sales {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #cc0000;
+header h1{
+    font-family:'Cinzel',serif;
+    font-size:42px;
+    color:#ffd700;
+    letter-spacing:2px;
+    text-shadow:0 0 12px rgba(255,215,0,.45);
 }
 
-.price-box {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px 0;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+header p{
+    margin-top:10px;
+    font-size:17px;
+    color:#fff7cf;
 }
 
-.old-price {
-    text-decoration: line-through;
-    color: gray;
+.line{
+    width:170px;
+    height:2px;
+    margin:14px auto;
+    background:linear-gradient(to right,transparent,#ffd700,transparent);
 }
 
-.new-price {
-    color: #cc0000;
-    font-size: 32px;
-    font-weight: bold;
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+    gap:16px;
+    align-items:stretch;
 }
 
-.highlight {
-    background: #fff3b0;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 15px 0;
-    font-weight: bold;
+/* CARD */
+
+.card{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:100%;
+    padding:20px;
+    border-radius:18px;
+    background:linear-gradient(145deg, rgba(255,215,0,.08), rgba(255,255,255,.03));
+    border:1px solid rgba(255,215,0,.18);
+    backdrop-filter:blur(6px);
+    box-shadow:0 0 16px rgba(0,0,0,.45);
+    transition:.3s;
 }
 
-.description {
-    color: #cc0000;
-    font-size: 16px;
-    text-align: justify;
-    line-height: 1.6;
+.card:hover{
+    transform:translateY(-4px);
+    border-color:#ffd700;
+    box-shadow:0 0 22px rgba(255,215,0,.20);
 }
 
-.whatsapp-btn {
-    display: block;
-    margin: 25px auto;
-    padding: 18px;
-    background-color: #25D366;
-    color: white;
-    font-size: 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+.card h2{
+    font-size:22px;
+    color:#ffd700;
+    line-height:1.3;
+    margin-bottom:10px;
 }
 
-.urgency {
-    color: red;
-    font-weight: bold;
+.desc{
+    font-size:15px;
+    line-height:1.6;
+    color:#fff6d8;
+    margin-bottom:15px;
+    flex-grow:1;
 }
 
-.comments {
-    margin-top: 30px;
-    text-align: left;
+.price{
+    font-size:28px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:14px;
 }
 
-.comment {
-    background: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+.btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    padding:14px;
+    border-radius:12px;
+    background:linear-gradient(90deg,#18b858,#25D366);
+    transition:.3s;
 }
 
-.comment strong {
-    color: #cc0000;
+.btn:hover{
+    transform:scale(1.02);
 }
 
-/* POPUP */
-.popup {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: #cc0000;
-    color: #ffe066;
-    padding: 12px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
-    font-size: 14px;
-    display: none;
-    animation: fadeIn 0.5s;
-    max-width: 260px;
-    text-align: left;
+/* INFO */
+
+.info{
+    margin-top:25px;
+    padding:25px;
+    border-radius:18px;
+    background:rgba(255,215,0,.08);
+    border:1px solid rgba(255,215,0,.25);
 }
 
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
+.info h3{
+    font-family:'Cinzel',serif;
+    text-align:center;
+    font-size:30px;
+    color:#ffd700;
+    margin-bottom:18px;
 }
 
-.timer {
-    font-size: 22px;
-    color: red;
-    font-weight: bold;
+.info p{
+    font-size:17px;
+    line-height:1.8;
+    color:#fff7d0;
+}
+
+.highlight{
+    color:#ffd700;
+    font-weight:700;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:20px 10px 10px;
+    font-size:15px;
+    color:#fff3be;
+}
+
+/* BOTÃO FLUTUANTE */
+
+.float{
+    position:fixed;
+    right:16px;
+    bottom:16px;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#25D366;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    text-decoration:none;
+    z-index:999;
+    box-shadow:0 0 18px rgba(37,211,102,.55);
+}
+
+/* CELULAR */
+
+@media (max-width:768px){
+
+.container{
+    padding:10px;
+}
+
+header{
+    padding:22px 12px;
+}
+
+header h1{
+    font-size:29px;
+    line-height:1.2;
+}
+
+header p{
+    font-size:14px;
+}
+
+.grid{
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.card{
+    padding:16px;
+    border-radius:16px;
+}
+
+.card h2{
+    font-size:20px;
+}
+
+.desc{
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.price{
+    font-size:24px;
+}
+
+.btn{
+    font-size:15px;
+    padding:13px;
+}
+
+.info{
+    padding:18px;
+}
+
+.info h3{
+    font-size:24px;
+}
+
+.info p{
+    font-size:15px;
+    line-height:1.7;
+}
+
+.float{
+    width:55px;
+    height:55px;
+    font-size:26px;
+}
+
+}
+
+/* TELAS MUITO PEQUENAS */
+
+@media (max-width:380px){
+
+header h1{
+    font-size:25px;
+}
+
+.card h2{
+    font-size:18px;
+}
+
+.price{
+    font-size:22px;
+}
+
+.btn{
+    font-size:14px;
+}
+
 }
 </style>
 </head>
@@ -152,104 +308,157 @@ h1 {
 
 <div class="container">
 
-<img src="https://i.ibb.co/HLSkzcbG/Chat-GPT-Image-9-04-2026-23-57-49.png" class="top-image">
+<header>
+<h1>TRABALHOS ESPIRITUAIS</h1>
+<div class="line"></div>
+<p>Atendimento reservado • Sigilo absoluto • Trabalhos fortes e direcionados</p>
+</header>
 
-<h1>Amarração Amorosa</h1>
+<div class="grid">
 
-<!-- ESTRELAS -->
-<div class="rating">
-⭐ ⭐ ⭐ ⭐ ⭐ <span>4.9/5 avaliações</span>
+<div class="card">
+<h2>Amarração Amorosa</h2>
+<p class="desc">Trabalho voltado para fortalecer a união entre duas pessoas, aumentando atração, carinho e desejo de reconciliação.</p>
+<div class="price">R$ 487,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Amarração Amorosa no valor de R$ 487,00">Contratar</a>
 </div>
 
-<!-- VENDAS DINÂMICA -->
-<div class="sales" id="salesText"></div>
-
-<div class="highlight">
-🔥 Mais de 2.000 pessoas já transformaram sua vida amorosa
+<div class="card">
+<h2>Dominação / Submissão</h2>
+<p class="desc">Direcionado para tornar a pessoa mais receptiva, obediente e aberta aos seus sentimentos e vontades.</p>
+<div class="price">R$ 587,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Dominação no valor de R$ 587,00">Contratar</a>
 </div>
 
-<div class="price-box">
-<div class="old-price">De R$597,00</div>
-<div class="new-price">R$387,00</div>
-<div class="urgency">⚠️ Hoje com valor promocional</div>
-<div class="timer" id="timer">10:00</div>
+<div class="card">
+<h2>Arrasto Amoroso</h2>
+<p class="desc">Trabalho forte para trazer a pessoa amada de volta rapidamente, despertando saudade intensa e vontade de procurar você.</p>
+<div class="price">R$ 637,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Arrasto Amoroso no valor de R$ 637,00">Contratar</a>
 </div>
 
-<div class="description">
-Este trabalho de amarração amorosa é voltado para quem deseja transformar sua vida afetiva de forma profunda e definitiva...
+<div class="card">
+<h2>Adóçamento Amoroso</h2>
+<p class="desc">Ideal para acalmar brigas, diminuir discussões e trazer mais amor, carinho e harmonia ao relacionamento.</p>
+<div class="price">R$ 387,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Adoçamento Amoroso no valor de R$ 387,00">Contratar</a>
 </div>
 
-<a class="whatsapp-btn" href="https://wa.me/5585984368057?text=vim%20dos%20cartomantes%20online%20e%20desejo%20realizar%20a%20amarra%C3%A7%C3%A3o%20amorosa" target="_blank">
-💬 GARANTIR AGORA NO WHATSAPP
-</a>
+<div class="card">
+<h2>Quebra de Orgulho</h2>
+<p class="desc">Feito para reduzir teimosia, orgulho e resistência emocional, facilitando diálogo e aproximação.</p>
+<div class="price">R$ 427,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Quebra de Orgulho no valor de R$ 427,00">Contratar</a>
+</div>
 
-<div class="urgency">⏳ Poucas vagas disponíveis hoje</div>
+<div class="card">
+<h2>Chora nos Meus Pés</h2>
+<p class="desc">Trabalho para despertar arrependimento, saudade e desejo de reconciliação na pessoa desejada.</p>
+<div class="price">R$ 337,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Chora nos Meus Pés no valor de R$ 337,00">Contratar</a>
+</div>
 
-<div class="comments">
+<div class="card">
+<h2>Brochamento Sexual</h2>
+<p class="desc">Direcionado para esfriar desejos e enfraquecer o interesse íntimo da pessoa por terceiros.</p>
+<div class="price">R$ 287,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Brochamento Sexual no valor de R$ 287,00">Contratar</a>
+</div>
 
-<div class="comment"><strong>Juliana R.</strong><br>Em poucos dias ele voltou atrás de mim… foi impressionante.</div>
-<div class="comment"><strong>Marcos V.</strong><br>Resultado apareceu rápido e o suporte foi excelente.</div>
-<div class="comment"><strong>Ana Paula S.</strong><br>Eu já tinha perdido as esperanças… hoje estou feliz novamente.</div>
-<div class="comment"><strong>Fernanda L.</strong><br>Foi surreal, parecia impossível e aconteceu.</div>
-<div class="comment"><strong>Roberto D.</strong><br>Valeu cada centavo, muito profissional.</div>
-<div class="comment"><strong>Camila T.</strong><br>Ele voltou mais carinhoso e próximo.</div>
-<div class="comment"><strong>Bruno A.</strong><br>Atendimento rápido, sem enrolação.</div>
-<div class="comment"><strong>Patrícia M.</strong><br>Senti mudança em poucos dias.</div>
-<div class="comment"><strong>Lucas F.</strong><br>Hoje recomendo sem medo.</div>
-<div class="comment"><strong>Daniela P.</strong><br>Minha vida mudou completamente.</div>
+<div class="card">
+<h2>Abertura de Caminhos no Amor</h2>
+<p class="desc">Remove bloqueios sentimentais, ajudando a encontrar amor verdadeiro ou melhorar a vida amorosa.</p>
+<div class="price">R$ 387,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Abertura de Caminhos no Amor no valor de R$ 387,00">Contratar</a>
+</div>
 
+<div class="card">
+<h2>Trabalho Amoroso Completo</h2>
+<p class="desc">Pacote espiritual completo com união, atração, reconciliação, fidelidade e fortalecimento do relacionamento.</p>
+<div class="price">R$ 1.387,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Trabalho Amoroso Completo no valor de R$ 1.387,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Destruição Total</h2>
+<p class="desc">Trabalho intenso para destruir rivais e afetar todas as áreas da vida da pessoa.</p>
+<div class="price">R$ 777,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Destruição Total no valor de R$ 777,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Separação Total</h2>
+<p class="desc">Voltado para afastar casais ou relações conturbadas, promovendo distanciamento definitivo.</p>
+<div class="price">R$ 587,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Separação Total no valor de R$ 587,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Afastamento de Rival</h2>
+<p class="desc">Direcionado para afastar pessoas que interferem no relacionamento ou causam conflitos.</p>
+<div class="price">R$ 537,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Afastamento de Rival no valor de R$ 537,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Tranca de Caminhos Total</h2>
+<p class="desc">Trabalho para trancar os caminhos de alguém, seja no amor, vida pessoal ou por vingança.</p>
+<div class="price">R$ 637,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Tranca de Caminhos Total no valor de R$ 637,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Abertura de Caminhos Financeiro</h2>
+<p class="desc">Ajuda a desbloquear prosperidade, oportunidades profissionais e crescimento financeiro.</p>
+<div class="price">R$ 337,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Abertura Financeira no valor de R$ 337,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Limpeza e Fortificação Espiritual</h2>
+<p class="desc">Remove cargas negativas, inveja e mau-olhado, trazendo proteção e equilíbrio espiritual.</p>
+<div class="price">R$ 487,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Limpeza Espiritual no valor de R$ 487,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Quebra de Magia ou Maldição</h2>
+<p class="desc">Voltado para desfazer trabalhos negativos, demandas espirituais e energias pesadas.</p>
+<div class="price">R$ 457,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Quebra de Magia no valor de R$ 457,00">Contratar</a>
+</div>
+
+<div class="card">
+<h2>Oferendas para Entidades</h2>
+<p class="desc">Ritual de fortalecimento espiritual com pedidos de proteção, caminhos e auxílio específico.</p>
+<div class="price">R$ 637,00</div>
+<a class="btn" target="_blank" href="https://wa.me/5585986966786?text=Desejo realizar o trabalho Oferendas para Entidades no valor de R$ 637,00">Contratar</a>
 </div>
 
 </div>
 
-<!-- POPUP -->
-<div class="popup" id="popup"></div>
+<div class="info">
+<h3>INFORMAÇÕES IMPORTANTES</h3>
+<p>
+Para realizar qualquer trabalho são necessários <span class="highlight">fotos, nomes completos, datas de nascimento</span> e informações relevantes.<br><br>
 
-<script>
-// CONTADOR TEMPO
-let time = Math.floor(Math.random() * 600) + 300;
-const timer = document.getElementById('timer');
+Todos os atendimentos são feitos com <span class="highlight">dia e hora marcados</span>, com total sigilo e seriedade.<br><br>
 
-setInterval(() => {
-    let m = Math.floor(time / 60);
-    let s = time % 60;
-    s = s < 10 ? '0'+s : s;
-    timer.innerHTML = m + ":" + s;
-    if(time > 0) time--;
-}, 1000);
+Enviamos <span class="highlight">fotos, vídeos e orientações completas</span> durante o processo.<br><br>
 
-// VENDAS ALEATÓRIAS
-let sales = Math.floor(Math.random() * 6) + 5;
-document.getElementById("salesText").innerHTML =
-" Entre " + sales + " a " + (sales + 5) + " pessoas compraram hoje";
+Também oferecemos <span class="highlight">acompanhamento semanal</span> para dúvidas e suporte.<br><br>
 
-// POPUP
-const people = [
-"Rafael - PR","Beatriz - SP","Eduardo - RJ","Larissa - MG","André - SC",
-"Camila - GO","Felipe - RS","Vanessa - BA","Gustavo - PE","Renata - DF",
-"Thiago - CE","Aline - AM","Rodrigo - ES","Paula - MT","Diego - MS"
-];
+Os resultados podem surgir entre <span class="highlight">7, 14 ou 21 dias</span>, dependendo de cada caso.
+</p>
+</div>
 
-let lastIndex = -1;
-const popup = document.getElementById('popup');
+<footer>
+Formas de Pagamento Pix • Cartão de Credíto • Deposíto Bancário
+</footer>
 
-setInterval(() => {
-    let index;
-    do {
-        index = Math.floor(Math.random() * people.length);
-    } while(index === lastIndex);
+</div>
 
-    lastIndex = index;
-
-    popup.innerHTML = "🔥 " + people[index] + " acabou de adquirir";
-    popup.style.display = "block";
-
-    setTimeout(() => {
-        popup.style.display = "none";
-    }, 4000);
-
-}, 9000);
-</script>
+<a class="float" target="_blank" href="https://wa.me/5585986966786">✆</a>
 
 </body>
 </html>
