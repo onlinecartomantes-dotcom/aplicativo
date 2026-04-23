@@ -1233,8 +1233,10 @@ html+=`
   <div class="img-box">
     <img src="https://i.ibb.co/BWYnvNR/Whats-App-Image-2026-04-09-at-20-54-28-1.jpg">
 
-  ${(() => {
-  const status = getStatus("Esmeralda");
+ ${(() => {
+
+delete statusCache["Esmeralda"];
+const status = getStatus("Esmeralda");
 
   return status.online
   ? `<button class="btn-oferta"
