@@ -1,4 +1,4 @@
-const CACHE_NAME = "cartomantes-v7";
+const CACHE_NAME = "cartomantes-v8";
 
 const urlsToCache = [
   "/aplicativo/",
