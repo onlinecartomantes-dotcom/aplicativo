@@ -913,24 +913,24 @@ function clicarContratar(nome, imagem){
 
 // 🔥 AGENDA DOS CONSULTORES
 const agenda = {
-  "Pai Márcio": { inicio: 10, fim: 22 },
-  "Tamila": { inicio: 10, fim: 22 },
-  "Samanta": { inicio: 12, fim: 20 },
-  "Dolores": { inicio: 10, fim: 18 },
+  "Pai Márcio": { inicio: 13, fim: 22 },
+  "Tamila": { inicio: 13, fim: 22 },
+  "Samanta": { inicio: 13, fim: 20 },
+  "Dolores": { inicio: 13, fim: 18 },
 
-  "Esmeralda": { inicio: 10, fim: 22 },
-  "Janaina": { inicio: 10, fim: 19 },
-  "Pedro": { inicio: 11, fim: 21 },
+  "Esmeralda": { inicio: 13, fim: 22 },
+  "Janaina": { inicio: 13, fim: 19 },
+  "Pedro": { inicio: 13, fim: 21 },
   "Beatriz": { inicio: 13, fim: 22 },
 
-  "Carlos": { inicio: 10, fim: 20 },
-  "Sulamita": { inicio: 12, fim: 22 },
-  "Adria": { inicio: 10, fim: 19 },
-  "M.Padilha": { inicio: 10, fim: 23 },
+  "Carlos": { inicio: 13, fim: 20 },
+  "Sulamita": { inicio: 13, fim: 22 },
+  "Adria": { inicio: 13, fim: 19 },
+  "M.Padilha": { inicio: 13, fim: 23 },
 
-  "Sara": { inicio: 10, fim: 23 },
-  "7 Saias": { inicio: 14, fim: 23 },
-  "Odara": { inicio: 10, fim: 18 }
+  "Sara": { inicio: 13, fim: 23 },
+  "7 Saias": { inicio: 13, fim: 23 },
+  "Odara": { inicio: 13, fim: 18 }
 };
 // 🔥 CONTROLE REAL (CORRIGIDO E ESTÁVEL)
 let controleStatus = JSON.parse(localStorage.getItem("controleStatus")) || {};
@@ -2106,11 +2106,10 @@ function mostrarPopup(){
   const ocupados = consultoresOcupados();
 
   // 🔥 BLOQUEIO INTELIGENTE (madrugada)
-  if(hora >= 2 && hora < 10 && ocupados.length === 0){
-    agendarPopup();
-    return;
-  }
-
+if(hora >= 2 && hora < 13 && ocupados.length === 0){
+  agendarPopup();
+  return;
+}
   // 🔥 se não tiver ninguém no horário → tenta de novo
   if(ocupados.length === 0){
     agendarPopup();
