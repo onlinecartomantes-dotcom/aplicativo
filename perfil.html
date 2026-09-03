@@ -5,438 +5,2562 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Fonte Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- 🔥 PWA (INSTALAÇÃO COMO APP) -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000">
 
 <style>
 
+*{box-sizing:border-box;}
+
+/* 🔥 VARIÁVEIS DE TEMA (ETAPA 1) */
+:root{
+  --bg: linear-gradient(180deg, #fffdf5 0%, #fff4cc 40%, #ffe8a3 100%);
+  --card: #fff;
+  --text: #333;
+  --subtext: #c47a00;
+  --box: #fff;
+}
+
+/* 🌙 MODO ESCURO */
+.dark{
+  --bg: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+  --card: #111827;
+  --text: #f1f5f9;
+  --subtext: #facc15;
+  --box: #1e293b;
+}
+
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(to bottom,#fffdf5,#fff4cc,#ffe8a3);
-max-width:500px;
-margin:auto;
-color:#222;
+  margin:0;
+  font-family:'Poppins', sans-serif;
+
+  /* 🔥 AGORA DINÂMICO */
+  background: var(--bg);
+  background-attachment: fixed;
+
+  overflow-x:hidden;
+
+  max-width:500px;
+  margin:auto;
+
+  /* 🔥 TRANSIÇÃO SUAVE */
+  transition: all 0.3s ease;
 }
 
-/* 🔥 CAPA */
-.capa{
-width:100%;
-height:200px;
-background-size:cover;
-background-position:center;
+/* TOPO */
+.topo-novo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px;
+}
+
+/* 🔥 TODAS AS IMAGENS IGUAIS (CORRIGIDO) */
+.topo-novo img{
+  width:60px;        /* 🔥 antes era 15vw */
+  height:60px;
+  max-width:80px;
+  max-height:80px;
+
+  object-fit:contain;
+
+  border-radius:0;
+  box-shadow:none;
+  background:none;
+}
+
+/* só posiciona a da direita */
+.logo-direita{
+  margin-left:auto;
+}
+
+.ola{
+  font-size:32px;
+  font-weight:600;
+  color: var(--text);
+}
+
+/* BOX */
+.box{
+  background: var(--box);
+  margin:15px;
+  padding:15px;
+  border-radius:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* OPÇÕES */
+.opcoes{
+  display:flex;
+  gap:10px;
+  margin-top:5px;
+
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+  justify-content:space-between;
+
+  scrollbar-width:none;
+}
+
+.opcoes::-webkit-scrollbar{
+  display:none;
+}
+.op{
+  flex:1;
+  min-width:0;
+  padding:12px 6px;
+  border-radius:16px;
+  border:2px solid #e6c068;
+  text-align:center;
+  color:#b8860b;
+  font-weight:bold;
+  cursor:pointer;
+  background:#f7f1e3;
+  white-space:nowrap;
+}
+
+.op img{
+  width:34px;
+  height:34px;
+  margin:auto;
+  display:block;
+  margin-bottom:6px;
+}
+
+/* 👇 INSTAGRAM / FACEBOOK */
+.app-view .opcoes{
+  overflow-x:auto;
+  justify-content:flex-start;
+}
+
+.app-view .op{
+  flex:0 0 auto;
+  min-width:120px;
+  padding:14px 10px;
+}
+.op.active{
+  background:linear-gradient(45deg,#ffd700,#e6c068);
+  color:#fff;
+}
+.op.active img{
+  filter: brightness(0) invert(1);
+}
+/* TITULOS */
+.titulo{
+margin:12px 15px 6px;
+font-weight:700;
+font-size:18px;
+
+/* 🔥 COR DINÂMICA */
+color: var(--text);
+
+display:flex;
+align-items:center;
+gap:12px;
+}
+.titulo img{
+width:40px;
+}
+
+/* SCROLL */
+.scroll{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding:10px 15px;
+scroll-snap-type:x mandatory;
+}
+
+.scroll::-webkit-scrollbar{
+display:none;
+}
+
+/* CARD */
+.card{
+flex:0 0 280px;
+width:280px;
+max-width:280px;
+min-width:280px;
+min-height:150px;
+border-radius:20px;
+padding:16px 10px;
 position:relative;
+
+/* 🔥 AGORA DINÂMICO */
+background: var(--card);
+
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+scroll-snap-align:center;
+overflow:hidden;
+text-align:center;
+
+/* 🔥 LINK CORRETO */
+display:block;
+text-decoration:none;
+color:inherit;
+
+/* 🔥 TRANSIÇÃO BONITA */
+transition: all 0.3s ease;
+}
+/* 🔥 LINK DO CARD (CORRIGIDO) */
+.card{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+
+  position:relative;
 }
 
-.capa::after{
-content:"";
-position:absolute;
-width:100%;
-height:100%;
-background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.35));
+/* 🔥 REMOVE AZUL E SUBLINHADO */
+.card{
+  text-decoration:none;
+  color:inherit;
 }
 
-/* FOTO */
+/* 🔥 EFEITO DE CLIQUE */
+.card:active{
+  transform:scale(0.98);
+}
+/* 🔥 FUNDO DO CARD */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url('https://i.ibb.co/yBnPKpsp/Whats-App-Image-2026-04-07-at-22-40-41.jpg');
+  background-size:cover;
+  background-position:center;
+  opacity:0.5;
+  z-index:0; /* fica atrás */
+}
+
+/* 🔥 CONTEÚDO SEMPRE NA FRENTE */
+.card *{
+  position:relative;
+  z-index:1;
+}
+/* ⏰ TEMPO (PEQUENO, LIMPO E RESPONSIVO) */
+.tempo{
+  position:absolute;
+  top:8px;
+  left:2px;   /* 🔥 mais pra esquerda */
+
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+
+  /* 🔥 AGORA DINÂMICO */
+  background: var(--box);
+  color: var(--subtext);
+
+  font-size:10px;
+  font-weight:bold;
+  padding:4px 8px;
+  border-radius:15px;
+
+  z-index:999;
+  max-width:70%;
+}
+
+/* 🔥 ÍCONE MENOR */
+.tempo svg{
+  width:12px;
+  height:12px;
+
+  /* 🔥 COR DINÂMICA */
+  stroke: var(--subtext);
+}
+/* FOTO (CORRIGIDO PRO INSTAGRAM) */
 .foto{
-width:130px;
-height:130px;
-margin:-65px auto 10px;
-border-radius:50%;
-padding:4px;
-background:linear-gradient(45deg,#e6c068,#b8860b);
-position:relative;
-z-index:2;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
+  width:100%;
+  max-width:140px;
+  aspect-ratio:1/1;
+
+  margin:auto;
+  margin-top:5px;
+  border-radius:50%;
+  padding:4px;
+
+  background:linear-gradient(45deg,#e6c068,#b8860b);
+  position:relative;
 }
 
 .foto img{
-width:100%;
-height:100%;
-border-radius:50%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
 }
 
+/* 🟢 ONLINE PISCANDO */
 .online{
-position:absolute;
-top:6px;
-right:6px;
-width:16px;
-height:16px;
-background:#00cc66;
-border-radius:50%;
-border:2px solid #fff;
-animation:pulse 1.2s infinite;
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:15px;
+  height:15px;
+  background:#00cc66;
+  border-radius:50%;
+  border:2px solid #fff;
+  box-shadow:0 0 4px rgba(0,204,102,0.5);
+  animation:pulse 1.2s infinite;
 }
 
 @keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.4);}
-100%{transform:scale(1);}
+  0%{transform:scale(1);opacity:1;}
+  50%{transform:scale(1.4);opacity:0.5;}
+  100%{transform:scale(1);opacity:1;}
 }
 
-.nome{text-align:center;font-size:24px;font-weight:700;}
-.estrelas{text-align:center;color:#ffd700;margin-top:5px;font-size:18px;}
-.status{text-align:center;color:#00cc66;font-weight:600;margin-top:5px;}
-.valor{text-align:center;margin-top:10px;font-weight:600;}
-
-.box{
-margin:20px;
-padding:20px;
-border-radius:20px;
-background:#ffffff;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
+/* TEXTO CENTRAL */
+.nome,.desc,.foot{
+  text-align:center;
 }
 
-.sobre{
-background:#fff8dc;
-padding:15px;
-border-radius:15px;
-margin-bottom:20px;
-border:1px solid #f1d27a;
+/* NOME */
+.nome{
+  margin-top:15px;
+  font-weight:600;
+  font-size:clamp(18px, 4vw, 24px);
+  color: var(--text);
 }
 
-/* 🔥 DEPOIMENTOS MELHORADOS */
-.depo{
-margin-top:12px;
-font-size:14px;
+/* DESCRIÇÃO */
+.desc{
+  margin-top:8px;
+
+  height:52px;                 /* trava altura igual */
+  display:flex;
+  align-items:center;          /* centraliza vertical */
+  justify-content:center;      /* centraliza horizontal */
+
+  text-align:center;
+  line-height:1.2;
+
+  font-size:clamp(13px,3vw,18px);
+  font-weight:600;
+
+  padding:0 6px;
+}
+/* 🔥 CORREÇÃO DO TEXTO QUE ESTOURA */
+.foot{
+  font-size:13px;
+  margin-top:15px;
+  background:rgba(255, 215, 0, 0.5);
+  border-radius:20px;
+  padding:8px;
+  font-weight:500;
+
+  white-space:normal;
+  word-break:break-word;
+  overflow-wrap:break-word;
+  line-height:1.3;
+}
+
+/* 👇 GLOBAL SAFE */
+img{
+  max-width:100%;
+  height:auto;
+}
+
+*{
+  word-wrap:break-word;
+  overflow-wrap:break-word;
+}
+
+/* 🔥 AJUSTE INSTAGRAM */
+.app-view .foto{
+  max-width:120px;
+}
+
+.app-view .nome{
+  font-size:18px;
+}
+
+.app-view .desc{
+  font-size:14px;
+}
+
+.app-view .foot{
+  font-size:12px;
+  padding:6px;
+}
+
+/* 🔥 CARD DESTAQUE */
+.card-destaque{
+  background: var(--card);
+  margin:15px;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  position:relative;
+  overflow:hidden;
+  transition: all 0.3s ease;
+}
+
+.card-destaque::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url('...');
+  background-size:cover;
+  background-position:center;
+  opacity:0.5;
+}
+
+.card-destaque *{
+  position:relative;
+  z-index:2;
+}
+
+.topo-destaque{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.card-destaque .topo-destaque > div{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+/* FOTO DESTAQUE */
+.foto-destaque{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  padding:4px;
+  background:linear-gradient(45deg,#e6c068,#b8860b);
+  position:relative;
+}
+
+.foto-destaque img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.foto-destaque .online{
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:14px;
+  height:14px;
+  background:#00cc66;
+  border-radius:50%;
+  border:2px solid #fff;
+  box-shadow:0 0 4px rgba(0,204,102,0.5);
+  animation:pulse 1.2s infinite;
+}
+
+/* BADGE */
+.badge{
+  background:linear-gradient(45deg,#ffd700,#e6c068);
+  color:#000;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:20px;
+  display:inline-block;
+}
+
+/* NOME DESTAQUE */
+.card-destaque .nome-destaque{
+  display:block;
+  margin-top:5px;
+  font-weight:600;
+  font-size:clamp(18px, 4vw, 24px);
+  color: var(--text);
+}
+
+/* SUB */
+.sub{
+  font-size:clamp(14px, 3.5vw, 18px);
+  color: var(--subtext);
+  margin-top:12px;
+}
+
+/* INFO */
+.info{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+/* PESSOAS */
+#pessoasSemana{
+  background:rgba(255, 215, 0, 0.5);
+  padding:8px;
+  border-radius:20px;
+  font-size:13px;
+}
+
+/* TEMPO */
+#tempoSemana{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background: var(--box);
+  color: var(--subtext);
+  font-size:11px;
+  font-weight:bold;
+  padding:5px 10px;
+  border-radius:20px;
+}
+
+#tempoSemana svg{
+  width:14px;
+  height:14px;
+  stroke: var(--subtext);
+}
+
+/* TEXTO */
+.texto{
+  margin-top:15px;
+  font-size:14px;
+  color: var(--text);
+}
+
+/* BOTÃO */
+.btn{
+  margin-top:20px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:20px;
+  background:linear-gradient(45deg,#00bfa6,#1abc9c);
+  color:#fff;
+  font-size:18px;
+  font-weight:600;
+}
+
+/* CARD OFERTA */
+.card-oferta{
+  flex:0 0 auto;
+  width:85%;
+  max-width:320px;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+}
+
+.img-box{
+  position:relative;
+}
+
+.img-box img{
+  width:100%;
+  display:block;
+  border-radius:20px;
+}
+
+.btn-oferta{
+  position:absolute;
+  bottom:15px;
+  left:50%;
+  transform:translateX(-50%);
+  width:80%;
+  padding:14px;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(45deg,#00bfa6,#1abc9c);
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  box-shadow:0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* DARK MODE */
+.dark div[style*="background:#fff"]{
+  background:#020617 !important;
+  color:#fff !important;
+}
+
+.dark .ola,
+.dark .titulo,
+.dark .nome{
+  color:#ffffff !important;
+}
+
+.dark .desc{
+  color:#facc15 !important;
+}
+
+.dark .texto{
+  color:#cbd5e1 !important;
+}
+
+.dark .box{
+  background:#020617 !important;
+}
+
+.dark .card{
+  background:#020617 !important;
+}
+
+.dark .op{
+  background:#0f172a !important;
+  color:#facc15 !important;
+  border:2px solid rgba(250,204,21,0.3) !important;
+}
+
+.dark #toggleTema{
+  background:#facc15 !important;
+  color:#000 !important;
+}
+.dark #toggleTema{
+ background:#facc15 !important;
+ color:#000 !important;
+}
+
+/* ===== LOJA PRODUTOS ===== */
+
+.scroll{
+display:flex;
+gap:14px;
+overflow-x:auto;
+padding:10px 15px;
+scroll-behavior:smooth;
+-webkit-overflow-scrolling:touch;
+scrollbar-width:none;
+}
+
+.scroll::-webkit-scrollbar{
+display:none;
+}
+
+.produto-card{
+flex:0 0 auto;
+width:86%;
+max-width:320px;
+min-width:260px;
+background:var(--card);
+border-radius:24px;
 padding:14px;
-background:linear-gradient(135deg,#fff8dc,#fff1b8);
-border-radius:14px;
-border:1px solid #f1d27a;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
-font-weight:500;
+box-shadow:0 8px 22px rgba(0,0,0,.08);
+scroll-snap-align:center;
+transition:.25s;
 }
 
-.btn-fixo{
-position:fixed;
-bottom:10px;
-left:50%;
-transform:translateX(-50%);
-width:90%;
-max-width:400px;
-padding:15px;
-border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#00cc66,#00bfa6);
+.produto-card:active{
+transform:scale(.98);
+}
+
+.produto-img{
+background:#fff6c9;
+height:190px;
+border-radius:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:14px;
+margin-bottom:14px;
+overflow:hidden;
+}
+
+.produto-img img{
+max-width:100%;
+max-height:170px;
+object-fit:contain;
+display:block;
+}
+
+.produto-nome{
+font-size:15px;
+font-weight:700;
+color:var(--text);
+line-height:1.35;
+min-height:72px;
+max-height:72px;
+overflow:hidden;
+margin-bottom:14px;
+}
+
+.produto-btn{
+display:block;
+width:100%;
+text-align:center;
+padding:14px;
+border-radius:18px;
+background:linear-gradient(45deg,#00bfa6,#1abc9c);
 color:#fff;
-font-size:18px;
-font-weight:bold;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
+font-weight:700;
+text-decoration:none;
+font-size:15px;
+box-shadow:0 6px 18px rgba(0,191,166,.25);
 }
 
-.espaco{height:90px;}
+.produto-btn:active{
+transform:scale(.98);
+}
+
+/* MODO ESCURO */
+.dark .produto-card{
+background:#020617 !important;
+}
+
+.dark .produto-img{
+background:#1e293b !important;
+}
+
+.dark .produto-nome{
+color:#fff !important;
+}
+
+.dark .produto-btn{
+background:linear-gradient(45deg,#facc15,#eab308);
+color:#000 !important;
+}
+
+/* CELULAR */
+@media(max-width:600px){
+
+.produto-card{
+width:88%;
+min-width:250px;
+max-width:280px;
+padding:12px;
+}
+
+.produto-img{
+height:170px;
+}
+
+.produto-img img{
+max-height:150px;
+}
+
+.produto-nome{
+font-size:14px;
+min-height:66px;
+max-height:66px;
+}
+
+.produto-btn{
+font-size:14px;
+padding:13px;
+}
+
+}
 
 </style>
 </head>
-
 <body>
+<div class="topo-novo">
 
-<!-- 🔥 CAPA NOVA -->
-<div class="capa" id="capa"></div>
+  <img src="https://i.ibb.co/CpTCs8s9/Design-sem-nome-removebg-preview.png">
 
-<div class="foto">
-<img id="foto">
-<div class="online"></div>
+  <span class="ola">Olá :)</span>
+
+  <!-- 🔥 BOTÃO MODO ESCURO -->
+  <button id="toggleTema" style="
+  margin-left:auto;
+  background:#111;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:20px;
+  font-size:14px;
+  cursor:pointer;
+  ">
+    🌙
+  </button>
+
+  <!-- NOVA IMAGEM -->
+  <img class="logo-direita" src="https://i.ibb.co/FqhZTCZg/logo-192-removebg-preview.png">
+
 </div>
-
-<div class="nome" id="nome"></div>
-<div class="estrelas" id="estrelas"></div>
-<div class="status">Online agora</div>
-<div class="valor">R$1,99/min</div>
 
 <div class="box">
+<div class="titulo">O que está procurando?</div><div class="opcoes">
 
-<div class="sobre">
-<b>Sobre mim</b><br><br>
+<div class="op active" onclick="trocar('clareza',this)">
+<img src="https://i.ibb.co/TMVkVXN6/pp.png">Clareza
+</div>
 
-<div id="especialidade"></div><br>
-<div id="signos"></div><br>
+<div class="op" onclick="trocar('motivacao',this)">
+<img src="https://i.ibb.co/8Dhz1WFw/image.png">Motivação
+</div>
 
-<div id="descricao"></div>
+<div class="op" onclick="trocar('esperanca',this)">
+<img src="https://i.ibb.co/ccP46cMj/kkkkk.png">Esperança
+</div>
+
+</div>
+</div>
+
+<div id="principal"></div>
+<div id="fixo"></div>
+
+<script>
+const banco = {
+  clareza: [
+    {
+      nome: "Pai Márcio",
+      img: "pai-marcio.png"
+    },
+    {
+      nome: "Tamila",
+      img: "tamila.png"
+    },
+    {
+      nome: "Samanta",
+      img: "samanta.png"
+    },
+    {
+      nome: "Dolores",
+      img: "dolores.png"
+    }
+  ],
+
+  motivacao: [
+    {
+      nome: "Esmeralda",
+      img: "esmeralda.png"
+    },
+    {
+      nome: "Janaina",
+      img: "janaina.png"
+    },
+    {
+      nome: "Pedro",
+      img: "pedro.png"
+    },
+    {
+      nome: "Beatriz",
+      img: "beatriz.png"
+    }
+  ],
+
+  esperanca: [
+    {
+      nome: "Carlos",
+      img: "carlos.png"
+    },
+    {
+      nome: "Sulamita",
+      img: "sulamita.png"
+    },
+    {
+      nome: "Adria",
+      img: "adria.png"
+    },
+    {
+      nome: "M.Padilha",
+      img: "m-padilha.png"
+    },
+    {
+      nome: "Sara",
+      img: "sara.png"
+    },
+    {
+      nome: "7 Saias",
+      img: "7-saias.png"
+    },
+    {
+      nome: "Odara",
+      img: "odara.png"
+    }
+  ]
+};
+const fixo = [
+  {
+    titulo: "Nós temos um futuro juntos?",
+    icone: "https://i.ibb.co/tw8wF0JD/ppp.png",
+    lista: [
+      "Tamila",
+      "Sara",
+      "Sulamita"
+    ]
+  },
+
+  {
+    titulo: "Tem interesse em mim?",
+    icone: "https://i.ibb.co/gLMsV9kQ/ppppp.png",
+    lista: [
+      "Pedro",
+      "Carlos",
+      "Odara"
+    ]
+  },
+
+  {
+    titulo: "Como atrair o amor?",
+    icone: "https://i.ibb.co/DHGtmnwZ/pppppppp.png",
+    lista: [
+      "Esmeralda",
+      "7 Saias",
+      "Beatriz"
+    ]
+  }
+];
+function buscar(nome){
+  return [...banco.clareza,...banco.motivacao,...banco.esperanca]
+  .find(c=>c.nome===nome);
+}
+// 🔥 👇 COLE AQUI
+function clicarContratar(nome, imagem){
+  localStorage.setItem('consultorNome', nome);
+  localStorage.setItem('consultorImagem', imagem);
+  window.location.href = "/aplicativo/perfil.html";
+}
+// 🟢 CONTROLE DE ONLINE/OFFLINE (NOVO)
+
+// 🔥 AGENDA DOS CONSULTORES
+const agenda = {
+  "Pai Márcio": { inicio: 13, fim: 22 },
+  "Tamila": { inicio: 13, fim: 22 },
+  "Samanta": { inicio: 13, fim: 20 },
+  "Dolores": { inicio: 13, fim: 18 },
+
+  "Esmeralda": { inicio: 13, fim: 22 },
+  "Janaina": { inicio: 13, fim: 19 },
+  "Pedro": { inicio: 13, fim: 21 },
+  "Beatriz": { inicio: 13, fim: 22 },
+
+  "Carlos": { inicio: 13, fim: 20 },
+  "Sulamita": { inicio: 13, fim: 22 },
+  "Adria": { inicio: 13, fim: 19 },
+  "M.Padilha": { inicio: 13, fim: 23 },
+
+  "Sara": { inicio: 13, fim: 23 },
+  "7 Saias": { inicio: 13, fim: 23 },
+  "Odara": { inicio: 13, fim: 18 }
+};
+// 🔥 CONTROLE REAL (CORRIGIDO E ESTÁVEL)
+let controleStatus = JSON.parse(localStorage.getItem("controleStatus")) || {};
+// 👇 NOVO (CACHE GLOBAL)
+window.statusCache = Object.create(null);
+function statusConsultor(nome){
+
+  const agora = new Date();
+  const agoraMs = Date.now();
+  const hora = agora.getHours();
+
+  const a = agenda[nome];
+
+  const dentroHorario = a && hora >= a.inicio && hora < a.fim;
+
+  // 🔥 inicialização inteligente
+  if(!controleStatus[nome]){
+    controleStatus[nome] = {
+      online: dentroHorario ? Math.random() < 0.6 : false,
+      mudouEm: agoraMs
+    };
+  }
+
+  const estado = controleStatus[nome];
+
+// 🔴 FORA DO EXPEDIENTE (BASEADO NO FIM DO EXPEDIENTE)
+if(!a || hora < a.inicio || hora >= a.fim){
+
+  let offlineDesde = new Date();
+
+  // 🔥 define o horário de saída (fim do expediente)
+  offlineDesde.setHours(a?.fim || 23, 0, 0, 0);
+
+  // 🔥 se ainda não chegou no fim hoje → usa o de ontem
+  if(agora < offlineDesde){
+    offlineDesde.setDate(offlineDesde.getDate() - 1);
+  }
+
+  const minutosOffline = Math.floor((agoraMs - offlineDesde.getTime()) / 60000);
+
+  return {
+    online: false,
+    tempo: minutosOffline
+  };
+}
+// ⏸ PAUSA (CORRIGIDO E COM TEMPO REAL)
+if(a && a.pausa && hora >= a.pausa[0] && hora < a.pausa[1]){
+
+  // 🔥 força offline durante pausa
+  if(estado.online){
+    estado.online = false;
+    estado.mudouEm = agoraMs;
+  }
+
+  // 🔥 salva estado
+  localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
+
+  // 🔥 calcula tempo desde início da pausa
+  let pausaInicio = new Date();
+  pausaInicio.setHours(a.pausa[0], 0, 0, 0);
+
+  const minutosOffline = Math.floor((agoraMs - pausaInicio.getTime()) / 60000);
+
+  return {
+    online:false,
+    tempo:minutosOffline
+  };
+}
+// 🔥 TROCA INTELIGENTE (COM TEMPO MÍNIMO)
+const tempoMinimo = 3 + Math.floor(Math.random()*3); 
+// entre 3 e 5 minutos
+
+if(agoraMs - estado.mudouEm > tempoMinimo * 60000){
+
+  if(Math.random() < 0.3){
+    estado.online = !estado.online;
+    estado.mudouEm = agoraMs;
+  }
+
+}
+// 🔥 salva sempre
+localStorage.setItem("controleStatus", JSON.stringify(controleStatus));
+
+const minutosPassados = Math.floor((agoraMs - estado.mudouEm)/60000);
+
+// 🔥 RESET DO CONTADOR OFFLINE (AQUI 👇)
+if(estado.online){
+  estado.offlineDesde = null;
+}
+// 🟢 ONLINE → FILA REAL
+if(estado.online){
+
+  // 🔥 quantidade de pessoas na fila (1 a 4)
+  const fila = Math.floor(Math.random()*4)+1;
+
+  // 🔥 tempo base por pessoa (5 a 10 minutos)
+  const tempoBase = 5 + Math.floor(Math.random()*6);
+
+  // 🔥 tempo total de espera
+  const tempoFila = fila * tempoBase;
+
+  return { 
+    online:true, 
+    tempo:tempoFila,
+    fila:fila
+  };
+}
+
+// 🔴 OFFLINE → TEMPO REAL
+return { online:false, tempo:minutosPassados };
+}
+// 👇 COLE AQUI
+function getStatus(nome){
+  if(!statusCache[nome]){
+    statusCache[nome] = statusConsultor(nome);
+  }
+  return statusCache[nome];
+}
+// ⏱ FORMATAR TEMPO
+function formatarTempo(min){
+
+  if(min >= 60){
+    const h = Math.floor(min/60);
+    const m = min % 60;
+    return m > 0 ? `${h}h ${m}m` : `${h}h`;
+  }
+
+  return min + " min";
+}
+
+// 👥 PESSOAS
+function pessoas(){
+  return Math.floor(Math.random()*53)+20;
+}
+// 🔥 CARD
+function card(c){
+
+const status = getStatus(c.nome);
+const online = status.online;
+const tempoTxt = formatarTempo(status.tempo);
+
+return `
+<a class="card"
+data-online="${online}"
+onclick="
+const online = this.getAttribute('data-online') === 'true';
+abrirPerfil('${c.nome}','${c.img}', online);
+"
+href="javascript:void(0)">
+
+<div class="tempo">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="M12 7v5l3 2"></path>
+  </svg>
+  <span>
+    ${"≈ " + tempoTxt}
+  </span>
+</div>
+
+<div class="foto">
+  <img src="${c.img}">
+  ${online ? '<div class="online"></div>' : ''}
+</div>
+
+<div class="nome">${c.nome}</div>
+
+<div class="desc"
+style="
+color:${online ? '#00cc66' : '#c47a00'};
+font-weight:600;
+font-size:clamp(13px,3vw,18px);
+text-shadow:none;
+line-height:1.2;
+">
+${
+  online
+  ? "Estou Disponível"
+  : "Indisponível há " + tempoTxt
+}
+</div>
+
+<div class="foot">${pessoas()} pessoas ajudadas/90 dias</div>
+
+</a>`;
+}
+// 🔥 RENDER PRINCIPAL
+function renderPrincipal(tipo){
+
+const icones={
+clareza:"https://i.ibb.co/TMVkVXN6/pp.png",
+motivacao:"https://i.ibb.co/8Dhz1WFw/image.png",
+esperanca:"https://i.ibb.co/ccP46cMj/kkkkk.png"
+};
+
+const titulos={
+clareza:"Estou no caminho correto?",
+motivacao:"Qual é minha missão?",
+esperanca:"Terei um futuro melhor?"
+};
+
+let html=`
+<div class="titulo">
+<img src="${icones[tipo]}">
+${titulos[tipo]}
+</div>
+<div class="scroll">`;
+
+banco[tipo].forEach(c=> html+=card(c));
+
+html+=`</div>`;
+document.getElementById("principal").innerHTML=html;
+
+renderFixo();
+}
+
+// 🔥 FIXO
+function renderFixo(){
+
+let html="";
+
+fixo.forEach((sec,index)=>{
+
+html+=`
+<div class="titulo">
+<img src="${sec.icone}">
+${sec.titulo}
+</div>`;
+
+html+=`<div class="scroll">`;
+
+sec.lista.forEach(n=> html+=card(buscar(n)));
+
+html+=`</div>`;
+
+// 🔥 CARD DESTAQUE
+if(index === 0){
+
+const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
+const semana=Math.floor(Date.now()/604800000);
+const c=todos[semana % todos.length];
+
+// ✅ AQUI SIM salva o status correto
+const status = getStatus(c.nome);
+const online = status.online;
+html+=`
+<div class="card-destaque">
+
+  <div class="topo-destaque">
+    <div class="foto-destaque">
+      <img id="fotoSemana">
+      ${online ? '<div class="online"></div>' : ''}
+    </div>
+
+    <div>
+      <div class="badge">CONSULTOR DA SEMANA</div>
+      <div class="nome-destaque" id="nomeSemana"></div>
+    </div>
+  </div>
+
+  <div class="sub">Compatibilidade Amor...</div>
+
+  <div class="info">
+    <span id="pessoasSemana"></span>
+
+    <span id="tempoSemana">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 7v5l3 2"></path>
+      </svg>
+      <span id="tempoTexto"></span>
+    </span>
+  </div>
+
+  <div class="texto" id="descSemana"></div>
+
+  <button class="btn" id="btnSemana" style="display:none;"></button>
+
+</div>
+`;
+}
+// 🔥 NOVA SEÇÃO (OFERTAS ESPECIAIS)
+if(index === 2){
+
+// 🔥 TÍTULO
+html+=`
+<div class="titulo">
+  <img src="https://i.ibb.co/QvGk7YvL/Chat-GPT-Image-9-04-2026-18-51-25-removebg-preview.png">
+  Ofertas Especiais
+</div>
+`;
+
+// 🔥 SCROLL (igual aos cards)
+html+=`<div class="scroll">`;
+
+// 🔥 CARD 1 (CONTRATAR LEITURA)
+html+=`
+<div class="card-oferta">
+
+  <div class="img-box">
+    <img src="https://i.ibb.co/KpDbykSC/Chat-GPT-Image-22-04-2026-23-46-34.png">
+
+ ${(() => {
+
+delete statusCache["Esmeralda"];
+const status = getStatus("Esmeralda");
+
+return status.online
+? `<button id="btnEsmeralda" class="btn-oferta"
+     onclick="clicarContratar('Esmeralda','esmeralda.png')">
+     Consultar agora
+   </button>`
+: `<button id="btnEsmeralda" class="btn-oferta"
+     style="opacity:0.5; pointer-events:none;">
+     Indisponível
+   </button>`;
+})()}
+
+  </div>
+
+</div>
+`;
+
+// 🔥 CARD 2 (MAGIA)
+html+=`
+<div class="card-oferta">
+
+  <div class="img-box">
+    <img src="https://i.ibb.co/d0gG3PJ8/Chat-GPT-Image-22-04-2026-23-12-07.png">
+
+    <button class="btn-oferta"
+    onclick="window.location.href='https://onlinecartomantes-dotcom.github.io/aplicativo/trabalho.html'">
+      Contratar Magia
+    </button>
+
+  </div>
+
+</div>
+`;
+
+// 🔥 FECHA SCROLL
+html+=`</div>`; 
+html += `
+
+<div class="titulo" style="position:relative;">
+
+  <img src="https://i.ibb.co/xqGGR3Mv/Chat-GPT-Image-22-04-2026-09-44-00-removebg-preview.png">
+
+  <span>Nossos Produtos</span>
+
+  <button onclick="window.open('https://loja-1-rykc.onrender.com/','_blank')"
+  style="
+  margin-left:auto;
+  background:linear-gradient(45deg,#00bfa6,#1abc9c);
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+  ">
+   Ver Loja
+  </button>
 
 </div>
 
-<b>Depoimentos reais</b>
-<div id="depoimentos"></div>
+<div class="scroll" id="produtosShopee">
+
+<div style="
+padding:20px;
+font-weight:700;
+color:#b8860b;
+background:var(--card);
+border-radius:20px;
+min-width:260px;
+text-align:center;
+">
+Carregando produtos...
+</div>
 
 </div>
 
-<div class="espaco"></div>
+`;
+} // fecha if
+}); // fecha loop
 
-<button class="btn-fixo">Conecte-se Comigo</button>
+// 🔥 BLOCO ABAIXO DOS CARDS (FORA DO SCROLL)
+html+=`
+<div style="
+margin:20px 15px;
+background:#fff;
+border-radius:20px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+">
+
+  <div style="
+  font-size:22px;
+  font-weight:600;
+  color:#333;
+  ">
+  </div>
+
+  <div style="
+  color:#c47a00;
+  margin-top:6px;
+  font-size:16px;
+  ">
+  </div>
+
+  <div style="position:relative; margin-top:12px;">
+
+    <img src="https://i.ibb.co/0j5Nm1MR/Design-sem-nome.png" style="
+    width:100%;
+    border-radius:20px;
+    ">
+<button onclick="window.location.href='https://onlinecartomantes-dotcom.github.io/aplicativo/mural.html'"
+style="
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+width:85%;
+padding:14px;
+border:none;
+border-radius:25px;
+background:linear-gradient(45deg,#00bfa6,#1abc9c);
+color:#fff;
+font-size:18px;
+font-weight:600;
+box-shadow:0 6px 18px rgba(0,0,0,0.2);
+">
+  Ver
+</button>
+
+</div>
+
+</div>
+`;
+
+/* 🔥 BIBLIOTECA OCULTA */
+
+html += `
+
+<div style="
+margin:18px 12px;
+position:relative;
+overflow:hidden;
+border-radius:24px;
+padding:18px 0 10px;
+background:transparent;
+box-shadow:none;
+">
+
+<!-- BOTÃO -->
+
+<div style="
+padding:0 14px 22px;
+text-align:center;
+">
+
+<a href="https://onlinecartomantes-dotcom.github.io/bibliotecaoculta/biblioteca.html"
+target="_blank"
+style="
+display:inline-block;
+text-decoration:none;
+
+font-family:'Poppins',sans-serif;
+font-size:22px;
+font-weight:700;
+line-height:1.35;
+
+color:#fff;
+
+padding:16px 26px;
+
+border-radius:22px;
+
+background:
+linear-gradient(45deg,#00bfa6,#1abc9c);
+
+box-shadow:
+0 8px 22px rgba(0,191,166,.28);
+
+transition:.3s ease;
+">
+
+ACESSE NOSSA<br>
+BIBLIOTECA OCULTA
+
+</a>
+
+</div>
+
+<!-- WRAPPER -->
+
+<div class="books-wrapper-novo">
+
+<div class="fade-left-novo"></div>
+<div class="fade-right-novo"></div>
+
+<!-- LINHA SUPERIOR -->
+
+<div class="marquee-novo marquee-left-novo">
+
+<div class="track-novo">
+
+<img src="https://biblioteca-secreta.vercel.app/books/0.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/1.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/2.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/3.png">
+<img src="https://biblioteca-secreta.vercel.app/books/4.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/5.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/6.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/7.png">
+<img src="https://biblioteca-secreta.vercel.app/books/8.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/9.png">
+<img src="https://biblioteca-secreta.vercel.app/books/10.png">
+
+<!-- DUPLICA -->
+
+<img src="https://biblioteca-secreta.vercel.app/books/0.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/1.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/2.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/3.png">
+<img src="https://biblioteca-secreta.vercel.app/books/4.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/5.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/6.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/7.png">
+<img src="https://biblioteca-secreta.vercel.app/books/8.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/9.png">
+<img src="https://biblioteca-secreta.vercel.app/books/10.png">
+
+</div>
+
+</div>
+
+<!-- LINHA INFERIOR -->
+
+<div class="marquee-novo marquee-right-novo">
+
+<div class="track-novo">
+
+<img src="https://biblioteca-secreta.vercel.app/books/17.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/18.png">
+<img src="https://biblioteca-secreta.vercel.app/books/19.webp">
+<img src="https://biblioteca-secreta.vercel.app/books/20.png">
+<img src="https://biblioteca-secreta.vercel.app/books/21.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/22.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/23.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/24.png">
+<img src="https://biblioteca-secreta.vercel.app/books/25.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/26.jpg">
+
+<!-- DUPLICA -->
+
+<img src="https://biblioteca-secreta.vercel.app/books/17.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/18.png">
+<img src="https://biblioteca-secreta.vercel.app/books/19.webp">
+<img src="https://biblioteca-secreta.vercel.app/books/20.png">
+<img src="https://biblioteca-secreta.vercel.app/books/21.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/22.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/23.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/24.png">
+<img src="https://biblioteca-secreta.vercel.app/books/25.jpg">
+<img src="https://biblioteca-secreta.vercel.app/books/26.jpg">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+/* WRAPPER */
+
+.books-wrapper-novo{
+position:relative;
+overflow:hidden;
+
+display:flex;
+flex-direction:column;
+
+gap:20px;
+
+background:transparent;
+}
+
+/* FADES */
+
+.fade-left-novo,
+.fade-right-novo{
+position:absolute;
+top:0;
+width:40px;
+height:100%;
+z-index:5;
+pointer-events:none;
+}
+
+.fade-left-novo{
+left:0;
+background:linear-gradient(to right,#f3e7bb,transparent);
+}
+
+.fade-right-novo{
+right:0;
+background:linear-gradient(to left,#f3e7bb,transparent);
+}
+
+/* MARQUEE */
+
+.marquee-novo{
+display:flex;
+width:max-content;
+}
+
+/* TRACK */
+
+.track-novo{
+display:flex;
+align-items:center;
+gap:14px;
+padding:0 10px;
+}
+
+/* IMAGENS */
+
+.track-novo img{
+width:102px;
+height:156px;
+
+object-fit:cover;
+
+border-radius:16px;
+
+flex-shrink:0;
+
+background:#fff;
+
+border:2px solid rgba(255,255,255,.7);
+
+box-shadow:
+0 6px 16px rgba(0,0,0,.18);
+
+transition:.3s ease;
+}
+
+/* HOVER */
+
+.track-novo img:hover{
+transform:
+translateY(-4px)
+scale(1.03);
+
+box-shadow:
+0 10px 24px rgba(0,0,0,.22);
+}
+
+/* ANIMAÇÕES */
+
+.marquee-left-novo{
+animation:scrollLeftNovo 30s linear infinite;
+}
+
+.marquee-right-novo{
+animation:scrollRightNovo 30s linear infinite;
+}
+
+@keyframes scrollLeftNovo{
+from{
+transform:translateX(0);
+}
+to{
+transform:translateX(-50%);
+}
+}
+
+@keyframes scrollRightNovo{
+from{
+transform:translateX(-50%);
+}
+to{
+transform:translateX(0);
+}
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.track-novo{
+gap:10px;
+padding:0 6px;
+}
+
+.track-novo img{
+width:82px;
+height:126px;
+border-radius:12px;
+}
+
+.fade-left-novo,
+.fade-right-novo{
+width:26px;
+}
+
+.marquee-left-novo{
+animation:scrollLeftNovo 48s linear infinite;
+}
+
+.marquee-right-novo{
+animation:scrollRightNovo 48s linear infinite;
+}
+
+}
+
+</style>
+`;
+   // 🔮 HORÓSCOPO (NOVO BLOCO)
+html+=`
+<div class="animar" id="horoscopoBox" style="
+margin:20px 15px;
+border-radius:20px;
+overflow:hidden;
+
+/* 👇 REMOVE O BRANCO */
+background:transparent;
+box-shadow:none;
+padding:0;
+">
+
+<iframe 
+src="https://widget.horoscopovirtual.com.br/?background=ffffff&color=b8860b&border=fff3cd&text=b8860b&font=roboto" 
+style="
+border:none;
+width:100%;
+height:350px;
+display:block;
+">
+</iframe>
+
+</div>
+`;
+// ✅ renderiza o HTML corretamente
+document.getElementById("fixo").innerHTML = html;
+
+setTimeout(renderDestaque,100);
+setTimeout(carregarProdutosShopee,300);
+}
+
+// 🔥 DESCRIÇÕES FIXAS (264 caracteres cada)
+const descricoes = {
+
+"Pai Márcio":"Sou tarólogo experiente e intuitivo, trabalho com espiritualidade profunda e orientação direta. Minha missão é te mostrar caminhos claros, revelar o que está oculto e te ajudar a tomar decisões com segurança, firmeza e fé em todas as áreas da sua vida.",
+
+"Tamila":"Sou taróloga e sensitiva, trabalho com a energia do amor e da intuição em minhas leituras. Estou aqui sempre disposta a te ajudar com carinho, sinceridade e acolhimento, te direcionando da melhor forma para que você encontre paz, clareza e felicidade em sua vida.",
+
+"Samanta":"Sou sensitiva e trabalho com intuição profunda e conexão espiritual em minhas leituras. Minha missão é te ajudar a enxergar sentimentos ocultos, entender situações e tomar decisões com mais segurança, trazendo clareza, verdade e equilíbrio para sua vida.",
+
+"Dolores":"Sou taróloga sensitiva e trabalho com energia espiritual e emocional em minhas leituras. Estou aqui para te ajudar com acolhimento e sinceridade, revelando caminhos, trazendo clareza e te guiando para que você encontre paz, equilíbrio e felicidade em sua jornada.",
+
+"Esmeralda":"Sou especialista em amor e relacionamentos, utilizo minha intuição e sensibilidade para revelar sentimentos ocultos e intenções verdadeiras. Estou aqui para te ajudar com clareza, sinceridade e direcionamento, trazendo respostas que fazem diferença na sua vida.",
+
+"Janaina":"Sou sensitiva e intuitiva, trabalho com energia emocional e espiritual em minhas leituras. Minha missão é te orientar com leveza e verdade, trazendo clareza sobre sentimentos e caminhos, ajudando você a tomar decisões com mais segurança e tranquilidade.",
+
+"Pedro":"Realizo leituras profundas e detalhadas com forte conexão espiritual e intuitiva. Estou aqui para te ajudar a entender situações, revelar verdades ocultas e trazer clareza para suas decisões, sempre com sinceridade e direcionamento seguro para sua vida.",
+
+"Beatriz":"Sou taróloga experiente e sensitiva, trabalho com energia espiritual e orientação verdadeira. Minha missão é te ajudar a enxergar caminhos com clareza, trazendo respostas sinceras e direcionamento seguro para que você possa tomar decisões com confiança.",
+
+"Carlos":"Trabalho com energia espiritual elevada e intuição profunda em minhas leituras. Estou aqui para te ajudar a encontrar clareza, paz e direção, revelando caminhos e sentimentos com verdade, sempre buscando o melhor para sua vida e seu equilíbrio emocional.",
+
+"Sulamita":"Sou especialista em amor e reconciliação, trabalho com energia emocional e espiritual em minhas leituras. Minha missão é te ajudar a entender sentimentos, revelar caminhos e trazer clareza para suas decisões, sempre com carinho e sinceridade.",
+
+"Adria":"Trabalho com intuição profunda e conexão espiritual para revelar caminhos e sentimentos ocultos. Estou aqui para te ajudar com clareza e verdade, trazendo direcionamento seguro para suas decisões e te auxiliando a encontrar equilíbrio e paz na sua vida.",
+
+"M.Padilha":"Realizo leituras diretas e profundas com forte conexão espiritual. Minha missão é revelar verdades, mostrar caminhos e te orientar em decisões importantes, trazendo clareza, segurança e direcionamento firme para sua vida em todos os sentidos.",
+
+"Sara":"Sou sensitiva e trabalho com orientação detalhada e acolhedora em minhas leituras. Estou aqui para te ajudar com clareza emocional, revelando sentimentos e caminhos, sempre com sinceridade, carinho e direcionamento para sua vida.",
+
+"7 Saias":"Trabalho com energia espiritual forte e reveladora em minhas leituras. Minha missão é mostrar verdades ocultas, trazer clareza para suas dúvidas e te orientar com firmeza e sinceridade, ajudando você a tomar decisões mais seguras.",
+
+"Odara":"Trabalho com energia positiva e intuição espiritual em minhas leituras. Estou aqui para te ajudar com sinceridade e clareza, revelando caminhos e trazendo direcionamento para que você encontre equilíbrio, paz e felicidade em sua vida."
+
+};
+function renderDestaque(){
+
+const todos=[...banco.clareza,...banco.motivacao,...banco.esperanca];
+const semana=Math.floor(Date.now()/604800000);
+const c=todos[semana % todos.length];
+
+// ✅ USA O MESMO STATUS (CORRETO)
+const status = getStatus(c.nome);
+const online = status.online;
+
+// 🔥 SINCRONIZA A BOLINHA (NOVO)
+const foto = document.querySelector(".foto-destaque");
+
+if(foto){
+
+  if(online){
+
+    if(!foto.querySelector(".online")){
+      const bolinha = document.createElement("div");
+      bolinha.className = "online";
+      foto.appendChild(bolinha);
+    }
+
+  }else{
+
+    const bolinha = foto.querySelector(".online");
+    if(bolinha) bolinha.remove();
+
+  }
+
+}
+
+// 🔥 FOTO + NOME
+document.getElementById("fotoSemana").src=c.img;
+document.getElementById("nomeSemana").innerText=c.nome;
+
+// 🔥 INFO
+document.getElementById("pessoasSemana").innerText =
+(Math.floor(Math.random()*300)+200)+" pessoas ajudadas";
+
+// 🔥 TEMPO
+const tempoTxt = formatarTempo(status.tempo);
+document.getElementById("tempoTexto").innerText = "≈ " + tempoTxt;
+
+// 🔥 DESCRIÇÃO
+document.getElementById("descSemana").innerText =
+descricoes[c.nome] || "Estou aqui para te ajudar com clareza.";
+
+// 🔥 BOTÃO
+const btn = document.getElementById("btnSemana");
+
+if(btn){
+
+  if(status.online){
+
+    btn.style.display = "block";
+    btn.innerText = "Consultar " + c.nome;
+
+    btn.onclick = () => {
+      localStorage.setItem("consultorNome", c.nome);
+      localStorage.setItem("consultorImagem", c.img);
+      window.location.href="/aplicativo/perfil.html";
+    };
+
+  }else{
+    btn.style.display = "none";
+  }
+
+}
+
+} // ✅ FIM renderDestaque
+
+function abrirPerfil(nome, img, online){
+
+  // 🔥 TRAVA ABSOLUTA (NUNCA ENTRA OFFLINE)
+  if(!online){
+    return;
+  }
+
+  // 🔥 SALVA DADOS
+  localStorage.setItem('consultorNome', nome);
+  localStorage.setItem('consultorImagem', img);
+
+  // 🔥 REDIRECIONA
+  window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html";
+}
+
+// 🔥 CONTROLE DO TIPO ATUAL
+let tipoAtual = "clareza";
+
+
+// 🔥 MENU
+function trocar(tipo,el){
+
+  tipoAtual = tipo;
+
+  document.querySelectorAll(".op").forEach(o=>o.classList.remove("active"));
+
+  el.classList.add("active");
+
+  renderPrincipal(tipo);
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+// 🔥 INICIALIZA (CORRETO)
+document.addEventListener("DOMContentLoaded", () => {
+
+  renderPrincipal(tipoAtual);
+  renderDestaque();
+  atualizarBotaoEsmeralda();
+
+});
+
+// 🔥 ATUALIZAÇÃO SUAVE (ESTÁVEL E SEM BUG)
+setInterval(() => {
+
+  // 🔥 limpa cache global
+  window.statusCache = Object.create(null);
+
+  document.querySelectorAll(".card").forEach(card => {
+
+    const nome = card.querySelector(".nome")?.innerText;
+    if(!nome) return;
+
+    const status = getStatus(nome);
+    const tempoTxt = formatarTempo(status.tempo);
+
+    // 🔥 ATUALIZA TEMPO
+    const tempoEl = card.querySelector(".tempo");
+
+    if(tempoEl){
+
+      let texto = tempoEl.querySelector("span");
+
+      if(!texto){
+        texto = document.createElement("span");
+        tempoEl.appendChild(texto);
+      }
+
+      texto.textContent = "≈ " + tempoTxt;
+    }
+
+    // 🔥 ATUALIZA BOLINHA
+    const foto = card.querySelector(".foto");
+    if(!foto) return;
+
+    if(status.online){
+
+      if(!foto.querySelector(".online")){
+        const bolinha = document.createElement("div");
+        bolinha.className = "online";
+        foto.appendChild(bolinha);
+      }
+
+    }else{
+
+      const bolinha = foto.querySelector(".online");
+      if(bolinha) bolinha.remove();
+
+    }
+
+    // 🔥 ATUALIZA DESCRIÇÃO
+    const desc = card.querySelector(".desc");
+
+    if(desc){
+
+      if(status.online){
+
+        desc.innerText = "Estou Disponível";
+        desc.style.color = "#00cc66";
+        desc.style.fontWeight = "600";
+        desc.style.fontSize = "clamp(13px,3vw,18px)";
+        desc.style.textShadow = "none";
+        desc.style.lineHeight = "1.2";
+
+      }else{
+
+        desc.innerText = "Indisponível há " + tempoTxt;
+        desc.style.color = "#c47a00";
+        desc.style.fontWeight = "600";
+        desc.style.fontSize = "clamp(13px,3vw,18px)";
+        desc.style.textShadow = "none";
+        desc.style.lineHeight = "1.2";
+
+      }
+
+    }
+
+    // 🔥 PARTE MAIS IMPORTANTE (ANTI-BUG)
+    card.setAttribute("data-online", status.online);
+
+  });
+
+  // 🔥 atualiza extras sem recarregar página
+  renderDestaque();
+  atualizarBotaoEsmeralda();
+
+}, 10000);
+/* =========================
+🔥 PWA + DETECÇÃO
+========================= */
+
+const ua = navigator.userAgent.toLowerCase();
+
+if (ua.includes("instagram") || ua.includes("fbav") || ua.includes("facebook")) {
+  document.body.classList.add("app-view");
+}
+
+let deferredPrompt;
+
+function isIOS(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
+function isInApp(){
+  return ua.includes("instagram") || ua.includes("fb") || ua.includes("messenger");
+}
+
+function isAndroid(){
+  return /android/i.test(navigator.userAgent);
+}
+
+window.addEventListener("beforeinstallprompt",(e)=>{
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function abrirPWA(){
+
+  if(window.matchMedia('(display-mode: standalone)').matches) return;
+
+  const popup = document.getElementById("pwaPopup");
+  if(!popup) return;
+
+  const titulo = document.getElementById("pwaTitulo");
+  const texto = document.getElementById("pwaTexto");
+  const steps = document.getElementById("pwaSteps");
+  const btn = document.getElementById("pwaBtn");
+
+  popup.style.display="flex";
+
+  if(isInApp()){
+    titulo.innerText="ABRIR NO NAVEGADOR";
+    texto.innerHTML="Você está dentro do Instagram/Facebook.";
+    steps.innerHTML=`
+    1. Toque em <b>⋮</b><br>
+    2. Abrir no navegador<br>
+    3. Depois instale o aplicativo
+    `;
+
+    btn.innerText="COPIAR LINK";
+    btn.onclick=()=>{
+      navigator.clipboard.writeText(location.href);
+      alert("Link copiado!");
+    };
+    return;
+  }
+
+  if(isIOS()){
+    titulo.innerText="INSTALAR NO IPHONE";
+    texto.innerHTML="Siga os passos abaixo:";
+    steps.innerHTML=`
+    1. Toque em <b>Compartilhar ⤴</b><br>
+    2. Role a tela<br>
+    3. Toque em <b>Adicionar à Tela de Início</b><br>
+    4. Confirmar
+    `;
+
+    btn.innerText="ENTENDI";
+    btn.onclick=fecharPWA;
+    return;
+  }
+
+  if(deferredPrompt){
+    titulo.innerText="INSTALAR APLICATIVO";
+    texto.innerHTML="Instale agora:";
+    steps.innerHTML=`
+    ✔ Acesso rápido<br>
+    ✔ Funciona como app<br>
+    ✔ Mais leve e rápido
+    `;
+
+    btn.innerText="INSTALAR AGORA";
+    btn.onclick=()=>{
+      deferredPrompt.prompt();
+      popup.style.display="none";
+    };
+    return;
+  }
+
+  titulo.innerText="INSTALAR NO DISPOSITIVO";
+  texto.innerHTML="Você pode instalar este site como aplicativo.";
+  steps.innerHTML=`
+  👉 No Chrome / Edge:<br>
+  1. Clique em <b>⋮</b><br>
+  2. "Instalar aplicativo"<br><br>
+
+  👉 Outros navegadores:<br>
+  1. Use o menu<br>
+  2. Adicionar à tela inicial
+  `;
+
+  btn.innerText="ENTENDI";
+  btn.onclick=fecharPWA;
+}
+
+function fecharPWA(){
+  const popup = document.getElementById("pwaPopup");
+  if(popup) popup.style.display="none";
+}
+
+setTimeout(abrirPWA,2000);
+
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js");
+}
+
+</script>
+
+<!-- 🔥 POPUP OCUPADO -->
+<div id="popupOcupado" style="
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ffe58a;
+color:#000;
+padding:12px 16px;
+border-radius:12px;
+font-weight:600;
+font-size:13px;
+box-shadow:0 6px 18px rgba(0,0,0,0.2);
+display:none;
+z-index:99999;
+max-width:90%;
+text-align:center;
+"></div>
 
 <script>
 
-// DADOS
-const nome = localStorage.getItem("consultorNome");
-const foto = localStorage.getItem("consultorImagem");
-
-if(!nome || !foto){
-document.body.innerHTML="Erro ao carregar consultor";
+// 🔥 LISTA TOTAL
+function todosConsultores(){
+  return [
+    ...banco.clareza,
+    ...banco.motivacao,
+    ...banco.esperanca
+  ];
 }
 
-// 🔥 CAPAS FIXAS
-const capas = [
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-];
+// 🔥 PEGA CONSULTORES NO HORÁRIO (SEM BUG)
+function consultoresOcupados(){
 
-const capasPorConsultor = {
-"Pai Márcio": "https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"Tamila": capas[0],
-"Samanta": capas[1],
-"Dolores": capas[2],
-"Esmeralda": capas[3],
-"Janaina": capas[4],
-"Pedro": capas[5],
-"Beatriz": capas[6],
-"Carlos": capas[7],
-"Sulamita": capas[8],
-"Adria": capas[9],
-"M.Padilha": capas[10],
-"Sara": capas[11],
-"7 Saias": capas[12],
-"Odara": capas[13]
-};
+  const hora = new Date().getHours();
 
-// aplicar capa
-document.getElementById("capa").style.backgroundImage =
-`url(${capasPorConsultor[nome]})`;
+  return todosConsultores().filter(c => {
 
-// GÊNERO
-const masculino = [
-"Pai Márcio",
-"Pedro",
-"Carlos"
-];
-const genero = masculino.includes(nome) ? "Masculino" : "Feminino";
+    const a = agenda[c.nome];
+    if(!a) return false;
 
-// FOTO
-document.getElementById("nome").innerText = nome;
-document.getElementById("foto").src = foto;
+    // ✅ dentro do horário
+    const dentroHorario = hora >= a.inicio && hora < a.fim;
 
-// ESTRELAS
-function estrelas(){
-let qtd = Math.floor(Math.random()*2)+4;
-return "★".repeat(qtd) + "☆".repeat(5-qtd);
+    if(!dentroHorario) return false;
+
+    // ✅ pega status REAL (igual ao card)
+    const status = getStatus(c.nome);
+
+    // ✅ regra principal
+    return status && status.online === false;
+
+  });
+
 }
-document.getElementById("estrelas").innerText = estrelas();
+// 🔥 MOSTRAR POPUP (BLINDADO)
+function mostrarPopup(){
 
-// 🔥 SIGNOS FIXOS POR CONSULTOR
-const signosFixos = {
+  const hora = new Date().getHours();
 
-"Tamila": "Sol ♈ Áries | Asc ♌ Leão",
-"Samanta": "Sol ♓ Peixes | Asc ♋ Câncer",
-"Dolores": "Sol ♉ Touro | Asc ♍ Virgem",
+  const ocupados = consultoresOcupados();
 
-"Esmeralda": "Sol ♎ Libra | Asc ♒ Aquário",
-"Janaina": "Sol ♏ Escorpião | Asc ♑ Capricórnio",
-"Pedro": "Sol ♊ Gêmeos | Asc ♐ Sagitário",
-"Beatriz": "Sol ♍ Virgem | Asc ♉ Touro",
+  // 🔥 BLOQUEIO INTELIGENTE (madrugada)
+if(hora >= 2 && hora < 13 && ocupados.length === 0){
+  agendarPopup();
+  return;
+}
+  // 🔥 se não tiver ninguém no horário → tenta de novo
+  if(ocupados.length === 0){
+    agendarPopup();
+    return;
+  }
 
-"Carlos": "Sol ♓ Peixes | Asc ♎ Libra",
-"Sulamita": "Sol ♋ Câncer | Asc ♓ Peixes",
-"Adria": "Sol ♒ Aquário | Asc ♈ Áries",
-"M.Padilha": "Sol ♏ Escorpião | Asc ♌ Leão",
-"Sara": "Sol ♑ Capricórnio | Asc ♍ Virgem",
-"7 Saias": "Sol ♌ Leão | Asc ♏ Escorpião",
-"Odara": "Sol ♐ Sagitário | Asc ♊ Gêmeos"
+  let random = ocupados[Math.floor(Math.random() * ocupados.length)];
 
-};
+  const popup = document.getElementById("popupOcupado");
 
-// 🔥 SIGNOS (fixo Pai Márcio)
-if(nome === "Pai Márcio"){
-  document.getElementById("signos").innerText = "Sol ♌ Leão | Asc ♍ Virgem";
-}else{
-  document.getElementById("signos").innerText =
-    signosFixos[nome] || "";
+  if(!popup){
+    agendarPopup();
+    return;
+  }
+
+  // 🔥 mensagem (SEM depender de online/offline)
+  popup.innerText = `💬 ${random.nome} está em atendimento`;
+
+  // 🔥 reset
+  popup.style.display = "block";
+  popup.style.opacity = "0";
+  popup.style.transform = "translateX(-50%) translateY(20px)";
+  popup.style.transition = "none";
+
+  // 🔥 entrada
+  setTimeout(()=>{
+    popup.style.transition = "0.3s";
+    popup.style.opacity = "1";
+    popup.style.transform = "translateX(-50%) translateY(0)";
+  },50);
+
+  // 🔥 saída
+  setTimeout(()=>{
+    popup.style.opacity = "0";
+    popup.style.transform = "translateX(-50%) translateY(20px)";
+
+    setTimeout(()=>{
+      popup.style.display = "none";
+      agendarPopup();
+    },300);
+
+  },3000);
 }
 
-// ESPECIALIDADE
-document.getElementById("especialidade").innerText =
-"🔮 Amor • Relacionamentos • Espiritualidade";
-
-// DESCRIÇÃO
-// 🔥 DESCRIÇÕES PROFISSIONAIS
-const descricoes = {
-
-Masculino: [
-"Sou especialista em orientação espiritual profunda, trazendo respostas diretas e seguras.",
-"Minha leitura revela com clareza o que está oculto, ajudando você a tomar decisões com confiança.",
-"Trabalho com espiritualidade forte e verdadeira, mostrando exatamente o que você precisa saber.",
-"Sou tarólogo experiente, focado em revelar sentimentos e caminhos com precisão.",
-"Minha missão é trazer respostas claras e orientação segura para sua vida.",
-"Realizo leituras profundas, mostrando verdades que fazem diferença nas suas decisões.",
-"Atuo com energia espiritual direta, trazendo clareza e direção.",
-"Sou especialista em revelar situações ocultas e orientar seus próximos passos.",
-"Minha leitura é objetiva e verdadeira, sem rodeios.",
-"Trabalho com conexão espiritual para trazer respostas firmes e confiáveis."
-],
-
-Feminino: [
-"Sou sensitiva e intuitiva, conectada com sua energia para revelar sentimentos ocultos.",
-"Minha leitura é acolhedora e verdadeira, trazendo clareza emocional.",
-"Trabalho com energia do amor e intuição profunda, revelando caminhos.",
-"Sou sensitiva e ajudo você a entender sentimentos e decisões.",
-"Minhas leituras são sinceras e feitas para trazer paz e clareza.",
-"Atuo com energia espiritual leve, guiando você com segurança.",
-"Sou intuitiva e acolhedora, trazendo respostas com carinho.",
-"Minha leitura revela intenções ocultas e sentimentos verdadeiros.",
-"Trabalho com conexão emocional profunda para te orientar.",
-"Sou sensitiva experiente, trazendo respostas detalhadas.",
-"Minha energia é voltada para clareza e direção emocional.",
-"Atuo com leitura espiritual verdadeira e acolhedora.",
-"Sou especialista em sentimentos e relacionamentos.",
-"Minhas consultas trazem paz, clareza e entendimento.",
-"Trabalho com intuição refinada para revelar verdades.",
-"Sou conectada com sua energia para orientar seus caminhos.",
-"Minha leitura mostra exatamente o que você precisa saber.",
-"Trago respostas sinceras e direcionamento emocional.",
-"Sou sensitiva com forte conexão espiritual.",
-"Minha missão é te ajudar com clareza e verdade."
-]
-
-};
-
-// 🔥 ESCOLHE ALEATÓRIO
-const textoDescricao = descricoes[genero][
-Math.floor(Math.random() * descricoes[genero].length)
-];
-
-// 🔥 APLICA NA TELA
-document.getElementById("descricao").innerText = textoDescricao;
-
-// 🔥 40 COMENTÁRIOS REALISTAS
-const comentariosMasculino = [
-"Ele descreveu a situação exatamente como está acontecendo.",
-"Fiquei impressionada com a precisão das respostas.",
-"Falou coisas que ninguém sabia.",
-"Me deu uma direção muito clara.",
-"Consulta muito forte e verdadeira.",
-"Acertou até detalhes pequenos.",
-"Me senti segura com o que falou.",
-"Voltarei com certeza.",
-"Explicou tudo com firmeza.",
-"Não enrola, fala direto.",
-"Acertou sentimentos ocultos.",
-"Me ajudou a decidir algo importante.",
-"Consulta muito profunda.",
-"Passa muita confiança.",
-"Acerto impressionante.",
-"Já consultei outros e ele foi o melhor.",
-"Tudo fez sentido.",
-"Me trouxe muita clareza.",
-"Respostas rápidas e diretas.",
-"Recomendo muito.",
-"Leitura muito detalhada.",
-"Muito profissional.",
-"Me surpreendeu bastante.",
-"Falou exatamente o que eu precisava ouvir.",
-"Muito assertivo.",
-"Gostei demais da consulta.",
-"Voltei pela segunda vez.",
-"Vale muito a pena.",
-"Explicação clara.",
-"Me deixou mais tranquila.",
-"Ele é muito bom mesmo.",
-"Confiei totalmente.",
-"Acertou tudo.",
-"Excelente consulta.",
-"Me ajudou muito.",
-"Super recomendo.",
-"Incrível mesmo.",
-"Leitura forte.",
-"Muito direto.",
-"Perfeito."
-];
-
-const comentariosFeminino = [
-"Muito acolhedora e sensível.",
-"Me senti muito confortável.",
-"Explicou tudo com calma.",
-"Leitura leve e verdadeira.",
-"Acertou sentimentos ocultos.",
-"Me trouxe muita paz.",
-"Energia muito boa.",
-"Voltei várias vezes.",
-"Super recomendo.",
-"Consulta maravilhosa.",
-"Muito detalhada.",
-"Me ajudou emocionalmente.",
-"Senti muita verdade.",
-"Falou tudo certo.",
-"Gostei muito.",
-"Incrível mesmo.",
-"Me orientou muito bem.",
-"Consulta muito boa.",
-"Vale a pena.",
-"Me trouxe clareza.",
-"Explicação perfeita.",
-"Muito profissional.",
-"Gostei demais.",
-"Me ajudou muito.",
-"Leitura sincera.",
-"Perfeita.",
-"Voltarei sempre.",
-"Confio muito.",
-"Excelente atendimento.",
-"Muito sensitiva.",
-"Acertou bastante.",
-"Me surpreendeu.",
-"Maravilhosa consulta.",
-"Leitura forte.",
-"Muito clara.",
-"Recomendo demais.",
-"Incrível.",
-"Perfeita leitura.",
-"Me ajudou muito mesmo.",
-"Amei."
-];
-
-// 🔥 EMBARALHAR SEM BAGUNÇAR ORIGINAL
-function embaralhar(array){
-  return [...array].sort(() => Math.random() - 0.5);
+// 🔥 LOOP ESTÁVEL (NÃO TRAVA)
+function agendarPopup(){
+  const tempo = Math.random() * 4000 + 3000; // 3s a 7s
+  setTimeout(() => {
+    mostrarPopup();
+  }, tempo);
 }
 
-// 🔥 ESCOLHER ATÉ 15 SEM REPETIR
-const lista = genero === "Masculino"
-  ? embaralhar(comentariosMasculino).slice(0,15)
-  : embaralhar(comentariosFeminino).slice(0,15);
-// render
-let html="";
-lista.forEach(c=>{
-html += `<div class="depo">⭐ ${c}</div>`;
-});
+// 🔥 START GARANTIDO (ESPERA O PWA PRIMEIRO)
+setTimeout(() => {
 
-document.getElementById("depoimentos").innerHTML = html;
+  const pwa = document.getElementById("pwaPopup");
 
-// BOTÃO
-const btn = document.querySelector(".btn-fixo");
+  // 🔥 se o popup de instalação estiver aberto, espera fechar
+  if(pwa && pwa.style.display === "flex"){
 
-if(btn){
-  btn.onclick = () => {
+    const check = setInterval(() => {
+      if(pwa.style.display === "none"){
+        clearInterval(check);
+        mostrarPopup();
+      }
+    }, 500);
 
-    const nome = localStorage.getItem("consultorNome");
+  } else {
+    mostrarPopup();
+  }
 
-    const valorPorMinuto = 1.99;
+}, 6000);
 
-    localStorage.setItem("consultorNome", nome);
-    localStorage.setItem("consultorValor", valorPorMinuto);
+</script>
+<!-- 🔥 POPUP PWA (INSTALAÇÃO) -->
+<div id="pwaPopup" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.9);
+z-index:99999;
+align-items:center;
+justify-content:center;
+padding:15px;
+">
 
-    window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/pix.html";
-  };
+  <div style="
+  background:#000;
+  color:#fff;
+  padding:20px;
+  border-radius:15px;
+  max-width:340px;
+  width:100%;
+  text-align:center;
+  box-shadow:0 0 25px rgba(255,215,0,0.4);
+  ">
+
+    <h2 id="pwaTitulo" style="color:#ffd700;"></h2>
+    <div id="pwaTexto"></div>
+    <div id="pwaSteps" style="margin-top:10px;text-align:left;"></div>
+
+    <button id="pwaBtn" style="
+    margin-top:12px;
+    padding:12px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#ffd700;
+    font-weight:bold;
+    ">
+      CONTINUAR
+    </button>
+
+    <button onclick="fecharPWA()" style="
+    margin-top:8px;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:#333;
+    color:#fff;
+    ">
+      AGORA NÃO
+    </button>
+
+  </div>
+
+</div>
+<!-- 🔥 COLE AQUI -->
+<script>
+function atualizarSaudacao(){
+
+  const hora = new Date().getHours();
+  const el = document.querySelector(".ola");
+
+  if(!el) return;
+
+  if(hora >= 23 || hora < 13){
+
+    el.innerHTML = `
+    <span style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;">
+      
+      <svg viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2.5"
+      style="width:26px;height:26px;">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 7v5l3 2"></path>
+      </svg>
+
+      <span>Volta às 13h</span>
+    </span>
+    `;
+
+  } else {
+
+    el.innerText = "Olá :)";
+
+  }
+
+}
+
+atualizarSaudacao();
+setInterval(atualizarSaudacao, 60000);
+</script>
+<!-- 🔥 FIM -->
+<!-- 🔥 BOTÃO FLUTUANTE AJUSTADO -->
+<style>
+.botao-flutuante {
+  position: fixed;
+  bottom: 90px; /* 👈 sobe pra não bater nos cards */
+  right: 15px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #FFD700, #FFC300);
+  color: black;
+  border: 2px solid white;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  z-index: 9998;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* 🔥 POPUP */
+.popup-video {
+  position: fixed;
+  bottom: 170px; /* 👈 fica acima do botão */
+  right: 15px;
+  z-index: 9999;
+  display: none;
+}
+
+.popup-box {
+  position: relative;
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.7) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.popup-box video {
+  width: 60vw;
+  max-width: 280px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+}
+/* 🔥 BOTÃO FECHAR */
+.fechar-popup {
+  position: absolute;
+  top: -12px;
+ left: -12px;
+
+  background: #FFD700;
+  color: black;
+
+  width: 36px;       /* 👈 maior */
+  height: 36px;      /* 👈 maior */
+  line-height: 36px;
+
+  font-size: 18px;   /* 👈 X maior */
+  font-weight: bold;
+
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+</style>
+
+<!-- 🔥 BOTÃO -->
+<button class="botao-flutuante" onclick="abrirPopup()">OLÁ</button>
+
+<!-- 🔥 POPUP -->
+<div class="popup-video" id="popupVideo" onclick="fecharPopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
+
+    <div class="fechar-popup" onclick="fecharPopup()">×</div>
+
+    <video id="videoPopup" muted playsinline controls>
+      <source src="https://onlinecartomantes-dotcom.github.io/aplicativo/video.mp4" type="video/mp4">
+    </video>
+
+  </div>
+</div>
+
+<script>
+let popupAberto = false;
+
+function abrirPopup(){
+  const popup = document.getElementById("popupVideo");
+  const video = document.getElementById("videoPopup");
+
+  popup.style.display = "block";
+  popupAberto = true;
+
+  if(video){
+    video.currentTime = 0;
+    video.muted = true;
+    video.play().catch(() => {});
+  }
+}
+
+function fecharPopup(){
+  const popup = document.getElementById("popupVideo");
+  const video = document.getElementById("videoPopup");
+
+  popup.style.display = "none";
+  popupAberto = false;
+
+  if(video){
+    video.pause();
+    video.currentTime = 0;
+  }
 }
 </script>
+
+<!-- =========================
+🌙 SCRIPT DO TEMA (VERSÃO PRO)
+========================= -->
+<script>
+
+// 🔥 detecta tema automático
+function detectarTemaSistema(){
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+// 🔥 aplica tema
+function aplicarTema(){
+
+  let tema = localStorage.getItem("tema");
+
+  if(!tema){
+    tema = detectarTemaSistema() ? "dark" : "light";
+  }
+
+  const btn = document.getElementById("toggleTema");
+
+  if(tema === "dark"){
+    document.body.classList.add("dark");
+    if(btn) btn.innerText = "☀️";
+  }else{
+    document.body.classList.remove("dark");
+    if(btn) btn.innerText = "🌙";
+  }
+
+}
+
+// 🔥 alterna tema
+function alternarTema(){
+
+  const escuro = document.body.classList.contains("dark");
+
+  if(escuro){
+    localStorage.setItem("tema","light");
+  }else{
+    localStorage.setItem("tema","dark");
+  }
+
+  aplicarTema();
+}
+
+// 🔥 inicia
+document.addEventListener("DOMContentLoaded", () => {
+
+  const btn = document.getElementById("toggleTema");
+
+  if(btn){
+    btn.onclick = alternarTema;
+  }
+
+  aplicarTema();
+
+});
+
+// 🔥 se sistema mudar
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+
+  if(!localStorage.getItem("tema")){
+    aplicarTema();
+  }
+
+});
+
+/* ===================================
+🔥 BOTÃO OFERTA ESMERALDA TEMPO REAL
+=================================== */
+
+function atualizarBotaoEsmeralda(){
+
+  const btn = document.getElementById("btnEsmeralda");
+  if(!btn) return;
+
+  delete statusCache["Esmeralda"];
+  const status = getStatus("Esmeralda");
+
+  if(status.online){
+
+    btn.innerText = "Consultar agora";
+    btn.style.opacity = "1";
+    btn.style.pointerEvents = "auto";
+
+    btn.onclick = () => {
+      clicarContratar(
+        "Esmeralda",
+        "https://i.ibb.co/gbtWvVLK/Chat-GPT-Image-22-04-2026-16-00-28.png"
+      );
+    };
+
+  }else{
+
+    btn.innerText = "Indisponível";
+    btn.style.opacity = "0.5";
+    btn.style.pointerEvents = "none";
+    btn.onclick = null;
+
+  }
+
+}
+
+async function carregarProdutosShopee(){
+
+const box = document.getElementById("produtosShopee");
+if(!box) return;
+
+try{
+
+const r = await fetch("https://loja-1-rykc.onrender.com/produtos?refresh=1&t=" + Date.now(),{
+cache:"no-store"
+});
+
+const data = await r.json();
+
+const lista = data?.data?.productOfferV2?.nodes || [];
+
+if(lista.length === 0){
+box.innerHTML = "<div style='padding:20px'>Nenhum produto encontrado</div>";
+return;
+}
+
+box.innerHTML = lista.map(p => `
+
+<div class="produto-card">
+
+<div class="produto-img">
+<img src="${p.imageUrl}">
+</div>
+
+<div class="produto-nome">
+${p.productName}
+</div>
+
+<a href="${p.offerLink}" target="_blank" class="produto-btn">
+Comprar Agora
+</a>
+
+</div>
+
+`).join("");
+
+}catch(e){
+
+box.innerHTML = "<div style='padding:20px'>Erro ao carregar produtos</div>";
+
+}
+
+}
+
+/* 🔥 CARREGA AO ABRIR */
+carregarProdutosShopee();
+
+/* 🔥 ATUALIZA A CADA 10 MINUTOS */
+setInterval(carregarProdutosShopee, 600000);
+
+</script>
+
 </body>
 </html>
