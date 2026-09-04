@@ -178,45 +178,12 @@ if(!nome || !foto){
 document.body.innerHTML="Erro ao carregar consultor";
 }
 
-// 🔥 CAPAS FIXAS
-const capas = [
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-];
-
-const capasPorConsultor = {
-"Pai Márcio": "https://i.ibb.co/27CVwmRK/Captura-de-tela-2026-04-22-180808.png",
-"Tamila": capas[0],
-"Samanta": capas[1],
-"Dolores": capas[2],
-"Esmeralda": capas[3],
-"Janaina": capas[4],
-"Pedro": capas[5],
-"Beatriz": capas[6],
-"Carlos": capas[7],
-"Sulamita": capas[8],
-"Adria": capas[9],
-"M.Padilha": capas[10],
-"Sara": capas[11],
-"7 Saias": capas[12],
-"Odara": capas[13]
-};
+// 🔥 CAPA FIXA LOCAL
+const capa = "Captura-de-tela-2026-04-22-180808.png";
 
 // aplicar capa
 document.getElementById("capa").style.backgroundImage =
-`url(${capasPorConsultor[nome]})`;
+`url(${capa})`;
 
 // GÊNERO
 const masculino = [
