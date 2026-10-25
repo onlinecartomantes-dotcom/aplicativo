@@ -244,29 +244,22 @@ opcoes.appendChild(div);
 // =========================
 // PAGAMENTO
 // =========================
-
 btn.onclick = () => {
-  if (!nome || !precoFinal || !minutosSelecionados) {
-    alert("Selecione uma opção antes de continuar.");
-    return;
-  }
 
   btn.innerText = "Processando...";
   btn.disabled = true;
 
-  const descricao =
-    `Consulta com ${nome} - ${minutosSelecionados} minutos`;
+  setTimeout(()=>{
 
-  const params = new URLSearchParams({
-    valor: precoFinal,
-    nome: nome,
-    minutos: String(minutosSelecionados),
-    descricao: descricao
-  });
+    // 🔥 descrição dinâmica
+    const descricao = encodeURIComponent(`Consulta com ${nome} - ${minutosSelecionados} minutos`);
 
-  window.location.href =
-    "https://onlinecartomantes-dotcom.github.io/aplicativo/aguarde.html?" +
-    params.toString();
+    // 🔥 REDIRECIONA PARA SEU RENDER
+    window.location.href =
+`https://onlinecartomantes-dotcom.github.io/aplicativo/aguarde.html?valor=${precoFinal}&descricao=${descricao}`;
+
+  }, 800);
+
 };
 
 </script>
