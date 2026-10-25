@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -146,65 +145,41 @@ Iniciando conexão...
 const params = new URLSearchParams(window.location.search);
 
 const valor = params.get("valor");
-const nome = params.get("nome");
-const minutos = params.get("minutos");
 const descricao = params.get("descricao");
 
-const API = "https://api-r8v0.onrender.com";
+const destino =
+`https://api-r8v0.onrender.com/?valor=${valor}&descricao=${descricao}`;
 
 const msg = document.getElementById("msg");
 const statusTxt = document.getElementById("status");
 
-let redirecionando = false;
-
-function montarDestino() {
-  const destino = new URL("https://api-r8v0.onrender.com/");
-
-  if (valor !== null) destino.searchParams.set("valor", valor);
-  if (nome !== null) destino.searchParams.set("nome", nome);
-  if (minutos !== null) destino.searchParams.set("minutos", minutos);
-  if (descricao !== null) destino.searchParams.set("descricao", descricao);
-
-  return destino.toString();
-}
 async function acordarRender(){
 
-  if(redirecionando) return;
+msg.innerHTML =
+`Conectando ao servidor...`;
 
-  msg.innerHTML =
-    "Conectando ao servidor...<br>Não feche esta página.";
+statusTxt.innerText = "Aguarde, preparando ambiente seguro...";
 
-  statusTxt.innerText = "Aguarde, preparando ambiente seguro...";
+try{
 
-  try{
+await fetch("https://api-r8v0.onrender.com/",{
+method:"GET",
+mode:"no-cors"
+});
 
-    // O GET serve apenas para acordar o Render e aguardar uma resposta.
-    const resposta = await fetch(API + "/", {
-      method: "GET",
-      cache: "no-store"
-    });
+statusTxt.innerText = "Servidor online! Redirecionando...";
 
-    if(!resposta.ok){
-      throw new Error("Servidor ainda não está pronto.");
-    }
+setTimeout(()=>{
+window.location.href = destino;
+},1000);
 
-    statusTxt.innerText = "Servidor online! Redirecionando...";
+}catch(e){
 
-    redirecionando = true;
+statusTxt.innerText = "Servidor iniciando...";
 
-    setTimeout(() => {
-      window.location.href = montarDestino();
-    }, 1000);
+setTimeout(acordarRender,3000);
 
-  }catch(e){
-
-    console.log("Aguardando o Render iniciar:", e);
-
-    statusTxt.innerText = "Servidor iniciando...";
-
-    setTimeout(acordarRender, 3000);
-
-  }
+}
 
 }
 
