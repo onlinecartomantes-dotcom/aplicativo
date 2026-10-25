@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -142,13 +143,12 @@ Iniciando conexão...
 
 <script>
 
+const API = "https://api-r8v0.onrender.com";
+
 const params = new URLSearchParams(window.location.search);
 
-const valor = params.get("valor");
-const descricao = params.get("descricao");
-
-const destino =
-`https://https://api-r8v0.onrender.com/?valor=${valor}&descricao=${descricao}`;
+const valor = Number(params.get("valor"));
+const descricao = params.get("descricao") || "Pagamento PIX";
 
 const msg = document.getElementById("msg");
 const statusTxt = document.getElementById("status");
@@ -160,24 +160,90 @@ msg.innerHTML =
 
 statusTxt.innerText = "Aguarde, preparando ambiente seguro...";
 
+if(!Number.isFinite(valor) || valor <= 0){
+msg.innerText = "O valor informado é inválido.";
+statusTxt.innerText = "Verifique o link de pagamento.";
+return;
+}
+
 try{
 
-await fetch("https://api-r8v0.onrender.com/",{
-method:"GET",
-mode:"no-cors"
+// Acordar o servidor do Render
+try{
+await fetch(API + "/", {
+method: "GET"
+});
+}catch(e){
+// Continua para a solicitação de pagamento.
+}
+
+// Criar o pagamento PIX pela rota correta
+statusTxt.innerText = "Gerando pagamento PIX...";
+
+const resposta = await fetch(API + "/create-payment", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+transaction_amount: valor,
+description: descricao
+})
 });
 
-statusTxt.innerText = "Servidor online! Redirecionando...";
+const dados = await resposta.json();
 
-setTimeout(()=>{
-window.location.href = destino;
-},1000);
+if(!resposta.ok){
+
+const detalhe =
+dados?.details?.message ||
+dados?.details?.cause?.[0]?.description ||
+dados?.error ||
+"Não foi possível gerar o pagamento.";
+
+throw new Error(detalhe);
+
+}
+
+const transacao =
+dados?.point_of_interaction?.transaction_data;
+
+if(transacao?.ticket_url){
+
+statusTxt.innerText = "PIX criado! Redirecionando...";
+
+setTimeout(() => {
+window.location.href = transacao.ticket_url;
+}, 1000);
+
+return;
+}
+
+if(transacao?.qr_code){
+
+msg.innerText =
+"PIX gerado. Código para copiar:\n" + transacao.qr_code;
+
+statusTxt.innerText = "Pagamento criado. Copie o código PIX.";
+
+document.querySelector(".loader").style.display = "none";
+document.querySelector(".barra").style.display = "none";
+
+return;
+}
+
+throw new Error("O Mercado Pago não retornou o link nem o código PIX.");
 
 }catch(e){
 
-statusTxt.innerText = "Servidor iniciando...";
+console.error("Erro ao gerar pagamento:", e);
 
-setTimeout(acordarRender,3000);
+msg.innerText = "Não foi possível gerar o pagamento: " + e.message;
+
+statusTxt.innerText = "Verifique o erro e tente novamente.";
+
+document.querySelector(".loader").style.display = "none";
+document.querySelector(".barra").style.display = "none";
 
 }
 
