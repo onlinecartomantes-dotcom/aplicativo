@@ -158,14 +158,17 @@ const statusTxt = document.getElementById("status");
 let redirecionando = false;
 
 function montarDestino(){
-  const destino = new URL(API + "/");
+  const destino = new URL(
+    "https://onlinecartomantes-dotcom.github.io/aplicativo/pagamento.html"
+  );
+
   if(valor !== null) destino.searchParams.set("valor", valor);
   if(nome !== null) destino.searchParams.set("nome", nome);
   if(minutos !== null) destino.searchParams.set("minutos", minutos);
   if(descricao !== null) destino.searchParams.set("descricao", descricao);
+
   return destino.toString();
 }
-
 async function acordarRender(){
 
   if(redirecionando) return;
