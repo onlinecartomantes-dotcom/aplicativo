@@ -1097,7 +1097,7 @@ href="javascript:void(0)">
   ${online ? '<div class="online"></div>' : ''}
 </div>
 
-<div class="nome">${c.nome}</div>
+<div class="nome">${c.nome === "Pai Márcio" ? "Portal do Mago" : c.nome}</div>
 
 <div class="desc"
 style="
@@ -1740,19 +1740,25 @@ if(btn){
 
 } // ✅ FIM renderDestaque
 
+
 function abrirPerfil(nome, img, online){
 
-  // 🔥 TRAVA ABSOLUTA (NUNCA ENTRA OFFLINE)
-  if(!online){
-    return;
-  }
+   // Não permite abrir consultores indisponíveis
+   if(!online){
+     return;
+   }
 
-  // 🔥 SALVA DADOS
-  localStorage.setItem('consultorNome', nome);
-  localStorage.setItem('consultorImagem', img);
+   // Se for o Pai Márcio, abre o Portal do Mago
+   if(nome === "Pai Márcio"){
+     window.location.href = "https://onlinecartomantes-dotcom.github.io/portaldomago/mago.html";
+     return;
+   }
 
-  // 🔥 REDIRECIONA
-  window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html";
+   // Mantém o funcionamento dos outros consultores
+   localStorage.setItem('consultorNome', nome);
+   localStorage.setItem('consultorImagem', img);
+
+   window.location.href = "https://onlinecartomantes-dotcom.github.io/aplicativo/perfil.html";
 }
 
 // 🔥 CONTROLE DO TIPO ATUAL
